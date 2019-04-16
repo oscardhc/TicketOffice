@@ -43,6 +43,10 @@ def logout():
         session.permanent = True
         return jsonify({'statsu': '0'})
 
+@app.route('/account')
+def account():
+    return render_template('account.html', ses = session)
+
 
 if __name__ == '__main__':
     app.run(port=9999)

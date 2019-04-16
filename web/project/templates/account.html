@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% set curSide = "账户" %}
+
+{% block content %}
+
+    <div class="mdui-typo">
+        {% if 'user' in ses %}
+
+            <code> {{ ses['user'] }} </code> now logged in !
+
+        {% else %}
+
+            please login...
+
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}
