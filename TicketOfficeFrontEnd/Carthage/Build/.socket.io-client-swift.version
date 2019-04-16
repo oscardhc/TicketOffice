@@ -1,0 +1,31 @@
+{
+  "Mac" : [
+    {
+      "name" : "SocketIO",
+      "hash" : "e5cf916dbba58c65523be22ef4e9bd067b0ffaefecafee5b17b20402dc1dd39b",
+      "swiftToolchainVersion" : "5.0 (swiftlang-1001.0.69.5 clang-1001.0.46.3)"
+    }
+  ],
+  "watchOS" : [
+    {
+      "name" : "SocketIO",
+      "hash" : "9938dc95819a70517c009e0cf5c383f43509fc51102946c46049020f6b9430f9",
+      "swiftToolchainVersion" : "5.0 (swiftlang-1001.0.69.5 clang-1001.0.46.3)"
+    }
+  ],
+  "tvOS" : [
+    {
+      "name" : "SocketIO",
+      "hash" : "02a6622a9d5c660f834520e333d6c1b95729fbcc4cb8066f06cabc326c9f4b39",
+      "swiftToolchainVersion" : "5.0 (swiftlang-1001.0.69.5 clang-1001.0.46.3)"
+    }
+  ],
+  "commitish" : "v15.0.0",
+  "iOS" : [
+    {
+      "name" : "SocketIO",
+      "hash" : "82170ff5f05fed67956497bcf79fd857ca2158cfa65519f8ee9e8cec90ebabdf",
+      "swiftToolchainVersion" : "5.0 (swiftlang-1001.0.69.5 clang-1001.0.46.3)"
+    }
+  ]
+}

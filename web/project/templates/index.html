@@ -1,0 +1,84 @@
+<d>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mdui.min.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/mdui.min.js') }}" defer></script>
+    <script src="{{ url_for("static", filename="js/my.js") }}" defer></script>
+    </head>
+
+    <body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-indigo mdui-theme-accent-pink">
+    <header class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-theme main-color">
+            <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white">
+                <i class="mdui-icon material-icons" >menu</i>
+            </span>
+            <span>Title</span>
+            <button class="mdui-btn" id="menubtn">click</button>
+            <div class="mdui-toolbar-spacer"></div>
+
+            {% if 'user' not in ses %}
+                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" mdui-dialog="{target: '#exampleDialog'}">login</button>
+            {% else %}
+                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="logoutbtn">logout</button>
+            {% endif %}
+
+
+        </div>
+    </header>
+
+    <div class="mdui-drawer" id="drawer">
+        <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
+            <div class="mdui-collapse-item mdui-collapse-item-open">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple" id="fatherbtn">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">near_me</i>
+                    <div class="mdui-list-item-content">开始使用</div>
+                    <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <div class="mdui-collapse-item-body mdui-list">
+                    <a href="./download" class="mdui-list-item mdui-ripple mdui-list-item-active">安装</a>
+                    <a href="./compatibility" class="mdui-list-item mdui-ripple ">兼容性</a>
+                    <a href="./jq" class="mdui-list-item mdui-ripple ">JavaScript 工具库</a>
+                    <a href="./global" class="mdui-list-item mdui-ripple ">JavaScript 全局方法</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <button>
+        This is something.
+    </button>
+
+    {% if 'user' in ses %}
+
+        {{ ses['user'] }} now logged in !
+
+    {% else %}
+
+        please login...
+
+    {% endif %}
+
+    <div class="mdui-dialog" id="exampleDialog">
+        <div class="mdui-dialog-title">Are you sure?</div>
+        <div class="mdui-dialog-content">You'll lose all photos and media!
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">account_circle</i>
+                <label class="mdui-textfield-label">Username</label>
+                <textarea class="mdui-textfield-input" id="emailinput"></textarea>
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">vpn_key</i>
+                <label class="mdui-textfield-label">Password</label>
+                <textarea class="mdui-textfield-input" id="passwdinput"></textarea>
+            </div>
+
+        </div>
+
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm id="loginbtn">login</button>
+        </div>
+    </div>
+
+    </body>
