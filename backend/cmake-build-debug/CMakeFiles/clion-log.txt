@@ -1,0 +1,4 @@
+"/Users/oscar/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/191.6183.77/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/bin/make -DCMAKE_C_COMPILER=/usr/local/bin/gcc-8 -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-8 -G "CodeBlocks - Unix Makefiles" "/Users/oscar/Documents/SJTU/1819_Spring/Data Structure/TicketOffice/backend"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/oscar/Documents/SJTU/1819_Spring/Data Structure/TicketOffice/backend/cmake-build-debug

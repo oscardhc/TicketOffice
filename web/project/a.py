@@ -9,7 +9,7 @@ app = Flask("Test")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 app.jinja_env.auto_reload = True
 app.secret_key = "19260817"
-app.permanent_session_lifetime = timedelta(seconds=300)
+app.permanent_session_lifetime = timedelta(seconds=60*30)
 
 
 @app.route('/')
@@ -46,6 +46,14 @@ def logout():
 @app.route('/account')
 def account():
     return render_template('account.html', ses = session)
+
+@app.route('/query')
+def query():
+    return render_template('query.html', ses = session)
+
+@app.route('/register')
+def reg():
+    pass
 
 
 if __name__ == '__main__':

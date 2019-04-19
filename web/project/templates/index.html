@@ -1,12 +1,35 @@
 {% extends "base.html" %}
 
-{% set curSide = "首页" %}
+{% set curSide = "idx" %}
 
 {% block content %}
 
+    <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+
     <par>
-        <div class="mdui-typo">
-            Welcome to the Ticket Office System!
+        <div style="width:95%; margin:1% auto auto auto; overflow:auto; _display:inline-block;">
+
+            <div style="width:200px; float:right;">
+
+                <div class="mdui-typo">
+                    <h4>
+                        一言（ヒトコト）
+                    </h4>
+                    <p id="hitokoto">
+                        loading...
+                    </p>
+                    <p class="mdui-typo-caption" id="hitokotoSource" align="right">
+
+                    </p>
+                </div>
+
+            </div>
+            <div style="margin-right:250px;">
+                <div class="mdui-typo" align="center">
+                    <h1>Train Ticket Office</h1>
+                </div>
+            </div>
         </div>
     </par>
 

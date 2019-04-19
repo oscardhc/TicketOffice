@@ -1,16 +1,9 @@
-var inst = new mdui.Drawer('#drawer')
-var btn = document.querySelector('#menubtn')
-var status = 1
-// var col =
+var errorDialog = new mdui.Dialog('#errorDialog');
 
-// method
-btn.onclick = function () {
-    if (status == 1) {
-        inst.close()
-    } else {
-        inst.open()
-    }
-    status = 1 - status
+function openError(msg) {
+    document.querySelector('#errorMsg').textContent = msg
+    errorDialog.open()
+    document.querySelector('#cancleBtn').focus()
 }
 
 function eraseBtnClicked () {
@@ -18,19 +11,35 @@ function eraseBtnClicked () {
     var ps = document.querySelector('#passwdinput').value
     // alert(nm + ps)
     $.post('/login', {'user': nm, 'pswd': ps}, function (d) {
-        if (d.status == '-1') {
-            alert('dismatch!')
+        // alert(d.status === '-1')
+        if (d.status === '-1') {
+            openError("用户名或密码错误")
+        } else {
+            location.reload()
         }
-        location.reload()
     })
     // window.navigate('/login')
 }
 
-var erabtn = document.querySelector('#loginbtn')
+function registerBtnClicked () {
+    var nm = document.querySelector('#emailinputR').value
+    var ps1 = document.querySelector('#passwdinputR1').value
+    var ps2 = document.querySelector('#passwdinputR2').value
 
-if (erabtn) {
-    erabtn.onclick = eraseBtnClicked
+    if (ps1 !== ps2) {
+        document.querySelector('#errorMsg').textContent = "两次输入密码不一致"
+        errorDialog.open()
+    }
+
+    // $.post('/login', {'user': nm, 'pswd': ps}, function (d) {
+    //     if (d.status == '-1') {
+    //         alert('dismatch!')
+    //     }
+    //     location.reload()
+    // })
+    // window.navigate('/login')
 }
+
 
 var logoutbtn = document.querySelector('#logoutbtn')
 
@@ -58,4 +67,23 @@ function ClickPassword() {
         event.returnValue = false
         return false
     }
+}
+
+var headicon = document.querySelector('#headicon')
+if (headicon) {
+    headicon.onclick = function () {
+        location.href = "/account"
+    }
+}
+
+var hitokoto = document.querySelector('#hitokoto')
+if (hitokoto) {
+    fetch('https://v1.hitokoto.cn')
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            hitokoto.innerText = data.hitokoto;
+            document.querySelector('#hitokotoSource').innerHTML = "—— " + data.from
+        })
 }

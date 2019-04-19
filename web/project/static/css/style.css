@@ -1,4 +1,19 @@
-.hhh {
-    text-decoration: line-through;
-    color: red;
+.round_icon{
+  width: 34px;
+  height: 34px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.big_round_icon{
+  width: 150px;
+  height: 150px;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }

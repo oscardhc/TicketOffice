@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdui.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/mdui.min.js') }}" defer></script>
     <script src="{{ url_for("static", filename="js/my.js") }}" defer></script>
 </head>
 <body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-indigo mdui-theme-accent-pink">
+
 <header class="mdui-appbar mdui-appbar-fixed">
-    <div class="mdui-toolbar mdui-color-theme main-color" id="menubtn">
-            <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white">
+    <div class="mdui-toolbar mdui-color-theme main-color">
+            <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#drawer', swipe: true}">
                 <i class="mdui-icon material-icons" >menu</i>
             </span>
         <span>Title</span>
@@ -21,7 +23,7 @@
         {% if 'user' not in ses %}
             <button class="mdui-btn mdui-ripple mdui-color-theme-accent" mdui-dialog="{target: '#exampleDialog'}">login</button>
         {% else %}
-            <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="logoutbtn">logout</button>
+            <img src="{{ url_for('static', filename='pic/1.jpg') }}" class="round_icon" id="headicon">
         {% endif %}
 
 
@@ -30,14 +32,20 @@
 
 <div class="mdui-drawer" id="drawer">
     <div class="mdui-list" mdui-collapse="{accordion: false}" style="margin-bottom: 76px;">
+
+        <div class="mdui-collapse-item mdui-collapse-item-open">
+            <div class="mdui-collapse-item-body mdui-list">
+                <a href="/" class="mdui-list-item mdui-ripple {% if curSide=="idx" %}  mdui-list-item-active {% else %}  {% endif %}">首页</a>
+            </div>
+        </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
             <div class="mdui-collapse-item-header mdui-list-item mdui-ripple" id="fatherbtn">
                 <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">near_me</i>
-                <div class="mdui-list-item-content">开始使用</div>
+                <div class="mdui-list-item-content">功能</div>
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="../" class="mdui-list-item mdui-ripple {% if curSide=="首页" %}  mdui-list-item-active {% else %}  {% endif %}">首页</a>
+                <a href="/query" class="mdui-list-item mdui-ripple {% if curSide=="qry" %}  mdui-list-item-active {% else %}  {% endif %}">查询</a>
             </div>
         </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
@@ -47,13 +55,15 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="../account" class="mdui-list-item mdui-ripple {% if curSide=="账户" %}  mdui-list-item-active {% else %}  {% endif %}">账户</a>
+                <a href="/account" class="mdui-list-item mdui-ripple {% if curSide=="acc" %}  mdui-list-item-active {% else %}  {% endif %}">账户</a>
             </div>
         </div>
     </div>
 </div>
 
-{% block content %}{% endblock %}
+<div style="margin: 2%;">
+    {% block content %}{% endblock %}
+</div>
 
 <div class="mdui-dialog" id="exampleDialog">
     <div class="mdui-dialog-title">SIGN IN</div>
@@ -62,19 +72,78 @@
         <div class="mdui-textfield mdui-textfield-floating-label">
             <i class="mdui-icon material-icons">account_circle</i>
             <label class="mdui-textfield-label">Username</label>
-            <textarea class="mdui-textfield-input" id="emailinput" onkeydown="ClickUsername()"></textarea>
+            <input class="mdui-textfield-input" id="emailinput" onkeydown="ClickUsername()"></input>
+        </div>
+
+        <div align="right">
+            <div class="mdui-btn mdui-ripple" mdui-dialog="{target: '#signupDialog'}"  mdui-dialog-close>
+                没有账号？马上注册
+            </div>
+        </div>
+
+
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <i class="mdui-icon material-icons">vpn_key</i>
+            <label class="mdui-textfield-label">Password</label>
+            <input class="mdui-textfield-input" id="passwdinput" type="password" onkeydown="ClickPassword()"></input>
+        </div>
+
+        <div align="right">
+            <div class="mdui-btn mdui-ripple">
+                忘记密码？
+            </div>
+        </div>
+    </div>
+
+    <div class="mdui-dialog-actions">
+        <button class="mdui-btn mdui-ripple " mdui-dialog-close>cancel</button>
+        <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="eraseBtnClicked()">login</button>
+    </div>
+</div>
+
+<div class="mdui-dialog" id="signupDialog">
+    <div class="mdui-dialog-title">SIGN UP</div>
+    <div class="mdui-dialog-content">
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <i class="mdui-icon material-icons">account_circle</i>
+            <label class="mdui-textfield-label">Username</label>
+            <input class="mdui-textfield-input" id="emailinputR"></input>
+        </div>
+
+        <div align="right">
+            <div class="mdui-btn mdui-ripple" mdui-dialog="{target: '#exampleDialog'}"  mdui-dialog-close>
+                已有账号？马上登录
+            </div>
+        </div>
+
+
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <i class="mdui-icon material-icons">vpn_key</i>
+            <label class="mdui-textfield-label">Password</label>
+            <input class="mdui-textfield-input" type="password" id="passwdinputR1"></input>
         </div>
         <div class="mdui-textfield mdui-textfield-floating-label">
             <i class="mdui-icon material-icons">vpn_key</i>
             <label class="mdui-textfield-label">Password</label>
-            <textarea class="mdui-textfield-input" id="passwdinput" onkeydown="ClickPassword()"></textarea>
+            <input class="mdui-textfield-input" type="password" onkeydown="ClickPassword()" id="passwdinputR2"></input>
         </div>
+
 
     </div>
 
     <div class="mdui-dialog-actions">
         <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
-        <button class="mdui-btn mdui-ripple" mdui-dialog-confirm id="loginbtn">login</button>
+        <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="registerBtnClicked()">confirm</button>
+    </div>
+</div>
+
+<div class="mdui-dialog" id="errorDialog">
+    <div class="mdui-dialog-title">error</div>
+    <div class="mdui-dialog-content" id="errorMsg">
+        MESSAGE
+    </div>
+    <div class="mdui-dialog-actions">
+        <button class="mdui-btn mdui-ripple " mdui-dialog-close id="cancleBtn" onclick="{location.reload()}">cancel</button>
     </div>
 </div>
 </body>

@@ -1,13 +1,42 @@
 {% extends "base.html" %}
 
-{% set curSide = "账户" %}
+{% set curSide = "acc" %}
 
 {% block content %}
 
     <div class="mdui-typo">
         {% if 'user' in ses %}
 
-            <code> {{ ses['user'] }} </code> now logged in !
+            <div class="doc-title mdui-text-color-theme">
+                <h1> 账户 </h1>
+            </div>
+
+            <div style="width:95%; margin:auto auto auto auto; overflow:auto; _display:inline-block;">
+                <div style="width:150px; float:left;">
+                    <img src="{{ url_for('static', filename='pic/1.jpg') }}" class="big_round_icon">
+                </div>
+                <div style=" margin-left:200px;">
+                    <div class="mdui-typo">
+
+                        <h2>{{ ses['user'] }}</h2>
+
+                        <p>姓名：</p>
+
+                        <p>邮箱：</p>
+
+                        <p>电话：</p>
+
+                        <p>权限：</p>
+
+                    </div>
+                    <div align="right">
+
+                        <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="logoutbtn">logout</button>
+
+                    </div>
+                </div>
+            </div>
+
 
         {% else %}
 

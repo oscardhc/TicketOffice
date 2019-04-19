@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% set curSide = "qry" %}
+
+{% block content %}
+
+    {% if 'user' in ses %}
+
+        <div class="mdui-typo">
+            <h1 class="mdui-text-color-theme">查询</h1>
+
+            This is the query page.
+        </div>
+
+    {% else %}
+        <div class="mdui-typo">
+            please login...
+        </div>
+    {% endif %}
+
+{% endblock %}
