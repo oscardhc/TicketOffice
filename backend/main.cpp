@@ -24,9 +24,8 @@ int main()
 {
    int wfd,rfd;
     char ubuf[BUF_SIZE]={0};
-    mkfifo(FIFO_WRITE,S_IFIFO|0666);
    umask(0);
-  wfd=open(FIFO_WRITE,O_SYNC | O_WRONLY);
+  wfd=open(FIFO_WRITE,O_SYNC | O_WRONLY, 0777);
   rfd=open(FIFO_READ,O_RDONLY);
   if(wfd==-1 || rfd==-1)
   {
