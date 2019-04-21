@@ -3,6 +3,7 @@ from flask import request, redirect
 from flask import render_template
 from flask import session, make_response, jsonify
 from datetime import timedelta
+from random import randint
 from lg import Database
 
 app = Flask("Test")
@@ -30,6 +31,9 @@ def login():
 
         if pswd == user + '1' :
             session['user'] = user
+            session['headIcon'] = randint(1, 9)
+            print('！！！！！！！！！！！！！！！')
+            print(session)
             session.permanent = True
             return jsonify({'status': '0'})
         else :

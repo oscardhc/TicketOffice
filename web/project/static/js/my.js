@@ -87,3 +87,31 @@ if (hitokoto) {
             document.querySelector('#hitokotoSource').innerHTML = "—— " + data.from
         })
 }
+
+
+function createTable(){
+    tableNode=document.querySelector('#tbody')
+    var row = 5, cols = 7;
+    //上面确定了 现在开始创建
+
+    for(var x=0;x<row;x++){
+        var trNode=tableNode.insertRow();
+        for(var y=0;y<cols;y++){
+            var tdNode=trNode.insertCell();
+            tdNode.innerHTML="单元格"+(x+1)+"-"+(y+1);
+        }
+        var col = document.createElement('td')
+        var btn = document.createElement('button')
+        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
+        btn.innerText = '1'
+        btn.setAttribute('mdui-dialog', "{target: '#detailDialogue'}")
+        col.append(btn)
+        trNode.append(col)
+    }
+}
+
+var tablePlace = document.querySelector('#tbody')
+if (tablePlace) {
+    createTable()
+}
+

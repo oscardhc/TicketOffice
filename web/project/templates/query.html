@@ -9,7 +9,30 @@
         <div class="mdui-typo">
             <h1 class="mdui-text-color-theme">查询</h1>
 
-            This is the query page.
+            <p>This is the query page.</p>
+
+            <p>Tickets from <code>北京</code> to <code>上海</code></p>
+
+            <div class="mdui-table-fluid">
+                <table class="mdui-table mdui-table-hoverable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>类型</th>
+                        <th>车号</th>
+                        <th>车名</th>
+                        <th>发车时间</th>
+                        <th>到达时间</th>
+                        <th>余票</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+
         </div>
 
     {% else %}
@@ -17,5 +40,19 @@
             please login...
         </div>
     {% endif %}
+
+{% endblock %}
+
+{% block app %}
+
+<div class="mdui-dialog" id="detailDialogue">
+    <div class="mdui-dialog-title">DETAIL</div>
+    <div class="mdui-dialog-content" id="errorMsg">
+
+    </div>
+    <div class="mdui-dialog-actions">
+        <button class="mdui-btn mdui-ripple " mdui-dialog-close id="cancleBtn">cancel</button>
+    </div>
+</div>
 
 {% endblock %}
