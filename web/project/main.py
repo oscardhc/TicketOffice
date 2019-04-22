@@ -37,7 +37,6 @@ def login():
         if res == '1sd' :
             session['user'] = user
             session['headIcon'] = randint(1, 15)
-            print('！！！！！！！！！！！！！！！')
             print(session)
             session.permanent = True
             return jsonify({'status': '0'})
