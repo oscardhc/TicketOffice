@@ -22,6 +22,7 @@ using namespace std;
  
 int main()
 {
+    freopen("./out.txt", "r", stdout);
    int wfd,rfd;
     char ubuf[BUF_SIZE]={0};
    umask(0);
