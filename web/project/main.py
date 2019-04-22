@@ -79,7 +79,7 @@ def sendcmd():
 
 if __name__ == '__main__':
     con.init()
-    if len(sys.argv) == 2:
-        app.run(host=str(sys.argv[0]), port=int(sys.argv[1]))
+    if len(sys.argv) == 3:
+        app.run(host=str(sys.argv[1]), port=int(sys.argv[2]))
     else:
         app.run(port=9999)
