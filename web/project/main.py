@@ -5,6 +5,7 @@ from flask import session, make_response, jsonify
 from datetime import timedelta
 from random import randint
 import interaction
+import sys
 
 app = Flask("TTRS")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
@@ -78,4 +79,7 @@ def sendcmd():
 
 if __name__ == '__main__':
     con.init()
-    app.run(port=9999)
+    if len(sys.argv) == 2:
+        app.run(host=str(sys.argv[0]), port=int(sys.argv[1]))
+    else:
+        app.run(port=9999)
