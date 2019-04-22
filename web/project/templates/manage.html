@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% set curSide = "mng" %}
+
+{% block content %}
+
+    {% if 'user' in ses %}
+
+        <div class="mdui-typo">
+            <h1 class="mdui-text-color-theme">管理</h1>
+
+            <p>This is the management page.</p>
+
+        </div>
+
+
+
+    {% else %}
+        <div class="mdui-typo">
+            please login...
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block app %}
+
+    <div class="mdui-dialog" id="detailDialogue">
+        <div class="mdui-dialog-title">DETAIL</div>
+        <div class="mdui-dialog-content" id="detailMsg">
+
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
+        </div>
+    </div>
+
+{% endblock %}

@@ -40,8 +40,11 @@ int main()
      int len = read(rfd,ubuf,BUF_SIZE);
      if(len>0){
          ubuf[len]=0;
-         printf("ubuf %d %s\n", len, ubuf);
+         printf("ubuf %d %s %c\n", len, ubuf,ubuf[0]);
+         sleep(2);
+         if(ubuf[0]=='a') ubuf[0]='1';
          write(wfd,ubuf,strlen(ubuf));
+         printf("sent %s\n", ubuf);
      }
   }
   close(wfd);

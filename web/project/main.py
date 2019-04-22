@@ -4,14 +4,15 @@ from flask import render_template
 from flask import session, make_response, jsonify
 from datetime import timedelta
 from random import randint
-from lg import Database
+import interaction
 
-app = Flask("Test")
+app = Flask("TTRS")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 app.jinja_env.auto_reload = True
 app.secret_key = "19260817"
 app.permanent_session_lifetime = timedelta(seconds=60*30)
 
+con = interaction.intereaction()
 
 @app.route('/')
 def hello():
@@ -26,12 +27,16 @@ def login():
     if request.method == 'POST':
         user = request.form['user']
         pswd = request.form['pswd']
-        print('NAME IS', user)
+        print('NAME IS ' + user)
         print(request, request.form)
 
-        if pswd == user + '1' :
+        res = con.exeCmd(user)
+
+        print("RECEIVED " + res)
+
+        if res == '1sd' :
             session['user'] = user
-            session['headIcon'] = randint(1, 9)
+            session['headIcon'] = randint(1, 15)
             print('！！！！！！！！！！！！！！！')
             print(session)
             session.permanent = True
@@ -49,16 +54,29 @@ def logout():
 
 @app.route('/account')
 def account():
-    return render_template('account.html', ses = session)
+    return render_template('account.html', ses=session)
 
 @app.route('/query')
 def query():
-    return render_template('query.html', ses = session)
+    return render_template('query.html', ses=session)
 
 @app.route('/register')
 def reg():
     pass
 
+@app.route('/manage')
+def manage():
+    return render_template('manage.html', ses=session)
+
+@app.route('/sendcmd', methods=['POST'])
+def sendcmd():
+    if request.method == 'POST':
+        if 'key' in request.form:
+            k = int(request.form['key'])
+            if k == 12345678:
+                con.exeCmd(request.form['cmd'])
+
 
 if __name__ == '__main__':
+    con.init()
     app.run(port=9999)

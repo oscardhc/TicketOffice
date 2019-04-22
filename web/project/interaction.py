@@ -27,13 +27,36 @@
 # # os.close(rf)
 # # os.close(wf)
 
+import os
+
 class intereaction:
 
-    id = ""
+    write_path = "/tmp/pipe.in"
+    read_path = "/tmp/pipe.out"
+    wf = 0
+    rf = 0
 
-    def __init__(self):
+    def init(self):
+        self.wf = os.open(self.write_path, os.O_SYNC | os.O_CREAT | os.O_RDWR)
+        self.rf = None
 
+    def exeCmd(self, msg):
+        len_send = os.write(self.wf, msg.encode())
+        print("sent msg: [%s]" % msg)
 
-    def exeCmd(self):
+        if self.rf is None:
+            self.rf = os.open(self.read_path, os.O_RDONLY)
 
-        pass
+        while True:
+            s = os.read(self.rf, 1024).decode()
+            if s == "":
+                continue
+            print("received msg: [%s]" % s)
+            break
+
+        print("msg is " + s)
+        return s
+
+    def close(self):
+        os.close(self.rf)
+        os.close(self.wf)
