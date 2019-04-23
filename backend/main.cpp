@@ -47,6 +47,7 @@ int main()
          write(wfd,ubuf,strlen(ubuf));
          printf("sent %s\n", ubuf);
      }
+     usleep(100000);
   }
   close(wfd);
   close(rfd);
