@@ -66,7 +66,7 @@ def reg():
 
 @app.route('/manage')
 def manage():
-    return render_template('manage.html', ses=session)
+    return render_template('mdui.html', ses=session)
 
 @app.route('/sendcmd', methods=['POST'])
 def sendcmd():
