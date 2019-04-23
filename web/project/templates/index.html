@@ -8,33 +8,32 @@
     <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
 
     <par>
-        <div style="width:100%; margin:-5% auto auto auto; overflow:auto; _display:inline-block;">
-
-            <div style="width:27%; margin: 5% auto auto auto; float:right;">
-
-                <div class="mdui-typo">
-                    <h4>
-                        一言（ヒトコト）
-                    </h4>
-                    <div class="mdui-divider"></div>
-                    <p id="hitokoto">
-                        loading...
-                    </p>
-                    <p class="mdui-typo-caption" id="hitokotoSource" align="right">
-
-                    </p>
+        <div class="leftblock">
+            <div class="mdui-card-content mdui-typo" align="center">
+                <div class="doc-title mdui-text-color-theme">
+                    <h1> Train Ticket Reserving System </h1>
                 </div>
-            </div>
-            <div style="margin-right:30%;">
-                <div class="mdui-card-content mdui-typo" align="center">
-                    <div class="doc-title mdui-text-color-theme">
-                        <h1> Train Ticket Reserving System </h1>
-                    </div>
-                    <img src="{{ url_for('static', filename='pic/home.jpg') }}">
-                    <div class="mdui-typo-caption-opacity">Copyright © 2019 dhc,ysf,whj,fly All rights reserved.</div>
-                </div>
+                <img src="{{ url_for('static', filename='pic/home.jpg') }}">
+
             </div>
         </div>
+
+        <div class="rightblock">
+
+            <div class="mdui-typo">
+                <h4>
+                    一言（ヒトコト）
+                </h4>
+                <div class="mdui-divider"></div>
+                <p id="hitokoto">
+                    loading...
+                </p>
+                <p class="mdui-typo-caption" id="hitokotoSource" align="right">
+
+                </p>
+            </div>
+        </div>
+
     </par>
 
 {% endblock %}
