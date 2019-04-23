@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55328FA1226E1D8B00CACD9C /* FoldingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55328FA0226E1D8B00CACD9C /* FoldingCell.swift */; };
+		55328FA3226E1EEE00CACD9C /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55328FA2226E1EEE00CACD9C /* TableViewController.swift */; };
 		55E07906226A09E500348B3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07905226A09E500348B3C /* AppDelegate.swift */; };
 		55E07908226A09E500348B3C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07907226A09E500348B3C /* ViewController.swift */; };
 		55E0790B226A09E500348B3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55E07909226A09E500348B3C /* Main.storyboard */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		55328FA0226E1D8B00CACD9C /* FoldingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoldingCell.swift; sourceTree = "<group>"; };
+		55328FA2226E1EEE00CACD9C /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		55E07902226A09E500348B3C /* iOSFrontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSFrontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E07905226A09E500348B3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55E07907226A09E500348B3C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +107,9 @@
 			children = (
 				55E07905226A09E500348B3C /* AppDelegate.swift */,
 				55E07936226A0A6100348B3C /* TabBarController.swift */,
+				55328FA0226E1D8B00CACD9C /* FoldingCell.swift */,
 				55E07907226A09E500348B3C /* ViewController.swift */,
+				55328FA2226E1EEE00CACD9C /* TableViewController.swift */,
 				55E07909226A09E500348B3C /* Main.storyboard */,
 				55E0790F226A09E600348B3C /* Assets.xcassets */,
 				55E07911226A09E600348B3C /* LaunchScreen.storyboard */,
@@ -263,6 +269,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				55E07908226A09E500348B3C /* ViewController.swift in Sources */,
+				55328FA3226E1EEE00CACD9C /* TableViewController.swift in Sources */,
+				55328FA1226E1D8B00CACD9C /* FoldingCell.swift in Sources */,
 				55E07937226A0A6100348B3C /* TabBarController.swift in Sources */,
 				55E07906226A09E500348B3C /* AppDelegate.swift in Sources */,
 				55E0790E226A09E500348B3C /* iOSFrontend.xcdatamodeld in Sources */,

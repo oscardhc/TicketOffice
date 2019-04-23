@@ -108,7 +108,7 @@ if (headicon) {
 
 var hitokoto = document.querySelector('#hitokoto')
 if (hitokoto) {
-    fetch('https://v1.hitokoto.cn')
+    fetch('https://v1.hitokoto.cn/?c=a ')
         .then(function (res) {
             return res.json();
         })
@@ -120,7 +120,8 @@ if (hitokoto) {
 
 var data = [
     ['c100','2018-03-28 08:00','2018-03-28 08:23',[['一等座',2000,765.50],['二等座',2000,765.49],['三等座',2000,765.48]],'c','name1'],
-    ['c100','2018-03-28 10:00','2018-03-28 10:23',[['一等座',2000,965.50],['二等座',2000,965.49],['三等座',2000,965.48]],'c','name2']
+    ['c200','2018-03-28 10:00','2018-03-28 10:23',[['一等座',2000,965.50],['二等座',2000,965.49],['三等座',2000,965.48]],'c','name2'],
+    ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
 ]
 
 function createTable(){
@@ -159,6 +160,30 @@ function createTable(){
 var tablePlace = document.querySelector('#tbody')
 if (tablePlace) {
     createTable()
+}
+function createPanel() {
+    var plc = document.querySelector('#panelPlace')
+    var row = data.length
+
+    for (var i=0;i<row;++i) {
+        var pnl = document.createElement('div')
+        pnl.setAttribute('class', 'mdui-panel-item mdui-hoverable')
+        pnl.setAttribute('id', 'panel' + i)
+        var hed = document.createElement('div')
+        hed.setAttribute('class', 'mdui-panel-item-header')
+        hed.innerText = data[i][0]
+        hed.innerHTML += '<i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>'
+        var bod = document.createElement('div')
+        bod.setAttribute('class', 'mdui-panel-item-body')
+        bod.innerText = data[i]
+        pnl.append(hed)
+        pnl.append(bod)
+        plc.append(pnl)
+    }
+}
+
+if (document.querySelector('#panelPlace')) {
+    createPanel()
 }
 
 var detailDialog = new mdui.Dialog('#detailDialogue');

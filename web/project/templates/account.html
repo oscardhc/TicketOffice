@@ -13,20 +13,22 @@
 
             <div style="width:95%; margin:auto auto auto auto; overflow:auto; _display:inline-block;">
                 <div style="width:150px; float:left;">
-                    <img src="{{ url_for('static', filename='pic/hd_' ~ ses['headIcon'] ~ '.png') }}" class="big_round_icon">
+                    <img src="{{ url_for('static', filename='pic/hd_' ~ ses['headIcon'] ~ '.png') }}" class="mdui-img-circle">
                 </div>
                 <div style=" margin-left:200px;">
                     <div class="mdui-typo">
 
                         <h2>{{ ses['user'] }}</h2>
 
-                        <p>姓名：</p>
+                        <ul class="mdui-list">
+                            <li class="mdui-list-item mdui-ripple">姓名：</li>
 
-                        <p>邮箱：</p>
+                            <li class="mdui-list-item mdui-ripple">邮箱：</li>
 
-                        <p>电话：</p>
+                            <li class="mdui-list-item mdui-ripple">电话：</li>
 
-                        <p>权限：</p>
+                            <li class="mdui-list-item mdui-ripple">权限：</li>
+                        </ul>
 
                     </div>
                     <div align="right">
