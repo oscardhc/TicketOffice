@@ -1,11 +1,12 @@
 
-#include <string>
+#include <cstring>
 #include <iostream>
 
 class Program{
 
-    inline void exec(std::string cmd){
-        std::cout << "THIS IS THE RESULT" << std::endl;
+    static inline void exec(char* cmd, char* ret){
+        int len = strlen(cmd);
+
     }
 
-}
+};

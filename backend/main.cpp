@@ -5,26 +5,31 @@
  *      Author: john
  */
  
-#include<sys/types.h>
-#include<sys/stat.h>
-#include<string.h>
-#include<iostream>
-#include<errno.h>
-#include<fcntl.h>
-#include<unistd.h>
-#include<stdlib.h>
-#include<stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <string.h>
+#include <iostream>
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "program.hpp"
+
 using namespace std;
 #define FIFO_READ "/tmp/pipe.in"
 #define FIFO_WRITE "/tmp/pipe.out"
  
 #define BUF_SIZE 1024
  
+int wfd,rfd;
+char ubuf[BUF_SIZE];
+char resl[BUF_SIZE];
+
 int main()
 {
     freopen("./out.txt", "r", stdout);
-   int wfd,rfd;
-    char ubuf[BUF_SIZE]={0};
+   
    umask(0);
   wfd=open(FIFO_WRITE,O_SYNC | O_WRONLY, 0777);
   rfd=open(FIFO_READ,O_RDONLY);
