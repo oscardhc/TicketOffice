@@ -6,7 +6,7 @@ class DataBase {
     
 
     class New {
-      
+
     };
 
 }
