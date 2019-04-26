@@ -113,7 +113,7 @@ if (hitokoto) {
             return res.json();
         })
         .then(function (data) {
-            hitokoto.innerText = data.hitokoto;
+            hitokoto.innerHTML = "&nbsp &nbsp &nbsp &nbsp" +  data.hitokoto;
             document.querySelector('#hitokotoSource').innerHTML = "—— " + data.from
         })
 }
@@ -124,43 +124,6 @@ var data = [
     ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
 ]
 
-function createTable(){
-    tableNode=document.querySelector('#tbody')
-    var row = data.length;
-    //上面确定了 现在开始创建
-
-    for(var x=0;x<row;x++){
-        var trNode=tableNode.insertRow();
-        for(var y=-1;y<=3;y++){
-            var tdNode=trNode.insertCell();
-            if (y==-1) {
-                tdNode.innerHTML = x + 1
-            } else if (y==3) {
-                var tx = "<div class='mdui-typo'>"
-                var len = data[x][3].length
-                for(var i=0;i<len;i++) {
-                    tx += "<div>" + data[x][3][i][0] + " : 余" + data[x][3][i][1] + "张" + "</div>"
-                }
-                tdNode.innerHTML = tx
-            } else {
-                tdNode.innerHTML = data[x][y]
-            }
-        }
-        var col = document.createElement('td')
-        var btn = document.createElement('button')
-        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
-        btn.innerText = '详情'
-        // btn.setAttribute('mdui-dialog', "{target: '#detailDialogue'}")
-        btn.setAttribute('onclick', '{clickedAtRow(' + x + ')}')
-        col.append(btn)
-        trNode.append(col)
-    }
-}
-
-var tablePlace = document.querySelector('#tbody')
-if (tablePlace) {
-    createTable()
-}
 function createPanel() {
     var plc = document.querySelector('#panelPlace')
     var row = data.length

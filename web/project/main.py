@@ -82,4 +82,4 @@ if __name__ == '__main__':
     if len(sys.argv) == 3:
         app.run(host=str(sys.argv[1]), port=int(sys.argv[2]))
     else:
-        app.run(host="0.0.0.0", port=9998)
+        app.run(host="0.0.0.0", port=80)
