@@ -5,6 +5,8 @@
 class DataBase {
     
 
-    
+    class New {
+      
+    };
 
 }
