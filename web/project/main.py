@@ -17,6 +17,7 @@ con = interaction.intereaction()
 
 @app.route('/')
 def hello():
+    # return render_template('demo.html')
     if 'user' not in session:
         return render_template('index.html', ses = session)
     else:
@@ -78,7 +79,7 @@ def sendcmd():
 
 
 if __name__ == '__main__':
-    con.init()
+    # con.init()
     if len(sys.argv) == 3:
         app.run(host=str(sys.argv[1]), port=int(sys.argv[2]))
     else:

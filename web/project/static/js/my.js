@@ -124,6 +124,10 @@ var data = [
     ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
 ]
 
+var tagname = [
+    '车次    ：','发车时间：','到达时间：','座位情况：'
+]
+
 function createPanel() {
     var plc = document.querySelector('#panelPlace')
     var row = data.length
@@ -138,7 +142,27 @@ function createPanel() {
         hed.innerHTML += '<i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>'
         var bod = document.createElement('div')
         bod.setAttribute('class', 'mdui-panel-item-body')
-        bod.innerText = data[i]
+        // bod.innerText = data[i]
+
+        var lst = document.createElement('ul')
+        lst.setAttribute('class', 'mdui-list')
+
+        for (var j=0;j<4;j++) {
+            var c = document.createElement('li')
+            c.setAttribute('class', 'mdui-list-item mdui-ripple')
+            c.innerText = tagname[j] + data[i][j]
+            lst.append(c)
+        }
+
+        var btn = document.createElement('button')
+        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
+        btn.innerText = "购买"
+
+        bod.setAttribute('align', 'right')
+
+        bod.append(lst)
+        bod.append(btn)
+
         pnl.append(hed)
         pnl.append(bod)
         plc.append(pnl)

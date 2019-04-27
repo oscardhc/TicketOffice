@@ -37,7 +37,7 @@ class intereaction:
     wf = 0
     rf = 0
 
-    def init(self):
+    def __init__(self):
         print("start exec")
         subprocess.call('../../backend/init.sh', shell=True)
         print("end exec")

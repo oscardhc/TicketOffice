@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>Live2D！把可爱的看板娘扑捉到你的博客去吧！</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/live2d.css') }}" />
+</head>
+<body>
+<div id="landlord" style="height: 100%; width: 100%;">
+{#    <div class="message" style="opacity:0"></div>#}
+    <canvas id="live2d" width="300" height="500" class="live2d"></canvas>
+    <div class="hide-button">隐藏</div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>
+<script type="text/javascript">
+    var message_Path = "{{ url_for('static', filename='live2d/') }}"
+    var home_Path = 'https://haremu.com/'
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/live2d.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/message.js') }}"></script>
+<script type="text/javascript">
+    loadlive2d("{{ url_for('static', filename='live2d') }}", "{{ url_for('static', filename='live2d/model/violet/14.json') }}");
+</script>
+</body>
+</html>

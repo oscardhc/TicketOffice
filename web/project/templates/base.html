@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <title>TTRS</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdui.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/live2d.css') }}" />
     <script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/mdui.js') }}" defer></script>
     <script src="{{ url_for("static", filename="js/my.js") }}" defer></script>
@@ -68,8 +69,26 @@
 </div>
 
 <div class="mdui-container doc-container doc-no-cover">
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
+
+<div id="landlord">
+{#    <div class="message" style="opacity:0"></div>#}
+    <canvas id="live2d" width="400" height="550" class="live2d" style="position:absolute;bottom:0;right:0;"></canvas>
+    <div class="hide-button">隐藏</div>
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>
+
+<script type="text/javascript">
+    var message_Path = "{{ url_for('static', filename='live2d/') }}"
+    var home_Path = 'https://haremu.com/'
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/live2d.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/message.js') }}"></script>
+<script type="text/javascript">
+    loadlive2d("{{ url_for('static', filename='live2d') }}", "{{ url_for('static', filename='live2d/model/umaru/13.json') }}");
+</script>
 
 
 <div class="mdui-dialog" id="exampleDialog">
@@ -159,7 +178,7 @@
 </div>
 
 <div class="mdui-dialog" id="processDialogue">
-    {#    <div class="mdui-dialog-title">process</div>#}
+    <div class="mdui-dialog-title" style="visibility: hidden">process</div>
     <div class="mdui-dialog-content">
         <div class="mdui-spinner"></div>
         PROCESSING...
