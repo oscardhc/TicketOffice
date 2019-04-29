@@ -37,13 +37,13 @@ class intereaction:
     wf = 0
     rf = 0
 
-    def __init__(self):
+    def __init__(self, path):
         print("start exec")
-        subprocess.call('../../backend/init.sh', shell=True)
+        subprocess.call('cd '+ path + '; ./init.sh', shell=True)
         print("end exec")
         self.wf = os.open(self.write_path, os.O_SYNC | os.O_CREAT | os.O_RDWR)
         self.rf = None
-        subprocess.Popen('../../backend/run.sh', shell=True)
+        subprocess.Popen('cd ' + path + '; ./run.sh', shell=True)
 
     def exeCmd(self, msg):
         len_send = os.write(self.wf, msg.encode())

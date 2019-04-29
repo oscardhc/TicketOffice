@@ -7,17 +7,19 @@ from random import randint
 import interaction
 import sys
 
+BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data\ Structure/TicketOffice/backend"
+# BackEndPath = "/home/oscar/dhc/TicketOffice/backend"
+
 app = Flask("TTRS")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 app.jinja_env.auto_reload = True
 app.secret_key = "19260817"
 app.permanent_session_lifetime = timedelta(seconds=60*30)
 
-con = interaction.intereaction()
+con = interaction.intereaction(BackEndPath)
 
 @app.route('/')
 def hello():
-    # return render_template('demo.html')
     if 'user' not in session:
         return render_template('index.html', ses = session)
     else:
@@ -32,11 +34,11 @@ def login():
         print('NAME IS ' + user)
         print(request, request.form)
 
-        res = con.exeCmd(user)
+        res = con.exeCmd('login ' + user + ' ' + pswd)
 
         print("RECEIVED " + res)
 
-        if res == '1sd' :
+        if res == '1' :
             session['user'] = user
             session['headIcon'] = randint(1, 15)
             print(session)
@@ -61,9 +63,10 @@ def account():
 def query():
     return render_template('query.html', ses=session)
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def reg():
-    pass
+    if request.method == 'POST' :
+        return
 
 @app.route('/manage')
 def manage():
