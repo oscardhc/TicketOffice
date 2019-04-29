@@ -38,7 +38,7 @@ def login():
 
         print("RECEIVED " + res)
 
-        if res == '1' :
+        if res[0] == '1' :
             session['user'] = user
             session['headIcon'] = randint(1, 15)
             print(session)
@@ -51,6 +51,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     if request.method == 'POST':
+        print("LOGGING OUT....");
         del session['user']
         session.permanent = True
         return jsonify({'statsu': '0'})

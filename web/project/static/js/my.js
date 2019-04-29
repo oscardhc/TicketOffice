@@ -76,7 +76,10 @@ var logoutbtn = document.querySelector('#logoutbtn')
 if (logoutbtn) {
     logoutbtn.onclick = function () {
         $.post('/logout', {}, function (d) {
-            location.reload()
+            // alert('logged out!')
+            // location.reload()
+            location.href = "/"
+            // alert('reloaded!')
         })
     }
 }
