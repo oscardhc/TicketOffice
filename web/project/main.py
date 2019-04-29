@@ -7,10 +7,10 @@ from random import randint
 import interaction
 import sys
 
-BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data\ Structure/TicketOffice/backend"
-# BackEndPath = "/home/oscar/dhc/TicketOffice/backend"
+# BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/"
+BackEndPath = "/home/oscar/dhc/TicketOffice/"
 
-app = Flask("TTRS")
+app = Flask("TTRS", template_folder = BackEndPath + "web/project/templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 app.jinja_env.auto_reload = True
 app.secret_key = "19260817"
