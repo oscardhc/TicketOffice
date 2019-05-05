@@ -38,11 +38,12 @@ class Program {
     return;
   }
 private:
-  tokenscanner scanner;
+  char *line;
+
   bplustree<ID,
   //TODO build bplustree
-  char *line;
-  char *getNextWord(&char *cmd){
+
+  char *getNextWord(char *cmd){
     int pos = 0,len = strlen(cmd);
     char *ret;
     while(pos < len){
@@ -50,7 +51,7 @@ private:
         break;
     }
     ret = new char[pos];
-    ret = strcpy(cmd,pos)
+    ret = strcpy(cmd,pos);
     //TODO
   }
   /*User command:*/
