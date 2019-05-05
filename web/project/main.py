@@ -7,13 +7,16 @@ from random import randint
 import interaction
 import sys
 
-app = Flask("TTRS")
+# BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/"
+BackEndPath = "/home/oscar/dhc/TicketOffice/"
+
+app = Flask("TTRS", template_folder = BackEndPath + "web/project/templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 app.jinja_env.auto_reload = True
 app.secret_key = "19260817"
 app.permanent_session_lifetime = timedelta(seconds=60*30)
 
-con = interaction.intereaction()
+con = interaction.intereaction(BackEndPath)
 
 @app.route('/')
 def hello():
@@ -31,11 +34,11 @@ def login():
         print('NAME IS ' + user)
         print(request, request.form)
 
-        res = con.exeCmd(user)
+        res = con.exeCmd('login ' + user + ' ' + pswd)
 
         print("RECEIVED " + res)
 
-        if res == '1sd' :
+        if res[0] == '1' :
             session['user'] = user
             session['headIcon'] = randint(1, 15)
             print(session)
@@ -48,6 +51,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     if request.method == 'POST':
+        print("LOGGING OUT....");
         del session['user']
         session.permanent = True
         return jsonify({'statsu': '0'})
@@ -60,9 +64,10 @@ def account():
 def query():
     return render_template('query.html', ses=session)
 
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def reg():
-    pass
+    if request.method == 'POST' :
+        return
 
 @app.route('/manage')
 def manage():
@@ -78,8 +83,8 @@ def sendcmd():
 
 
 if __name__ == '__main__':
-    con.init()
+    # con.init()
     if len(sys.argv) == 3:
         app.run(host=str(sys.argv[1]), port=int(sys.argv[2]))
     else:
-        app.run(host="0.0.0.0", port=9998)
+        app.run(host="0.0.0.0", port=80)

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set curSide = "qry" %}
+{% set curSide = "查询" %}
 
 {% block content %}
 
@@ -12,30 +12,6 @@
             <p>This is the query page.</p>
 
             <p>Tickets from <code>北京</code> to <code>上海</code></p>
-
-            <div class="mdui-table-fluid">
-                <table class="mdui-table mdui-table-hoverable">
-                    <col style="width: 5%"/>
-                    <col style="width: 15%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 32%"/>
-                    <col style="width: 8%"/>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>车号</th>
-                        <th>发车时间</th>
-                        <th>到达时间</th>
-                        <th>余票情况</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="tbody">
-
-                    </tbody>
-                </table>
-            </div>
 
             <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
 

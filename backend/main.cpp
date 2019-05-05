@@ -47,10 +47,12 @@ int main()
      if(len>0){
          ubuf[len]=0;
          printf("ubuf %d %s %c\n", len, ubuf,ubuf[0]);
+         
+         Program::exec(ubuf, resl);
          usleep(500000);
-         if(ubuf[0]=='a') ubuf[0]='1';
-         write(wfd,ubuf,strlen(ubuf));
-         printf("sent %s\n", ubuf);
+         
+         write(wfd,resl,strlen(resl));
+         printf("sent %s\n", resl);
      }
      usleep(100000);
   }

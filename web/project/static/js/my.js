@@ -76,7 +76,10 @@ var logoutbtn = document.querySelector('#logoutbtn')
 if (logoutbtn) {
     logoutbtn.onclick = function () {
         $.post('/logout', {}, function (d) {
-            location.reload()
+            // alert('logged out!')
+            // location.reload()
+            location.href = "/"
+            // alert('reloaded!')
         })
     }
 }
@@ -113,7 +116,7 @@ if (hitokoto) {
             return res.json();
         })
         .then(function (data) {
-            hitokoto.innerText = data.hitokoto;
+            hitokoto.innerHTML = "&nbsp &nbsp &nbsp &nbsp" +  data.hitokoto;
             document.querySelector('#hitokotoSource').innerHTML = "—— " + data.from
         })
 }
@@ -124,43 +127,10 @@ var data = [
     ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
 ]
 
-function createTable(){
-    tableNode=document.querySelector('#tbody')
-    var row = data.length;
-    //上面确定了 现在开始创建
+var tagname = [
+    '车次    ：','发车时间：','到达时间：','座位情况：'
+]
 
-    for(var x=0;x<row;x++){
-        var trNode=tableNode.insertRow();
-        for(var y=-1;y<=3;y++){
-            var tdNode=trNode.insertCell();
-            if (y==-1) {
-                tdNode.innerHTML = x + 1
-            } else if (y==3) {
-                var tx = "<div class='mdui-typo'>"
-                var len = data[x][3].length
-                for(var i=0;i<len;i++) {
-                    tx += "<div>" + data[x][3][i][0] + " : 余" + data[x][3][i][1] + "张" + "</div>"
-                }
-                tdNode.innerHTML = tx
-            } else {
-                tdNode.innerHTML = data[x][y]
-            }
-        }
-        var col = document.createElement('td')
-        var btn = document.createElement('button')
-        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
-        btn.innerText = '详情'
-        // btn.setAttribute('mdui-dialog', "{target: '#detailDialogue'}")
-        btn.setAttribute('onclick', '{clickedAtRow(' + x + ')}')
-        col.append(btn)
-        trNode.append(col)
-    }
-}
-
-var tablePlace = document.querySelector('#tbody')
-if (tablePlace) {
-    createTable()
-}
 function createPanel() {
     var plc = document.querySelector('#panelPlace')
     var row = data.length
@@ -175,7 +145,27 @@ function createPanel() {
         hed.innerHTML += '<i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>'
         var bod = document.createElement('div')
         bod.setAttribute('class', 'mdui-panel-item-body')
-        bod.innerText = data[i]
+        // bod.innerText = data[i]
+
+        var lst = document.createElement('ul')
+        lst.setAttribute('class', 'mdui-list')
+
+        for (var j=0;j<4;j++) {
+            var c = document.createElement('li')
+            c.setAttribute('class', 'mdui-list-item mdui-ripple')
+            c.innerText = tagname[j] + data[i][j]
+            lst.append(c)
+        }
+
+        var btn = document.createElement('button')
+        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
+        btn.innerText = "购买"
+
+        bod.setAttribute('align', 'right')
+
+        bod.append(lst)
+        bod.append(btn)
+
         pnl.append(hed)
         pnl.append(bod)
         plc.append(pnl)

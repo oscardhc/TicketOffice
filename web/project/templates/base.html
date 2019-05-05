@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <title>TTRS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>{{ curSide }} - TTRS</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdui.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/live2d.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"/>
     <script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/mdui.js') }}" defer></script>
     <script src="{{ url_for("static", filename="js/my.js") }}" defer></script>
 </head>
 <body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-deep-purple mdui-theme-accent-deep-purple">
+
 <header class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-theme main-color">
             <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#drawer', swipe: true}">
@@ -31,16 +34,15 @@
             </button>
         {% endif %}
 
-
     </div>
 </header>
 
 <div class="mdui-drawer" id="drawer">
-    <div class="mdui-list" mdui-collapse="{accordion: false}" style="margin-bottom: 76px;">
+    <div class="mdui-list" mdui-collapse="{accordion: false}" style="margin-bottom: 76px;" id="drawerlist">
 
         <div class="mdui-collapse-item mdui-collapse-item-open">
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="/" class="mdui-list-item mdui-ripple {% if curSide=="idx" %}  mdui-list-item-active {% else %}  {% endif %}">首页</a>
+                <a href="/" class="mdui-list-item mdui-ripple {% if curSide=="首页" %}  mdui-list-item-active {% else %}  {% endif %}">首页</a>
             </div>
         </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
@@ -50,8 +52,8 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="/query" class="mdui-list-item mdui-ripple {% if curSide=="qry" %}  mdui-list-item-active {% else %}  {% endif %}">查询</a>
-                <a href="/manage" class="mdui-list-item mdui-ripple {% if curSide=="mng" %}  mdui-list-item-active {% else %}  {% endif %}">管理</a>
+                <a href="/query" class="mdui-list-item mdui-ripple {% if curSide=="查询" %}  mdui-list-item-active {% else %}  {% endif %}">查询</a>
+                <a href="/manage" class="mdui-list-item mdui-ripple {% if curSide=="管理" %}  mdui-list-item-active {% else %}  {% endif %}">管理</a>
             </div>
         </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
@@ -61,15 +63,29 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="/account" class="mdui-list-item mdui-ripple {% if curSide=="acc" %}  mdui-list-item-active {% else %}  {% endif %}">账户</a>
+                <a href="/account" class="mdui-list-item mdui-ripple {% if curSide=="账户" %}  mdui-list-item-active {% else %}  {% endif %}">账户</a>
             </div>
         </div>
     </div>
+
 </div>
 
+
 <div class="mdui-container doc-container doc-no-cover">
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
+
+{#<script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>#}
+{#<script type="text/javascript">#}
+{#    var message_Path = "{{ url_for('static', filename='live2d/') }}"#}
+{#var home_Path = 'https://haremu.com/'#}
+{#    var home_Path = 'http://localhost/'#}
+{#</script>#}
+{#<script type="text/javascript" src="{{ url_for('static', filename='js/live2d.js') }}"></script>#}
+{#<script type="text/javascript" src="{{ url_for('static', filename='js/message.js') }}"></script>#}
+{#<script type="text/javascript">#}
+{#    loadlive2d("live2d", "{{ url_for('static', filename='live2d/model/Pio/model.json') }}");#}
+{#</script>#}
 
 
 <div class="mdui-dialog" id="exampleDialog">
@@ -159,7 +175,7 @@
 </div>
 
 <div class="mdui-dialog" id="processDialogue">
-    {#    <div class="mdui-dialog-title">process</div>#}
+    <div class="mdui-dialog-title" style="visibility: hidden">process</div>
     <div class="mdui-dialog-content">
         <div class="mdui-spinner"></div>
         PROCESSING...
@@ -171,6 +187,12 @@
 <footer>
     <div class="mdui-typo-caption-opacity" align="center">Copyright © 2019 dhc,ysf,whj,fly All rights reserved.</div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script>
+    const live2d_path = "{{ url_for('static', filename='js/') }}"
+</script>
+<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>
 
 </body>
 </html>
