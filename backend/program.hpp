@@ -1,5 +1,5 @@
-#include"tokenscanner.h"
-#include "bplustree.hpp"
+// #include"tokenscanner.h"
+// #include "bplustree.hpp"
 #include <cstring>
 #include <iostream>
 namespace sjtu {
@@ -8,102 +8,121 @@ namespace sjtu {
 
 class Program {
 
+public:
   Program(){};//TODO
   ~Program(){};//TODO
 
-  static inline void exec(char *cmd, char *ret) {
+  inline void exec(char *_cmd, char *_ret) {
+    cmd = _cmd;
+    ret = _ret;
     int len = strlen(cmd);
-    char *command = getNextWord(cmd);
-    if(strcmp(command,"exit") == 0){ret = "BYE";return;}
-    else if(strcmp(command,"clean") == 0){ret = clean();return;}
+    char word[30];
+    commandLength = getNextWord(cmd, word);
+    printf("cmd is *%s*\n", word);
+    if(strcmp(word,"exit") == 0){sprintf(ret, "BYE");return;}
+    else if(strcmp(word,"clean") == 0){clean();return;}
       /*User command:*/
-    else if(strcmp(command,"register") == 0){ret = execute_register();return;}
-    else if(strcmp(command,"login") == 0){ret = execute_login();return;}
-    else if(strcmp(command,"query_profile") == 0){ret = execute_queryProfile();return;}
-    else if(strcmp(command,"modify_profile") == 0){ret = execute_modifyProfile();return;}
+    else if(strcmp(word,"register") == 0){execute_register();return;}
+    else if(strcmp(word,"login") == 0){execute_login();return;}
+    else if(strcmp(word,"query_profile") == 0){execute_queryProfile();return;}
+    else if(strcmp(word,"modify_profile") == 0){execute_modifyProfile();return;}
     /*Ticket command:*/
-    else if(strcmp(command,"query_ticket") == 0){ret = execute_queryTicket();return;}
-    else if(strcmp(command,"query_transfer") == 0){ret = execute_queryTransfer();return;}
-    else if(strcmp(command,"buy_ticket") == 0){ret = execute_buyTicket();return;}
-    else if(strcmp(command,"query_order") == 0){ret = execute_queryOrder();return;}
-    else if(strcmp(command,"refund_ticket") == 0){ret = execute_refundTicket();return;}
+    else if(strcmp(word,"query_ticket") == 0){execute_queryTicket();return;}
+    else if(strcmp(word,"query_transfer") == 0){execute_queryTransfer();return;}
+    else if(strcmp(word,"buy_ticket") == 0){execute_buyTicket();return;}
+    else if(strcmp(word,"query_order") == 0){execute_queryOrder();return;}
+    else if(strcmp(word,"refund_ticket") == 0){execute_refundTicket();return;}
     /*Train command:*/
-    else if(strcmp(command,"add_train") == 0){ret = execute_addTrain();return;}
-    else if(strcmp(command,"sale_train") == 0){ret = execute_saleTrain();return;}
-    else if(strcmp(command,"query_train") == 0){ret = execute_queryTrain();return;}
-    else if(strcmp(command,"delete_train") == 0){ret = execute_deleteTrain();return;}
-    else if(strcmp(command,"modify_train") == 0){ret = execute_modifyTrain();return;}
-    /*invalid command*/
-    else ret = "invaild command\n";
+    else if(strcmp(word,"add_train") == 0){execute_addTrain();return;}
+    else if(strcmp(word,"sale_train") == 0){execute_saleTrain();return;}
+    else if(strcmp(word,"query_train") == 0){execute_queryTrain();return;}
+    else if(strcmp(word,"delete_train") == 0){execute_deleteTrain();return;}
+    else if(strcmp(word,"modify_train") == 0){execute_modifyTrain();return;}
+    /*invalid word*/
+    else{sprintf(ret,"invaild word");}
     return;
   }
-private:
-  char *line;
 
-  bplustree<ID,
+private:
+  char *cmd;
+  char *ret;
+  int commandLength;
+
+  // bplustree<ID,
   //TODO build bplustree
 
-  char *getNextWord(char *cmd){
-    int pos = 0,len = strlen(cmd);
-    char *ret;
-    while(pos < len){
-      if(cmd[pos] == ' ' || cmd[pos] == '\n' || cmd[pos] == "\t")
+  int getNextWord(char *str, char *word){
+    int pos = 0, len = strlen(str);
+    // printf("len = %d\n", len);
+    while (pos < len && (str[pos] == ' ' || str[pos] == '\n' || str[pos] == '\t')) pos++;
+    int base = pos;
+    while (pos < len) {
+      if(str[pos] == ' ' || str[pos] == '\n' || str[pos] == '\t')
         break;
+      pos++;
     }
-    ret = new char[pos];
-    ret = strcpy(cmd,pos);
+    // printf("%d %d\n", base, pos);
+    memcpy(word, str + base, pos - base);
+    word[pos - base] = 0;
+    return pos;
+  }
+  /*User word:*/
+  void execute_register(){
     //TODO
   }
-  /*User command:*/
-  char* execute_register(){
+  void execute_login(){
+    //TODO
+    char username[20], password[20];
+    char* cur = cmd + commandLength;
+    int userlen = getNextWord(cur, username);
+    cur += userlen;
+    int passlen = getNextWord(cur, password);
+    if (strcmp(username, "asd") == 0 && strcmp(password, "asd1") == 0) sprintf(ret, "1");
+    else sprintf(ret, "0"); 
+  }
+  void execute_queryProfile(){
     //TODO
   }
-  char* execute_login(){
+  void execute_modifyProfile(){
     //TODO
   }
-  char* execute_queryProfile(){
+  void execute_modifyPrivilege(){
     //TODO
   }
-  char* execute_modifyProfile(){
+  /*Ticket word*/
+  void execute_queryTicket(){
     //TODO
   }
-  char* execute_modifyPrivilege(){
+  void execute_queryTransfer(){
     //TODO
   }
-  /*Ticket command*/
-  char* execute_queryTicket(){
+  void execute_buyTicket(){
     //TODO
   }
-  char* execute_queryTransfer(){
+  void execute_queryOrder(){
     //TODO
   }
-  char execute_buyTicket(){
+  void execute_refundTicket(){
     //TODO
   }
-  char* execute_queryOrder(){
+  /*Train word*/
+  void execute_addTrain(){
     //TODO
   }
-  char* execute_refundTicket(){
+  void execute_saleTrain(){
     //TODO
   }
-  /*Train command*/
-  char execute_addTrain(){
+  void execute_queryTrain(){
     //TODO
   }
-  char execute_saleTrain(){
+  void execute_deleteTrain(){
     //TODO
   }
-  char execute_queryTrain(){
-    //TODO
-  }
-  char execute_deleteTrain(){
-    //TODO
-  }
-  char execute_modifyTrain(){
+  void execute_modifyTrain(){
     //TODO
   }
   /*Administrate*/
-  char clean{
+  void clean(){
     //TODO
   };
 

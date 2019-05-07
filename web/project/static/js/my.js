@@ -33,10 +33,9 @@ function eraseBtnClicked () {
     var classVal = document.querySelector("body").getAttribute("class")
     document.querySelector("body").setAttribute('class', classVal + ' disabled')
 
-    $.post('/login', {'user': nm, 'pswd': ps}, function (d) {
+    $.post('/login', {'user': nm, 'password': ps}, function (d) {
         // alert(d.status === '-1')
         processDialogue.close()
-        document.querySelector("body").setAttribute('class', classVal)
 
         if (d.status === '-1') {
             openError('用户名或密码错误')
@@ -51,23 +50,38 @@ function eraseBtnClicked () {
     // window.navigate('/login')
 }
 
+var signupDialogue = new mdui.Dialog('#signupDialog')
+
 function registerBtnClicked () {
-    var nm = document.querySelector('#emailinputR').value
-    var ps1 = document.querySelector('#passwdinputR1').value
-    var ps2 = document.querySelector('#passwdinputR2').value
+    let nm = document.querySelector('#userinputR').value
+    let ps1 = document.querySelector('#passwdinputR1').value
+    let ps2 = document.querySelector('#passwdinputR2').value
+    let em = document.querySelector('#emailinputR').value
+    let ph = document.querySelector('#phoneinputR').value
+
+    signupDialogue.close()
 
     if (ps1 !== ps2) {
         document.querySelector('#errorMsg').textContent = "两次输入密码不一致"
         errorDialog.open()
+    } else {
+        processDialogue.open()
+
+        $.post('/register', {'name': nm, 'password': ps1, 'email': em, 'phone': ph }, function (d) {
+            // alert(d.status === '-1')
+            processDialogue.close()
+
+            if (d.status === '-1') {
+                openError('注册失败')
+            } else {
+                // document.execCommand('Refresh')
+                var url = location.href.replace('#mdui-dialog','')
+                // alert(url)
+                location.href = url
+            }
+        })
     }
 
-    // $.post('/login', {'user': nm, 'pswd': ps}, function (d) {
-    //     if (d.status == '-1') {
-    //         alert('dismatch!')
-    //     }
-    //     location.reload()
-    // })
-    // window.navigate('/login')
 }
 
 
@@ -93,10 +107,11 @@ function ClickUsername() {
     }
 }
 
-function ClickPassword() {
+function ClickPassword(func) {
     if (event.keyCode == 13) {
         // alert("enter pressed")
-        eraseBtnClicked()
+        // alert(func)
+        func()
         event.returnValue = false
         return false
     }
@@ -194,3 +209,18 @@ function clickedAtRow(x) {
     document.querySelector('#detailCancleBtn').focus()
     // alert(row)
 }
+
+// console.log($('#fromInput').editableSelect)
+
+// $('#fromInput').editableSelect();
+
+$(document).ready(function () {
+    $('#fromInput').editableSelect( {
+        effects: 'slide'
+    });
+    $('#toInput').editableSelect({
+        effects: 'slide'
+    })
+//     alert(inp.editableSelect)
+})
+

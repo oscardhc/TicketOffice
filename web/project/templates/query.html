@@ -2,6 +2,12 @@
 
 {% set curSide = "查询" %}
 
+{% block head %}
+
+
+
+{% endblock %}
+
 {% block content %}
 
     {% if 'user' in ses %}
@@ -12,6 +18,28 @@
             <p>This is the query page.</p>
 
             <p>Tickets from <code>北京</code> to <code>上海</code></p>
+
+            <div>
+                出发地：
+                <select id="fromInput" style="width: 150px;">
+                    <option>Alfa Romeo</option>
+                    <option>Audi</option>
+                    <option>中国人民银行</option>
+                    <option>中国人民</option>
+                    <option>中国</option>
+                    <option>BMW</option>
+                </select>
+
+                目的地：
+                <select id="toInput" style="width: 150px;">
+                    <option>Alfa Romeo</option>
+                    <option>Audi</option>
+                    <option>中国人民银行</option>
+                    <option>中国人民</option>
+                    <option>中国</option>
+                    <option>BMW</option>
+                </select>
+            </div>
 
             <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
 
@@ -29,14 +57,14 @@
 
 {% block app %}
 
-<div class="mdui-dialog" id="detailDialogue">
-    <div class="mdui-dialog-title">DETAIL</div>
-    <div class="mdui-dialog-content" id="detailMsg">
+    <div class="mdui-dialog" id="detailDialogue">
+        <div class="mdui-dialog-title">DETAIL</div>
+        <div class="mdui-dialog-content" id="detailMsg">
 
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
+        </div>
     </div>
-    <div class="mdui-dialog-actions">
-        <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
-    </div>
-</div>
 
 {% endblock %}

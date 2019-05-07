@@ -7,8 +7,8 @@ from random import randint
 import interaction
 import sys
 
-# BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/"
-BackEndPath = "/home/oscar/dhc/TicketOffice/"
+BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/"
+# BackEndPath = "/home/oscar/dhc/TicketOffice/"
 
 app = Flask("TTRS", template_folder = BackEndPath + "web/project/templates")
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
@@ -30,15 +30,15 @@ def hello():
 def login():
     if request.method == 'POST':
         user = request.form['user']
-        pswd = request.form['pswd']
+        pswd = request.form['password']
         print('NAME IS ' + user)
         print(request, request.form)
 
-        res = con.exeCmd('login ' + user + ' ' + pswd)
+        res = con.exeCmd(['login', user, pswd])
 
         print("RECEIVED " + res)
 
-        if res[0] == '1' :
+        if res == '1' :
             session['user'] = user
             session['headIcon'] = randint(1, 15)
             print(session)
@@ -67,19 +67,14 @@ def query():
 @app.route('/register', methods=['POST'])
 def reg():
     if request.method == 'POST' :
-        return
+        if request.method == 'POST':
+            res = con.exeCmd(['register', request.form['name'], request.form['password'], request.form['email'], request.form['phone']])
+            id = int(res)
+            return jsonify({'status': '0'})
 
 @app.route('/manage')
 def manage():
     return render_template('manage.html', ses=session)
-
-@app.route('/sendcmd', methods=['POST'])
-def sendcmd():
-    if request.method == 'POST':
-        if 'key' in request.form:
-            k = int(request.form['key'])
-            if k == 12345678:
-                con.exeCmd(request.form['cmd'])
 
 
 if __name__ == '__main__':

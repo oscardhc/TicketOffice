@@ -45,7 +45,10 @@ class intereaction:
         self.rf = None
         subprocess.Popen('cd ' + path + 'backend ; ./run.sh', shell=True)
 
-    def exeCmd(self, msg):
+    def exeCmd(self, _msg):
+
+        msg = ' '.join(_msg)
+
         len_send = os.write(self.wf, msg.encode())
         print("sent msg: [%s]" % msg)
 
