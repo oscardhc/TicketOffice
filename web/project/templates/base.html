@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <title>TTRS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>{{ curSide }} - TTRS</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/mdui.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='js/mdui.js') }}" defer></script>
-    <script src="{{ url_for("static", filename="js/my.js") }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/live2d.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='pic/hd_7.png') }}">
+    {#    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-editable-select.css') }}" />#}
+    <link rel="stylesheet" href="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css">
+
+    {% block head %} {% endblock %}
 </head>
 <body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-deep-purple mdui-theme-accent-deep-purple">
+
 <header class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-theme main-color">
             <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#drawer', swipe: true}">
@@ -31,16 +36,15 @@
             </button>
         {% endif %}
 
-
     </div>
 </header>
 
 <div class="mdui-drawer" id="drawer">
-    <div class="mdui-list" mdui-collapse="{accordion: false}" style="margin-bottom: 76px;">
+    <div class="mdui-list" mdui-collapse="{accordion: false}" style="margin-bottom: 76px;" id="drawerlist">
 
         <div class="mdui-collapse-item mdui-collapse-item-open">
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="/" class="mdui-list-item mdui-ripple {% if curSide=="idx" %}  mdui-list-item-active {% else %}  {% endif %}">首页</a>
+                <a href="/" class="mdui-list-item mdui-ripple {% if curSide=="首页" %}  mdui-list-item-active {% else %}  {% endif %}">首页</a>
             </div>
         </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
@@ -50,8 +54,8 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="/query" class="mdui-list-item mdui-ripple {% if curSide=="qry" %}  mdui-list-item-active {% else %}  {% endif %}">查询</a>
-                <a href="/manage" class="mdui-list-item mdui-ripple {% if curSide=="mng" %}  mdui-list-item-active {% else %}  {% endif %}">管理</a>
+                <a href="/query" class="mdui-list-item mdui-ripple {% if curSide=="查询" %}  mdui-list-item-active {% else %}  {% endif %}">查询</a>
+                <a href="/manage" class="mdui-list-item mdui-ripple {% if curSide=="管理" %}  mdui-list-item-active {% else %}  {% endif %}">管理</a>
             </div>
         </div>
         <div class="mdui-collapse-item mdui-collapse-item-open">
@@ -61,15 +65,29 @@
                 <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="/account" class="mdui-list-item mdui-ripple {% if curSide=="acc" %}  mdui-list-item-active {% else %}  {% endif %}">账户</a>
+                <a href="/account" class="mdui-list-item mdui-ripple {% if curSide=="账户" %}  mdui-list-item-active {% else %}  {% endif %}">账户</a>
             </div>
         </div>
     </div>
+
 </div>
 
+
 <div class="mdui-container doc-container doc-no-cover">
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
+
+{#<script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>#}
+{#<script type="text/javascript">#}
+{#    var message_Path = "{{ url_for('static', filename='live2d/') }}"#}
+{#var home_Path = 'https://haremu.com/'#}
+{#    var home_Path = 'http://localhost/'#}
+{#</script>#}
+{#<script type="text/javascript" src="{{ url_for('static', filename='js/live2d.js') }}"></script>#}
+{#<script type="text/javascript" src="{{ url_for('static', filename='js/message.js') }}"></script>#}
+{#<script type="text/javascript">#}
+{#    loadlive2d("live2d", "{{ url_for('static', filename='live2d/model/Pio/model.json') }}");#}
+{#</script>#}
 
 
 <div class="mdui-dialog" id="exampleDialog">
@@ -83,7 +101,7 @@
         </div>
 
         <div align="right">
-            <div class="mdui-btn mdui-ripple" mdui-dialog="{target: '#signupDialog'}"  mdui-dialog-close>
+            <div class="mdui-btn mdui-ripple" onclick="loginDialogue.close();signupDialogue.open();"  mdui-dialog-close>
                 没有账号？马上注册
             </div>
         </div>
@@ -92,7 +110,7 @@
         <div class="mdui-textfield mdui-textfield-floating-label">
             <i class="mdui-icon material-icons">vpn_key</i>
             <label class="mdui-textfield-label">Password</label>
-            <input class="mdui-textfield-input" id="passwdinput" type="password" onkeydown="ClickPassword()"></input>
+            <input class="mdui-textfield-input" id="passwdinput" type="password" onkeydown="ClickPassword(eraseBtnClicked)"></input>
         </div>
 
         <div align="right">
@@ -115,26 +133,37 @@
     <div class="mdui-dialog-content">
         <div class="mdui-textfield mdui-textfield-floating-label">
             <i class="mdui-icon material-icons">account_circle</i>
-            <label class="mdui-textfield-label">Username</label>
-            <input class="mdui-textfield-input" id="emailinputR"></input>
+            <label class="mdui-textfield-label">用户名</label>
+            <input class="mdui-textfield-input" id="userinputR"></input>
         </div>
 
         <div align="right">
-            <div class="mdui-btn mdui-ripple" mdui-dialog="{target: '#exampleDialog'}"  mdui-dialog-close>
+            <div class="mdui-btn mdui-ripple" onclick="signupDialogue.close();loginDialogue.open();"  mdui-dialog-close>
                 已有账号？马上登录
             </div>
         </div>
 
-
         <div class="mdui-textfield mdui-textfield-floating-label">
             <i class="mdui-icon material-icons">vpn_key</i>
-            <label class="mdui-textfield-label">Password</label>
+            <label class="mdui-textfield-label">密码</label>
             <input class="mdui-textfield-input" type="password" id="passwdinputR1"></input>
         </div>
         <div class="mdui-textfield mdui-textfield-floating-label">
             <i class="mdui-icon material-icons">vpn_key</i>
-            <label class="mdui-textfield-label">Password</label>
-            <input class="mdui-textfield-input" type="password" onkeydown="ClickPassword()" id="passwdinputR2"></input>
+            <label class="mdui-textfield-label">确认密码</label>
+            <input class="mdui-textfield-input" type="password" id="passwdinputR2"></input>
+        </div>
+
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <i class="mdui-icon material-icons">email</i>
+            <label class="mdui-textfield-label">邮箱</label>
+            <input class="mdui-textfield-input" type="email" id="emailinputR"></input>
+        </div>
+
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <i class="mdui-icon material-icons">phone</i>
+            <label class="mdui-textfield-label">电话号码</label>
+            <input class="mdui-textfield-input" id="phoneinputR" onkeydown="ClickPassword(registerBtnClicked)"></input>
         </div>
 
 
@@ -159,7 +188,6 @@
 </div>
 
 <div class="mdui-dialog" id="processDialogue">
-    {#    <div class="mdui-dialog-title">process</div>#}
     <div class="mdui-dialog-content">
         <div class="mdui-spinner"></div>
         PROCESSING...
@@ -171,6 +199,17 @@
 <footer>
     <div class="mdui-typo-caption-opacity" align="center">Copyright © 2019 dhc,ysf,whj,fly All rights reserved.</div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script>
+    const live2d_path = "{{ url_for('static', filename='js/') }}"
+</script>
+
+<script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/mdui.js') }}"></script>
+<script src="{{ url_for("static", filename="js/my.js") }}"></script>
+<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>
+<script src="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 
 </body>
 </html>

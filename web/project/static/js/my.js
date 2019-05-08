@@ -1,3 +1,12 @@
+var userInfo = []
+
+function execCommand(cmd, done) {
+    $.post('/exec', {'cmd': cmd}, function (d) {
+        // alert(d.status === '-1')
+        done(d)
+    })
+}
+
 var errorDialog = new mdui.Dialog('#errorDialog');
 document.querySelector('#errorDialog').addEventListener('opened.mdui.dialog', function () {
     document.querySelector('#cancelBtn').focus()
@@ -33,41 +42,52 @@ function eraseBtnClicked () {
     var classVal = document.querySelector("body").getAttribute("class")
     document.querySelector("body").setAttribute('class', classVal + ' disabled')
 
-    $.post('/login', {'user': nm, 'pswd': ps}, function (d) {
+    $.post('/login', {'user': nm, 'password': ps}, function (d) {
         // alert(d.status === '-1')
         processDialogue.close()
-        document.querySelector("body").setAttribute('class', classVal)
 
         if (d.status === '-1') {
             openError('用户名或密码错误')
         } else {
-            // document.execCommand('Refresh')
             var url = location.href.replace('#mdui-dialog','')
-            // alert(url)
             location.href = url
         }
     })
 
-    // window.navigate('/login')
 }
 
+var signupDialogue = new mdui.Dialog('#signupDialog')
+
 function registerBtnClicked () {
-    var nm = document.querySelector('#emailinputR').value
-    var ps1 = document.querySelector('#passwdinputR1').value
-    var ps2 = document.querySelector('#passwdinputR2').value
+    let nm = document.querySelector('#userinputR').value
+    let ps1 = document.querySelector('#passwdinputR1').value
+    let ps2 = document.querySelector('#passwdinputR2').value
+    let em = document.querySelector('#emailinputR').value
+    let ph = document.querySelector('#phoneinputR').value
+
+    signupDialogue.close()
 
     if (ps1 !== ps2) {
         document.querySelector('#errorMsg').textContent = "两次输入密码不一致"
         errorDialog.open()
+    } else {
+        processDialogue.open()
+
+        $.post('/register', {'name': nm, 'password': ps1, 'email': em, 'phone': ph }, function (d) {
+            // alert(d.status === '-1')
+            processDialogue.close()
+
+            if (d.status === '-1') {
+                openError('注册失败')
+            } else {
+                // document.execCommand('Refresh')
+                var url = location.href.replace('#mdui-dialog','')
+                // alert(url)
+                location.href = url
+            }
+        })
     }
 
-    // $.post('/login', {'user': nm, 'pswd': ps}, function (d) {
-    //     if (d.status == '-1') {
-    //         alert('dismatch!')
-    //     }
-    //     location.reload()
-    // })
-    // window.navigate('/login')
 }
 
 
@@ -75,8 +95,12 @@ var logoutbtn = document.querySelector('#logoutbtn')
 
 if (logoutbtn) {
     logoutbtn.onclick = function () {
+        localStorage.removeItem('userInfo')
         $.post('/logout', {}, function (d) {
-            location.reload()
+            // alert('logged out!')
+            // location.reload()
+            location.href = "/"
+            // alert('reloaded!')
         })
     }
 }
@@ -90,10 +114,11 @@ function ClickUsername() {
     }
 }
 
-function ClickPassword() {
+function ClickPassword(func) {
     if (event.keyCode == 13) {
         // alert("enter pressed")
-        eraseBtnClicked()
+        // alert(func)
+        func()
         event.returnValue = false
         return false
     }
@@ -113,7 +138,7 @@ if (hitokoto) {
             return res.json();
         })
         .then(function (data) {
-            hitokoto.innerText = data.hitokoto;
+            hitokoto.innerHTML = "&nbsp &nbsp &nbsp &nbsp" +  data.hitokoto;
             document.querySelector('#hitokotoSource').innerHTML = "—— " + data.from
         })
 }
@@ -124,43 +149,10 @@ var data = [
     ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
 ]
 
-function createTable(){
-    tableNode=document.querySelector('#tbody')
-    var row = data.length;
-    //上面确定了 现在开始创建
+var tagname = [
+    '车次    ：','发车时间：','到达时间：','座位情况：'
+]
 
-    for(var x=0;x<row;x++){
-        var trNode=tableNode.insertRow();
-        for(var y=-1;y<=3;y++){
-            var tdNode=trNode.insertCell();
-            if (y==-1) {
-                tdNode.innerHTML = x + 1
-            } else if (y==3) {
-                var tx = "<div class='mdui-typo'>"
-                var len = data[x][3].length
-                for(var i=0;i<len;i++) {
-                    tx += "<div>" + data[x][3][i][0] + " : 余" + data[x][3][i][1] + "张" + "</div>"
-                }
-                tdNode.innerHTML = tx
-            } else {
-                tdNode.innerHTML = data[x][y]
-            }
-        }
-        var col = document.createElement('td')
-        var btn = document.createElement('button')
-        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
-        btn.innerText = '详情'
-        // btn.setAttribute('mdui-dialog', "{target: '#detailDialogue'}")
-        btn.setAttribute('onclick', '{clickedAtRow(' + x + ')}')
-        col.append(btn)
-        trNode.append(col)
-    }
-}
-
-var tablePlace = document.querySelector('#tbody')
-if (tablePlace) {
-    createTable()
-}
 function createPanel() {
     var plc = document.querySelector('#panelPlace')
     var row = data.length
@@ -175,7 +167,27 @@ function createPanel() {
         hed.innerHTML += '<i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>'
         var bod = document.createElement('div')
         bod.setAttribute('class', 'mdui-panel-item-body')
-        bod.innerText = data[i]
+        // bod.innerText = data[i]
+
+        var lst = document.createElement('ul')
+        lst.setAttribute('class', 'mdui-list')
+
+        for (var j=0;j<4;j++) {
+            var c = document.createElement('li')
+            c.setAttribute('class', 'mdui-list-item mdui-ripple')
+            c.innerText = tagname[j] + data[i][j]
+            lst.append(c)
+        }
+
+        var btn = document.createElement('button')
+        btn.setAttribute('class', 'mdui-btn mdui-ripple mdui-color-theme-accent')
+        btn.innerText = "购买"
+
+        bod.setAttribute('align', 'right')
+
+        bod.append(lst)
+        bod.append(btn)
+
         pnl.append(hed)
         pnl.append(bod)
         plc.append(pnl)
@@ -203,4 +215,61 @@ function clickedAtRow(x) {
     detailDialog.open()
     document.querySelector('#detailCancleBtn').focus()
     // alert(row)
+}
+
+// console.log($('#fromInput').editableSelect)
+
+// $('#fromInput').editableSelect();
+
+$(document).ready(function () {
+    $('#fromInput').editableSelect( {
+        effects: 'slide'
+    });
+    $('#toInput').editableSelect({
+        effects: 'slide'
+    })
+//     alert(inp.editableSelect)
+})
+
+var profileDialog = new mdui.Dialog('#profileDialog')
+var confirmPasswordDialog = new mdui.Dialog('#comfirmPasswordDialog')
+
+function profileBtnClicked() {
+    profileDialog.open()
+}
+
+function profileConfirmBtnClicked() {
+    profileDialog.close()
+    confirmPasswordDialog.open()
+}
+
+function profileSubmitBtnClicked() {
+    confirmPasswordDialog.close()
+    processDialogue.open()
+}
+
+// alert('user = ' + user)
+
+function getUserInfo(userId) {
+    if (!localStorage.getItem('userInfo')) {
+        execCommand('query_profile ' + userId, function (d) {
+            let res = d.result;
+            userInfo = res.split(" ")
+            localStorage.setItem('userInfo', JSON.stringify(userInfo))
+            document.querySelector('#userName').innerText = userInfo[0]
+            document.querySelector('#userEmail').innerText = userInfo[1]
+            document.querySelector('#userPhone').innerText = userInfo[2]
+            document.querySelector('#userPriv').innerText = userInfo[3]
+            // alert(JSON.stringify(userInfo))
+        })
+    } else {
+        // alert(localStorage.getItem('userInfo'))
+        userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        // alert(userInfo)
+        document.querySelector('#userName').innerText = userInfo[0]
+        document.querySelector('#userEmail').innerText = userInfo[1]
+        document.querySelector('#userPhone').innerText = userInfo[2]
+        document.querySelector('#userPriv').innerText = userInfo[3]
+    }
+
 }

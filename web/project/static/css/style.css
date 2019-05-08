@@ -19,6 +19,10 @@
     overflow: hidden;
 }
 
+ul {
+    padding-left: 0 !important;
+}
+
 .disabled {
     pointer-events: none;
 }
@@ -31,28 +35,56 @@
     margin: 0pt 0pt 10pt 0pt;
 }
 
-.leftblock {
-    width:100%;
-    margin: -5% auto auto auto;
+.mycard {
     display: inline-block;
+    width: 96%;
+    float: top;
+    margin: auto 2% 20px 2%;
 }
-.rightblock {
-    width:100%;
-    margin: 0 auto;
+.mycardb {
     display: inline-block;
+    float: left;
+    width: 46%;
+    margin: auto 2% 20px 2%;
+}
+
+#rblock {
+    width: 29%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#lblock {
+    width: 70%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+@media screen and (max-width: 720px) {
+    #lblock {
+        width: 100%;
+        display: block;
+        /*background: #ff00aa;*/
+    }
+    #rblock {
+        width: 100%;
+        display: block;
+        /*background: #aa00ff;*/
+    }
 }
 
 @media (min-width: 720px) {
-    .leftblock {
-        width:70%;
-        margin: -5% auto auto auto;
+    .mycard {
         display: inline-block;
+        width: 96%;
+        float: top;
+        margin: auto 2% 20px 2%;
     }
-    .rightblock {
-        width:28%;
-        margin: auto auto auto auto;
-        vertical-align:top;
+    .mycardb {
         display: inline-block;
+        float: left;
+        width: 46%;
+        margin: auto 2% 20px 2%;
     }
 }
 
