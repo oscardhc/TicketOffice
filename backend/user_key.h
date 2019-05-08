@@ -7,8 +7,9 @@
 #include "constant.h"
 #include "utility.h"
 #include <cstring>
+
 namespace sjtu{
-  typedef int user_key;
+  typedef int user_ID;
   class user_val{
   public:
     char name[NAME_SIZE];
@@ -17,7 +18,16 @@ namespace sjtu{
     char phone[PHONE_SIZE];
     int privilege = -1;
   private:
-    user_val(){};
+    user_val(char * inp){
+      int len = getNextWord(inp,name);
+      inp += len;
+      len = getNextWord(inp,password);
+      inp += len;
+      len = getNextWord(inp,email);
+      inp += len;
+      len = getNextWord(inp,phone);
+      delete inp; //?
+    };
     user_val &operator=(const user_val &other) {
       privilege = other.privilege;
       strcpy(name, other.name);
@@ -26,13 +36,19 @@ namespace sjtu{
       strcpy(phone, other.phone);
       return *this;
     }
-    void setInfo(char* cmd){
-      if(scanner(cmd,name) && scanner(cmd,password)
-      && scanner(cmd,email) && scanner(cmd,phone))
-        return;
+    void setInfo(char* inp){
+      int len = getNextWord(inp,name);
+      inp += len;
+      len = getNextWord(inp,password);
+      inp += len;
+      len = getNextWord(inp,email);
+      inp += len;
+      len = getNextWord(inp,phone);
+      delete inp; //?
     }
-    bool getPrivilege(){
-      return privilege == -1;
+
+    int getPrivilege(){
+      return privilege;
     }
   };
 }

@@ -11,7 +11,7 @@ namespace sjtu{
   const int PASSWORD_SIZE = 21;
   const int EMAIL_SIZE = 21;
   const int PHONE_SIZE = 21;
-  const int  ID_SIZE = 21;
+  const int ID_SIZE = 21;
   const int LOCATION_SIZE = 21;
   const int DATE_SIZE = 11;
   const int CATALOG_SIZE = 11;
@@ -20,6 +20,7 @@ namespace sjtu{
   const int COMMAND_SIZE = 21;
   const int PRIVILEGE_SIZE = 4;
   const int START_USER_ID = 2018;
-
+  const int MOD = (int)1e9 + 7;
+  const int BIT = 129;
 }
 #endif //TRAINTICKET_CONSTANT_H

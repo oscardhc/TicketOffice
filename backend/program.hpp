@@ -2,6 +2,8 @@
 // #include "bplustree.hpp"
 #include <cstring>
 #include <iostream>
+#include "utility.h"
+#include "user_key.h"
 namespace sjtu {
  typedef int ID;
  typedef char* UserInfo;
@@ -26,6 +28,7 @@ public:
     else if(strcmp(word,"login") == 0){execute_login();return;}
     else if(strcmp(word,"query_profile") == 0){execute_queryProfile();return;}
     else if(strcmp(word,"modify_profile") == 0){execute_modifyProfile();return;}
+    else if(strcmp(word,"modify_privilege") == 0){execute_modifyPrivilege();return;}
     /*Ticket command:*/
     else if(strcmp(word,"query_ticket") == 0){execute_queryTicket();return;}
     else if(strcmp(word,"query_transfer") == 0){execute_queryTransfer();return;}
@@ -51,23 +54,9 @@ private:
   // bplustree<ID,
   //TODO build bplustree
 
-  int getNextWord(char *str, char *word){
-    int pos = 0, len = strlen(str);
-    // printf("len = %d\n", len);
-    while (pos < len && (str[pos] == ' ' || str[pos] == '\n' || str[pos] == '\t')) pos++;
-    int base = pos;
-    while (pos < len) {
-      if(str[pos] == ' ' || str[pos] == '\n' || str[pos] == '\t')
-        break;
-      pos++;
-    }
-    // printf("%d %d\n", base, pos);
-    memcpy(word, str + base, pos - base);
-    word[pos - base] = 0;
-    return pos;
-  }
   /*User word:*/
   void execute_register(){
+
     //TODO
   }
   void execute_login(){

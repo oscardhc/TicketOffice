@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/fulingyue/Documents/GitHub/TicketOffice/backend/program.hpp
+cstring
+-
+iostream
+-
+
+/Users/fulingyue/Documents/GitHub/TicketOffice/backend/test.cpp
+program.hpp
+/Users/fulingyue/Documents/GitHub/TicketOffice/backend/program.hpp
+iostream
+-
+
