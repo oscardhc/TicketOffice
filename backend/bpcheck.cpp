@@ -9,6 +9,7 @@ map<int,int> mp;
 const int N = 10;
 pair<int, int> a[N];
 
+////ssfd。ssfd。ssfd。ssfd。
 int main(){
     srand(time(NULL));
 
@@ -25,6 +26,8 @@ int main(){
         bt.erase(a[i].first);
         mp.erase(a[i].first);
     }
+    
+    
     for (int i = N / 2; i < N; i++) {
         printf("pair(%d, %d) stdmp = %d bptree = %d\n", a[i].first, a[i].second, mp[a[i].first], bt.find(a[i].second));
     }
