@@ -3,3 +3,6 @@ data/*
 TTRS-master/*
 web/mdui-v0.4.2/*
 web/project/demo1_env/*
+*/.DS_Store
+*/*/.DS_Store
+.DS_Store
