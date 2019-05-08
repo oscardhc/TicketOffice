@@ -428,10 +428,3 @@ public:
         m_depth = depth;
     }
 };
-
-int main(){
-
-
-
-    return 0;
-}

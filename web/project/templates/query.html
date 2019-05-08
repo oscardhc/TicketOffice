@@ -20,30 +20,44 @@
             <p>Tickets from <code>北京</code> to <code>上海</code></p>
 
             <div>
-                出发地：
-                <select id="fromInput" style="width: 150px;">
-                    <option>Alfa Romeo</option>
-                    <option>Audi</option>
-                    <option>中国人民银行</option>
-                    <option>中国人民</option>
-                    <option>中国</option>
-                    <option>BMW</option>
-                </select>
+                <div style="display: inline-block">
+                    出发地：
+                    <select id="fromInput" style="width: 150px;">
+                        <option>Alfa Romeo</option>
+                    </select>
+                </div>
 
-                目的地：
-                <select id="toInput" style="width: 150px;">
-                    <option>Alfa Romeo</option>
-                    <option>Audi</option>
-                    <option>中国人民银行</option>
-                    <option>中国人民</option>
-                    <option>中国</option>
-                    <option>BMW</option>
-                </select>
+                <div style="display: inline-block; visibility: hidden">
+                    中转站：
+                    <select id="viaInput" style="width: 150px;">
+                        <option>Alfa Romeo</option>
+                    </select>
+                </div>
+
+                <div style="display: inline-block">
+                    目的地：
+                    <select id="toInput" style="width: 150px;">
+                        <option>Alfa Romeo</option>
+                    </select>
+                </div>
+
+                <div style="display: inline-block">
+                    <label class="mdui-switch">
+                        <input type="checkbox" />
+                        <i class="mdui-switch-icon"></i>
+                        中转
+                    </label>
+                </div>
+
             </div>
 
-            <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
+            <div>
+                <div align="center"> 查询结果 </div>
+                <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
 
+                </div>
             </div>
+
 
         </div>
 

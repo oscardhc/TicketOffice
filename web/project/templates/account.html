@@ -21,18 +21,28 @@
                         <h2>{{ ses['user'] }}</h2>
 
                         <ul class="mdui-list">
-                            <li class="mdui-list-item mdui-ripple">姓名：</li>
-
-                            <li class="mdui-list-item mdui-ripple">邮箱：</li>
-
-                            <li class="mdui-list-item mdui-ripple">电话：</li>
-
-                            <li class="mdui-list-item mdui-ripple">权限：</li>
+                            <li class="mdui-list-item mdui-ripple">
+                                姓名：
+                                <div style="display: inline-block; margin: 0 auto;" id="userName"></div>
+                            </li>
+                            <li class="mdui-list-item mdui-ripple">
+                                邮箱：
+                                <div style="display: inline-block; margin: 0 auto;" id="userEmail"></div>
+                            </li>
+                            <li class="mdui-list-item mdui-ripple">
+                                电话：
+                                <div style="display: inline-block; margin: 0 auto;" id="userPhone"></div>
+                            </li>
+                            <li class="mdui-list-item mdui-ripple">
+                                权限：
+                                <div style="display: inline-block; margin: 0 auto;" id="userPriv"></div>
+                            </li>
                         </ul>
 
                     </div>
                     <div align="right">
 
+                        <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="profileBtnClicked()">修改信息</button>
                         <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="logoutbtn">logout</button>
 
                     </div>
@@ -48,5 +58,72 @@
     </div>
 
 
+
+{% endblock %}
+
+{% block app %}
+    <div class="mdui-dialog" id="profileDialog">
+        <div class="mdui-dialog-title">修改信息</div>
+        <div class="mdui-dialog-content">
+
+            请输入修改后的用户信息
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">account_circle</i>
+                <label class="mdui-textfield-label">用户名</label>
+                <input class="mdui-textfield-input" id="profileUsername"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">vpn_key</i>
+                <label class="mdui-textfield-label">密码</label>
+                <input class="mdui-textfield-input" id="profilePassword" type="password"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">email</i>
+                <label class="mdui-textfield-label">邮箱</label>
+                <input class="mdui-textfield-input" type="email" id="profileEmail"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">phone</i>
+                <label class="mdui-textfield-label">电话号码</label>
+                <input class="mdui-textfield-input" id="profilePhone" onkeydown="ClickPassword(profileConfirmBtnClicked)"></input>
+            </div>
+
+        </div>
+
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="profileConfirmBtnClicked()">确定</button>
+        </div>
+
+    </div>
+
+    <div class="mdui-dialog" id="comfirmPasswordDialog">
+        <div class="mdui-dialog-title">确认</div>
+        <div class="mdui-dialog-content">
+
+            请输入原密码
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">vpn_key</i>
+                <label class="mdui-textfield-label">密码</label>
+                <input class="mdui-textfield-input" id="comfirmPassword" type="password"></input>
+            </div>
+
+        </div>
+
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="profileSubmitBtnClicked()">提交</button>
+        </div>
+
+    </div>
+
+    {% if 'user' in ses %}
+        <script>
+            getUserInfo('{{ session['user'] }}')
+        </script>
+    {% endif %}
 
 {% endblock %}

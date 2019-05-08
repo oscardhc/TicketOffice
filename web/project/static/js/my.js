@@ -1,3 +1,12 @@
+var userInfo = []
+
+function execCommand(cmd, done) {
+    $.post('/exec', {'cmd': cmd}, function (d) {
+        // alert(d.status === '-1')
+        done(d)
+    })
+}
+
 var errorDialog = new mdui.Dialog('#errorDialog');
 document.querySelector('#errorDialog').addEventListener('opened.mdui.dialog', function () {
     document.querySelector('#cancelBtn').focus()
@@ -40,14 +49,11 @@ function eraseBtnClicked () {
         if (d.status === '-1') {
             openError('用户名或密码错误')
         } else {
-            // document.execCommand('Refresh')
             var url = location.href.replace('#mdui-dialog','')
-            // alert(url)
             location.href = url
         }
     })
 
-    // window.navigate('/login')
 }
 
 var signupDialogue = new mdui.Dialog('#signupDialog')
@@ -89,6 +95,7 @@ var logoutbtn = document.querySelector('#logoutbtn')
 
 if (logoutbtn) {
     logoutbtn.onclick = function () {
+        localStorage.removeItem('userInfo')
         $.post('/logout', {}, function (d) {
             // alert('logged out!')
             // location.reload()
@@ -224,3 +231,45 @@ $(document).ready(function () {
 //     alert(inp.editableSelect)
 })
 
+var profileDialog = new mdui.Dialog('#profileDialog')
+var confirmPasswordDialog = new mdui.Dialog('#comfirmPasswordDialog')
+
+function profileBtnClicked() {
+    profileDialog.open()
+}
+
+function profileConfirmBtnClicked() {
+    profileDialog.close()
+    confirmPasswordDialog.open()
+}
+
+function profileSubmitBtnClicked() {
+    confirmPasswordDialog.close()
+    processDialogue.open()
+}
+
+// alert('user = ' + user)
+
+function getUserInfo(userId) {
+    if (!localStorage.getItem('userInfo')) {
+        execCommand('query_profile ' + userId, function (d) {
+            let res = d.result;
+            userInfo = res.split(" ")
+            localStorage.setItem('userInfo', JSON.stringify(userInfo))
+            document.querySelector('#userName').innerText = userInfo[0]
+            document.querySelector('#userEmail').innerText = userInfo[1]
+            document.querySelector('#userPhone').innerText = userInfo[2]
+            document.querySelector('#userPriv').innerText = userInfo[3]
+            // alert(JSON.stringify(userInfo))
+        })
+    } else {
+        // alert(localStorage.getItem('userInfo'))
+        userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        // alert(userInfo)
+        document.querySelector('#userName').innerText = userInfo[0]
+        document.querySelector('#userEmail').innerText = userInfo[1]
+        document.querySelector('#userPhone').innerText = userInfo[2]
+        document.querySelector('#userPriv').innerText = userInfo[3]
+    }
+
+}
