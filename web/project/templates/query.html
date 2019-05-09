@@ -19,40 +19,51 @@
 
             <p>Tickets from <code>北京</code> to <code>上海</code></p>
 
+        </div>
+        <div>
+
             <div>
+                <div style="margin: 20px 0"></div>
                 <div style="display: inline-block">
                     出发地：
-                    <select id="fromInput" style="width: 150px;">
-                        <option>Alfa Romeo</option>
+                    <select id="fromInput" style="width: 150px;" class="slt">
                     </select>
                 </div>
 
-                <div style="display: inline-block; visibility: hidden">
-                    中转站：
-                    <select id="viaInput" style="width: 150px;">
-                        <option>Alfa Romeo</option>
-                    </select>
-                </div>
-
-                <div style="display: inline-block">
+                <div style="display: inline-block; margin: 0 20px">
                     目的地：
-                    <select id="toInput" style="width: 150px;">
-                        <option>Alfa Romeo</option>
+                    <select id="toInput" style="width: 150px;" class="slt">
+                    </select>
+                </div>
+
+                <div style="display: inline-block; margin: 0 20px">
+                    日期：
+                    <select id="dateInput" style="width: 150px;">
                     </select>
                 </div>
 
                 <div style="display: inline-block">
                     <label class="mdui-switch">
-                        <input type="checkbox" />
-                        <i class="mdui-switch-icon"></i>
-                        中转
+                        <input type="checkbox" id="viaCheck"/>
+                        <i class="mdui-switch-icon" style="margin-right: 5px"></i>
+                        查询中转
                     </label>
+                </div>
+
+                <div style="margin-top: 20px" id="catas">
+                    类别：
+                </div>
+
+                <div align="center" style="margin: 20px 0">
+                    <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="submitQuery()">查询</button>
                 </div>
 
             </div>
 
+            $- 2 x \sin{\left(x^{2} \right)} + 2$
+
             <div>
-                <div align="center"> 查询结果 </div>
+{#                <div align="center"> 查询结果 </div>#}
                 <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
 
                 </div>
@@ -80,5 +91,59 @@
             <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
         </div>
     </div>
+
+{% endblock %}
+
+{% block scr %}
+
+    <script>
+        $(document).ready(function () {
+            for (var i = 1; i <= 30; i++) {
+                $('#dateInput').append('<option>2019-06-' + (i < 10 ? '0' : '') + i + '</option>')
+            }
+            for (var i = 0; i < allCity.length; i++) {
+                $('.slt').append('<option>' + allCity[i] + '</option>')
+            }
+            $('#fromInput').editableSelect( {
+                effects: 'slide'
+            });
+            $('#toInput').editableSelect({
+                effects: 'slide'
+            })
+            $('#dateInput').editableSelect({
+                effects: 'slide'
+            })
+        })
+
+        function submitQuery() {
+            var cmd = ''
+            if ($('#viaCheck').prop('checked') == true) {
+                cmd = 'query_transfer'
+            } else {
+                cmd = 'query_ticket'
+            }
+            cmd += ' '
+            cmd += $('#fromInput').val()
+            cmd += ' '
+            cmd += $('#toInput').val()
+            cmd += ' '
+            cmd += $('#dateInput').val()
+            cmd += ' '
+            for (var i = 0; i < allCata.length; i++) {
+                if ($('#cataCKB' + i).prop('checked') == true) {
+                    cmd += allCata[i]
+                }
+            }
+            alert(cmd)
+            {#execCommand(cmd, {#}
+            {##}
+            {#})#}
+        }
+
+        for (var i = 0; i < allCata.length; i++) {
+            $('#catas').append('<label class="mdui-checkbox" style="margin-right:50px"><input type="checkbox" id="cataCKB' + i + '" checked/><i class="mdui-checkbox-icon"></i>' + allCata[i] + '</label>')
+        }
+
+    </script>
 
 {% endblock %}

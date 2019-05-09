@@ -23,19 +23,19 @@
                         <ul class="mdui-list">
                             <li class="mdui-list-item mdui-ripple">
                                 姓名：
-                                <div style="display: inline-block; margin: 0 auto;" id="userName"></div>
+                                <div style="display: inline-block; margin: 0 auto;" class="userName"></div>
                             </li>
                             <li class="mdui-list-item mdui-ripple">
                                 邮箱：
-                                <div style="display: inline-block; margin: 0 auto;" id="userEmail"></div>
+                                <div style="display: inline-block; margin: 0 auto;" class="userEmail"></div>
                             </li>
                             <li class="mdui-list-item mdui-ripple">
                                 电话：
-                                <div style="display: inline-block; margin: 0 auto;" id="userPhone"></div>
+                                <div style="display: inline-block; margin: 0 auto;" class="userPhone"></div>
                             </li>
                             <li class="mdui-list-item mdui-ripple">
                                 权限：
-                                <div style="display: inline-block; margin: 0 auto;" id="userPriv"></div>
+                                <div style="display: inline-block; margin: 0 auto;" class="userPriv"></div>
                             </li>
                         </ul>
 
@@ -119,11 +119,7 @@
         </div>
 
     </div>
-
-    {% if 'user' in ses %}
-        <script>
-            getUserInfo('{{ session['user'] }}')
-        </script>
-    {% endif %}
+{% endblock %}
+{% block scr %}
 
 {% endblock %}

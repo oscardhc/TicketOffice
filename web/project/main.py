@@ -5,6 +5,7 @@ from flask import session, make_response, jsonify
 from datetime import timedelta
 from random import randint
 import interaction
+import captcha
 import sys
 
 BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/"
@@ -80,6 +81,12 @@ def exec():
     if request.method == 'POST' :
         res = con.exeCmd([request.form['cmd']])
         return jsonify({'result': res})
+
+@app.route('/captcha', methods=['POST'])
+def capt():
+    if request.method == 'POST' :
+        a = captcha.generate()
+        return jsonify({'origin':a[0], 'diff':a[1], 'val':str(a[2])})
 
 
 if __name__ == '__main__':

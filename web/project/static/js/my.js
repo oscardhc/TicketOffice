@@ -1,4 +1,7 @@
 var userInfo = []
+var allCata = ['C','D','E']
+var allCity = ['上海','闵行']
+var captcha = []
 
 function execCommand(cmd, done) {
     $.post('/exec', {'cmd': cmd}, function (d) {
@@ -20,8 +23,6 @@ function openError(msg) {
 }
 
 var loginDialogue = new mdui.Dialog('#exampleDialog')
-
-
 function openLogin() {
     loginDialogue.open()
 }
@@ -37,14 +38,24 @@ function eraseBtnClicked () {
 
     // alert(nm + ps)
     loginDialogue.close()
-    processDialogue.open()
+
     // document.querySelector('#baseDiv').setAttribute('class', 'disabled')
+
+    var cp = $('#capinput').val()
+    if (Number(cp) != Number(captcha.val).toFixed(1)) {
+        openError('验证码错误！')
+        // errorDialog.open()
+        return
+    }
+
+    processDialogue.open()
     var classVal = document.querySelector("body").getAttribute("class")
     document.querySelector("body").setAttribute('class', classVal + ' disabled')
 
     $.post('/login', {'user': nm, 'password': ps}, function (d) {
         // alert(d.status === '-1')
         processDialogue.close()
+        document.querySelector("body").setAttribute('class', classVal)
 
         if (d.status === '-1') {
             openError('用户名或密码错误')
@@ -124,12 +135,12 @@ function ClickPassword(func) {
     }
 }
 
-var headicon = document.querySelector('#headicon')
-if (headicon) {
-    headicon.onclick = function () {
-        location.href = "/account"
-    }
-}
+// var headicon = document.querySelector('#headicon')
+// if (headicon) {
+//     headicon.onclick = function () {
+//         location.href = "/account"
+//     }
+// }
 
 var hitokoto = document.querySelector('#hitokoto')
 if (hitokoto) {
@@ -221,16 +232,6 @@ function clickedAtRow(x) {
 
 // $('#fromInput').editableSelect();
 
-$(document).ready(function () {
-    $('#fromInput').editableSelect( {
-        effects: 'slide'
-    });
-    $('#toInput').editableSelect({
-        effects: 'slide'
-    })
-//     alert(inp.editableSelect)
-})
-
 var profileDialog = new mdui.Dialog('#profileDialog')
 var confirmPasswordDialog = new mdui.Dialog('#comfirmPasswordDialog')
 
@@ -256,20 +257,31 @@ function getUserInfo(userId) {
             let res = d.result;
             userInfo = res.split(" ")
             localStorage.setItem('userInfo', JSON.stringify(userInfo))
-            document.querySelector('#userName').innerText = userInfo[0]
-            document.querySelector('#userEmail').innerText = userInfo[1]
-            document.querySelector('#userPhone').innerText = userInfo[2]
-            document.querySelector('#userPriv').innerText = userInfo[3]
+            $('.userName').html(userInfo[0])
+            $('.userEmail').html(userInfo[1])
+            $('.userPhone').html(userInfo[2])
+            $('.userPriv').html(userInfo[3])
             // alert(JSON.stringify(userInfo))
         })
     } else {
         // alert(localStorage.getItem('userInfo'))
         userInfo = JSON.parse(localStorage.getItem('userInfo'))
         // alert(userInfo)
-        document.querySelector('#userName').innerText = userInfo[0]
-        document.querySelector('#userEmail').innerText = userInfo[1]
-        document.querySelector('#userPhone').innerText = userInfo[2]
-        document.querySelector('#userPriv').innerText = userInfo[3]
+        $('.userName').html(userInfo[0])
+        $('.userEmail').html(userInfo[1])
+        $('.userPhone').html(userInfo[2])
+        $('.userPriv').html(userInfo[3])
+        // document.querySelector('#userName').innerText = userInfo[0]
+        // document.querySelector('#userEmail').innerText = userInfo[1]
+        // document.querySelector('#userPhone').innerText = userInfo[2]
+        // document.querySelector('#userPriv').innerText = userInfo[3]
     }
 
 }
+
+$.post('/captcha', {}, function (d) {
+    captcha = d
+    $('#capLable').html('$\\displaystyle\\int_{x=0}^{1}' + captcha.diff + '=?$（保留一位小数）')
+    $('#capinput').val(captcha.val)
+    $('body').append("<script src=" + mjpath + "></script>")
+})
