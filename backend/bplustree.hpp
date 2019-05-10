@@ -1,430 +1,535 @@
 #include <iostream>
-#include <mach/vm_statistics.h>
+#include <map>
+#include <stdlib.h>
+#include <algorithm>
 
-#define nullptr 0
-#define INVALID 0
-#define FLAG_LEFT 1
-#define FLAG_RIGHT 2
+using namespace std;
+enum NODE_TYPE{INTERNAL = 0, LEAF = 1}; // 结点类型：内结点、叶子结点
+enum SIBLING_DIRECTION{LEFT, RIGHT}; // 兄弟结点方向：左兄弟结点、右兄弟结点
+typedef int KeyType; // 键类型
+typedef int DataType; // 值类型
+const int ORDER = 7; // B+树的阶（非根内结点的最小子树个数）
+const int MINNUM_KEY = ORDER-1; // 最小键值个数
+const int MAXNUM_KEY = 2*ORDER-1; // 最大键值个数
+const int MINNUM_CHILD = MINNUM_KEY+1; // 最小子树个数
+const int MAXNUM_CHILD = MAXNUM_KEY+1; // 最大子树个数
+const int MINNUM_LEAF = MINNUM_KEY; // 最小叶子结点键值个数
+const int MAXNUM_LEAF = MAXNUM_KEY; // 最大叶子结点键值个数
 
-typedef int KeyType;
-typedef int DataType;
-#define ORDER 5
-#define MAXNUM_KEY (ORDER * 2)
-#define MAXNUM_POINTER (MAXNUM_KEY + 1)
-#define MAXNUM_DATA (ORDER * 2)
+////.h
+//// 当前最大key值->getmax();
+//// 当前数据数量->getsize();
+//// 插入->insert(key, data);
+//// 删除->remove(key);
+//// 更新->update(key, data);
+//// 查找->search(key);
 
-enum NODE_TYPE{
-    NODE_TYPE_ROOT = 1,
-    NODE_TYPE_INTERNAL = 2,
-    NODE_TYPE_LEAF = 3,
-};
 
-/// in 0 - n-1  out 1-n
 class CNode{
 protected:
     NODE_TYPE m_type;
-    int m_count; //the number of pointer
-    CNode * m_pfather;
+    int m_KeyNum;
+    KeyType m_keys[MAXNUM_KEY];
 public:
     CNode(){
-        m_type = NODE_TYPE_LEAF;
-        m_count = 1;
-        m_pfather = nullptr;
+        m_type = LEAF;
+        m_KeyNum = 0;
     }
     virtual ~CNode(){
-        deletechildren();
+        m_KeyNum = 0;
     }
-
-    NODE_TYPE gettype(){
+    
+    NODE_TYPE getType()const{
         return m_type;
     }
-    void settype(NODE_TYPE type){
+    
+    void setType(NODE_TYPE type){
         m_type = type;
     }
-    int getcount(){
-        return m_count;
+    
+    int getKeyNum() const{
+        return m_KeyNum;
     }
-    void setcount(int i){
-        m_count = i;
+    
+    void setKeyNum(int i){
+        m_KeyNum = i;
     }
-    virtual KeyType getelement(int i){
-        return 0;
+    
+    KeyType getKey(int i) const{
+        return m_keys[i];
     }
-    virtual void setelement(int i, KeyType value) {}
-
-    virtual CNode *getpointer(int i){
-        return nullptr;
+    
+    void setKey(int i, KeyType key){
+        m_keys[i] = key;
     }
-    virtual void setpointer(int i, CNode *pointer) {}
-
-    CNode *getfather(){
-        return m_pfather;
-    }
-    void setfather(CNode * father){
-        m_pfather = father;
-    }
-    CNode * getbrother(int &flag){
-        CNode *pfather = getfather();
-        if (pfather == nullptr) return nullptr;
-        CNode *bro = nullptr;
-        for (int i = 1; i <= pfather->getcount(); ++i){
-            if (this == pfather->getpointer(pfather->getcount())) {
-                flag = FLAG_LEFT;
-                bro = pfather->getpointer(pfather->getcount() - 1);
-                return bro;
-            }
-
-            if (pfather->getpointer(i) == this){
-                flag = FLAG_RIGHT;
-                bro = pfather->getpointer(i + 1);
-                return bro;
-            }
+    
+    int getKeyIndex(KeyType key) const{
+        int l, r;
+        l = 0;
+        r = getKeyNum() - 1;
+        
+        if (key > getKey(r)) return r + 1;
+        while (l < r){
+            int m = (r + l) >> 1;
+            if (getKey(m) < key) l = m + 1;
+            else r = m;
         }
+        return l;
     }
-
-    void deletechildren(){
-        for (int i = 1; i <= getcount(); ++i){
-            CNode *p = getpointer(i);
-            if (p != nullptr){
-                p->deletechildren();
-            }
-            delete p;
-        }
-    }
-
-
-
+    
+    virtual void removekey(int keyindex, int childindex) = 0;
+    virtual void split(CNode *fa, int childindex) = 0;
+    virtual void merge(CNode *fa, CNode * child, int keyindex) = 0;
+    virtual void clear() = 0;
+    virtual void steal(CNode * bro, CNode * fa, int keyindex, SIBLING_DIRECTION d) = 0;
+    virtual int getchildindex(KeyType key, int keyindex) const = 0;
+    
 };
 
 
-class InternalNode:public CNode {
-protected:
-    KeyType m_Keys[MAXNUM_KEY];
-    CNode * m_pointers[MAXNUM_POINTER];
+class InterNode:public CNode{
+private:
+    CNode * m_Childs[MAXNUM_CHILD];
 public:
-    InternalNode(){
-        m_type = NODE_TYPE_INTERNAL;
-        for (int i = 0; i < MAXNUM_KEY; ++i){
-            m_Keys[i] = 0;
+    InterNode(){
+        m_type = INTERNAL;
+        
+    }
+    
+    virtual  ~InterNode(){
+        
+    }
+    
+    CNode * getchild(int i) const{
+        return m_Childs[i];
+    }
+    
+    void setChild(int i, CNode *child){
+        m_Childs[i] = child;
+    }
+    
+    void insert(int keyindex, int childindex, KeyType key, CNode *childnode){
+        for (int i = getKeyNum(); i  >= keyindex; --i){
+            setChild(i + 1, m_Childs[i]);
         }
-        for (int i = 1; i < MAXNUM_POINTER; ++i){
-            m_pointers[i] = nullptr;
+        for (int i = getKeyNum(); i > keyindex; --i){
+            setKey(i, m_keys[i - 1]);
         }
+        setChild(childindex, childnode);
+        setKey(keyindex, key);
+        m_KeyNum++;
     }
-    virtual ~InternalNode(){
-        for (int i = 1; i < MAXNUM_POINTER; ++i){
-            m_pointers[i] = nullptr;
-        }
-    }
-
-
-    KeyType getelement(int i){
-        if (i > 0 && i <= MAXNUM_KEY)
-            return m_Keys[i - 1];
-        else return INVALID;
-    }
-    void setelement(int i, KeyType value) {
-        if (i > 0 && i <= MAXNUM_KEY)
-            m_Keys[i - 1] = value;
-    }
-    CNode *getpointer(int i){
-        if (i > 0 && i <= MAXNUM_POINTER)
-            return m_pointers[i - 1];
-        else return nullptr;
-    }
-    void setpointer(int i, CNode *pointer){
-        if (i > 0 && i <= MAXNUM_POINTER)
-            m_pointers[i - 1] = pointer;
-    }
-    bool Insert(KeyType value, CNode *pnode){
-        if (getcount() >= MAXNUM_POINTER) return false;
-        pnode->setfather(this);
-
-        int k, i;
-        for (i = 0; i < getcount() - 1 && value > m_Keys[i]; ++i);
-        for (k = getcount() - 1; k > i; --k){
-            m_Keys[k] = m_Keys[k - 1];
-        }
-        for (k = getcount(); k > i + 1; --k){
-            m_pointers[k] = m_pointers[k - 1];
-        }
-
-        m_Keys[i] = value;
-        m_pointers[i + 1] = pnode;
-        m_count++;
-
-        return true;
-    }
-    bool Delete(KeyType value){
-        int i, k;
-        for (i = 0; i < getcount() - 1 && value != m_Keys[i]; ++i);
-        if (i == getcount() - 1) return false;
-        m_count--;
-        for (k = i; k < getcount() - 1; ++k){
-            m_Keys[k] = m_Keys[k + 1];
-        }
-        for (k = i + 1; k < getcount(); ++k){
-            m_pointers[k] = m_pointers[k + 1];
-        }
-        m_pointers[m_count] = nullptr;
-        return true;
-
-    }
-
-    KeyType split(InternalNode * pnode, KeyType key){
-        int cnt = 0;
-        if (key > m_Keys[ORDER - 1] && key < m_Keys[ORDER]){
-            for (int i = ORDER + 1; i <= MAXNUM_KEY; ++i){
-                ++cnt;
-                pnode->setelement(cnt, m_Keys[i - 1]);
-                this->setelement(i, 0);
+    
+    virtual void removekey(int keyindex, int childindex){
+        if (childindex == -1){
+            for (int i = keyindex; i < getKeyNum()- 1; ++i){
+                setKey(i, getKey(i + 1));
+                setChild(i, getchild(i + 1));
             }
-            cnt = 0;
-            for (int i = ORDER + 2; i <= MAXNUM_POINTER; ++i){
-                ++cnt;
-                m_pointers[i - 1]->setfather(pnode);
-                pnode->setpointer(i, m_pointers[i - 1]);
-                this->setpointer(i, nullptr);
-            }
-            this->setcount(ORDER);
-            pnode->setcount(ORDER);
-            return key;
+            setChild(getKeyNum() - 1, getchild(getKeyNum()));
+            m_KeyNum--;
+            return;
         }
-        int pos;
-        if (key < m_Keys[ORDER - 1]) pos = ORDER;
-        else pos = ORDER + 1;
-        for (int i = pos + 1; i <= MAXNUM_KEY; ++i){
-            ++cnt;
-            pnode->setelement(cnt, m_Keys[i - 1]);
-            this->setelement(i, 0);
+        for (int i = keyindex; i < getKeyNum()- 1; ++i){
+            setKey(i, getKey(i + 1));
+            setChild(i + 1, getchild(i + 2));
         }
-        cnt = 0;
-        for (int i = pos + 1; i <= MAXNUM_POINTER; ++i){
-            ++cnt;
-            m_pointers[i - 1]->setfather(pnode);
-            pnode->setpointer(i, m_pointers[i - 1]);
-            this->setpointer(i, nullptr);
-        }
-        int tmp = getelement(pos);
-        this->setelement(pos, 0);
-        this->setcount(pos - 1);
-        pnode->setcount(MAXNUM_KEY - pos);
-        return tmp;
+        m_KeyNum--;
     }
-    bool combine(CNode *pnode){
-        if (this->getcount() + pnode->getcount() + 1 > MAXNUM_KEY){
-            return false;
+    
+    virtual void split(CNode *fa, int childindex){
+        InterNode *newnode = new InterNode();
+        newnode->setKeyNum(MINNUM_KEY);
+        int i;
+        for (int i = 0; i < MINNUM_KEY; ++i){
+            newnode->setKey(i, m_keys[i + MINNUM_KEY + 1]);
         }
-        KeyType tmp = pnode->getpointer(1)->getelement(1);
-
-        m_Keys[m_count - 1] = tmp;
-        m_count++;
-        m_pointers[m_count - 1] = pnode->getpointer(1);
-
-        for (int i = 1; i < pnode->getcount(); ++i){
-            m_Keys[m_count - 1] = pnode->getelement(i);
-            m_count++;
-            m_pointers[m_count - 1] = pnode->getpointer(i + 1);
+        for (int i = 0; i < MINNUM_CHILD; ++i){
+            newnode->setChild(i, m_Childs[i + MINNUM_CHILD]);
         }
-
-        return true;
-
-
+        setKeyNum(MINNUM_KEY);
+        ((InterNode*)fa)->insert(childindex, childindex + 1, m_keys[MINNUM_KEY], newnode);
+        
     }
-    ///steal
-    bool move(CNode *pnode){
-        if (this->getcount() >= MAXNUM_KEY) return false;
-
-        if (pnode->getelement(1) < getelement(1)){
-            for (int i = getcount(); i; --i){
-                m_pointers[i] = m_pointers[i - 1];
-            }
-            for (int i = getcount() - 1; i; --i){
-                m_Keys[i] = m_Keys[i - 1];
-            }
-
-            m_Keys[0] = getpointer(1)->getelement(1);
-            m_pointers[0] = pnode->getpointer(pnode->getcount());
-            m_pointers[0]->setfather(this);
-            m_count++;
-            pnode->setcount(pnode->getcount() - 1);
-
+    
+    virtual void merge(CNode * fa, CNode * child, int keyindex){
+        insert(MINNUM_KEY, MINNUM_KEY + 1, fa->getKey(keyindex),  ((InterNode*)child)->getchild(0));
+        int i;
+        for (int i = 1; i <= child->getKeyNum(); ++i){
+            insert(MINNUM_KEY + i, MINNUM_KEY + i + 1, child->getKey(i - 1), ((InterNode*)child)->getchild(i));
+        }
+        fa->removekey(keyindex, keyindex + 1);
+        delete (InterNode*)child;/////
+    }
+    
+    virtual void clear(){
+        for (int i = 0; i <= m_KeyNum; ++i){
+            m_Childs[i]->clear();
+            delete m_Childs[i];
+            m_Childs[i] = nullptr;
+        }
+        
+    }
+    
+    virtual void steal(CNode * bro, CNode * fa, int keyindex, SIBLING_DIRECTION d){
+        if (d == LEFT){
+            insert(0, 0, fa->getKey(keyindex), ((InterNode*)bro)->getchild(bro->getKeyNum()));
+            fa->setKey(keyindex, bro->getKey(bro->getKeyNum() - 1));
+            bro->removekey(bro->getKeyNum() - 1, bro->getKeyNum());
         }
         else {
-            m_Keys[m_count - 1] = pnode->getpointer(1)->getelement(1);
-            m_pointers[m_count] = pnode->getpointer(1);
-            m_pointers[m_count]->setfather(this);
-            m_count++;
-            pnode->setcount(pnode->getcount() - 1);
-
-            for (int i = 1; i <= pnode->getcount(); ++i){
-                pnode->setelement(i, pnode->getelement(i + 1));
-            }
-            for (int i = 1; i < pnode->getcount(); ++i){
-                pnode->setpointer(i, pnode->getpointer(i + 1));
-            }
-
+            insert(getKeyNum(), getKeyNum() + 1, fa->getKey(keyindex), ((InterNode*)bro)->getchild(0));
+            fa->setKey(keyindex, bro->getKey(0));
+            bro->removekey(0, -1);
+            ///fa->setKey(keyindex, bro->getKey(0));
         }
-        return true;
-
-
+        
     }
-
+    
+    virtual int getchildindex(KeyType key, int keyindex) const {
+        if (keyindex == getKeyNum()) return keyindex;
+        if (key == getKey(keyindex)){
+            return keyindex + 1;
+        }
+        else return keyindex;
+        
+    }
+    
 };
 
-class LeafNode:public CNode{
+
+class LeafNode: public CNode{
 private:
-    LeafNode * prev;
-    LeafNode * next;
-
-protected:
-    KeyType m_datas[MAXNUM_DATA];
-
+    LeafNode * m_left;
+    LeafNode * m_right;
+    DataType m_Datas[MAXNUM_LEAF];
+    
 public:
     LeafNode(){
-        m_type = NODE_TYPE_LEAF;
-        m_count = 0;
-        for (int i = 0; i < MAXNUM_DATA; ++i){
-            m_datas[i] = 0;
-        }
-        prev = nullptr;
-        next = nullptr;
-
+        m_type = LEAF;
+        m_left = nullptr;
+        m_right = nullptr;
     }
+    
     virtual ~LeafNode(){
-
+        
     }
-    KeyType getelement(int i){
-        if (i > 0 && i < MAXNUM_DATA)
-            return m_datas[i - 1];
-        else return INVALID;
+    
+    LeafNode *getleft()const{
+        return m_left;
     }
-    void setelemet(int i, KeyType data){
-        if (i > 0 && i <MAXNUM_DATA)
-            m_datas[i - 1] = data;
+    
+    void setleft(LeafNode *node){
+        m_left = node;
     }
-
-    CNode *getpointer(int i){
-        return nullptr;
+    
+    LeafNode *getright()const{
+        return m_right;
     }
-
-    bool Insert(KeyType value){
-        if (getcount() > MAXNUM_DATA) return false;
-
-        int i;
-        for (i = 0; i < getcount() && m_datas[i] <= value; ++i);
-        for (int k = getcount(); k > i; --k){
-            m_datas[k] = m_datas[k - 1];
+    
+    void setright(LeafNode *node){
+        m_right = node;
+    }
+    
+    DataType getdata(int i) const {
+        return m_Datas[i];
+    }
+    
+    void setdata(int i, const DataType &data){
+        m_Datas[i] = data;
+    }
+    
+    void insert(KeyType key, const DataType &data){
+        int i = 0;
+        for (i = m_KeyNum; i >= 1 && m_keys[i - 1] > key; --i){
+            setKey(i, m_keys[i - 1]);
+            setdata(i, m_Datas[i -1]);
         }
-        m_datas[i] = value;
-        m_count++;
-
-        return true;
+        setdata(i, data);
+        setKey(i, key);
+        m_KeyNum++;
+        
     }
-
-    bool Delete(KeyType value){
-        bool flag = false;
-        int i;
-        for (i = 0; i < getcount(); ++i){
-            if (value == m_datas[i]) {
-                flag = true;
-                break;
-            }
+    
+    virtual void removekey(int keyindex, int childindex){
+        for (int i = keyindex; i < getKeyNum() - 1; ++i){
+            setKey(i, getKey(i + 1));
+            setdata(i, getdata(i + 1));
         }
-        if (i == getcount()) return flag;
-        for (int k = i; k < getcount() - 1; ++k){
-            m_datas[k] = m_datas[k + 1];
-        }
-        m_datas[getcount() - 1] = 0;
-        m_count--;
-
-        return true;
+        m_KeyNum--;
+        
     }
-
-    KeyType split(CNode *pnode){
-        int j = 0;
-        for (int i = ORDER + 1; i <= MAXNUM_DATA){
-            ++j;
-            pnode->setelement(j, getelement(i));
-            setelement(i, 0);
+    
+    virtual void split(CNode *fa, int childindex){
+        LeafNode * newnode = new LeafNode();
+        setKeyNum(MINNUM_LEAF);
+        newnode->setKeyNum(MINNUM_LEAF + 1);
+        newnode->setright(getright());
+        setright(newnode);
+        newnode->setleft(this);
+        for (int i = 0; i <= MINNUM_LEAF; ++i){
+            newnode->setKey(i, m_keys[i + MINNUM_LEAF]);
+            newnode->setdata(i, m_Datas[i + MINNUM_LEAF]);
         }
-        setcount(ORDER);
-        pnode->setcount(ORDER);
-        return pnode->getelement(1);
-
+        ((InterNode*)fa)->insert(childindex, childindex + 1, m_keys[MINNUM_LEAF], newnode);
+        
     }
-
-
-    bool combine(CNode *pnode){
-        if (getcount() + pnode->getcount() > MAXNUM_DATA) return false;
-
-        for (int i = getcount(); i < getcount() + pnode->getcount(); i++)
-        {
-            m_datas[i] = pnode->getelement(i - getcount());
+    
+    virtual void merge(CNode * fa, CNode * child, int keyindex){
+        for (int i = 0; i < child->getKeyNum(); ++i){
+            insert(child->getKey(i), ((LeafNode*)child)->getdata(i));
         }
-        return true;
+        setright(((LeafNode*)child)->getright());
+        fa->removekey(keyindex, keyindex + 1);
+        
     }
+    
+    virtual void clear(){
+        
+    }
+    
+    virtual void steal(CNode * bro, CNode * fa, int keyindex, SIBLING_DIRECTION d){
+        if (d == LEFT){
+            insert(bro->getKey(bro->getKeyNum() - 1), ((LeafNode*)bro)->getdata(bro->getKeyNum() - 1));
+            bro->removekey(bro->getKeyNum() - 1, bro->getKeyNum() - 1);
+            fa->setKey(keyindex, getKey(0));
+        }
+        else {
+            insert(bro->getKey(0), ((LeafNode*)bro)->getdata(0));
+            bro->removekey(0, 0);
+            fa->setKey(keyindex, bro->getKey(0));
+        }
+        
+    }
+    
+    virtual int getchildindex(KeyType key, int keyindex) const {
+        return keyindex;
+    }
+    
+    
 };
 
-
-class bplustree{
+class BPlusTree{
+    struct ans{
+        int keyindex;
+        LeafNode * node;
+    };
 private:
-    LeafNode *head;
-    LeafNode *tail;
-protected:
-    LeafNode *find(KeyType data){
-
-    }
-    bool InsertInter(InternalNode *pnode, KeyType key, CNode * rson){
-
-    }
-    bool DeleteInter(InternalNode *pnode, KeyType key){
-
-    }
-
-    CNode *m_root;
-    int m_depth;
+    CNode * m_root;
+    LeafNode * m_head;
+    KeyType m_maxkey;
+    int cnt;
+    long long size;
 public:
-    bplustree(){
-
+    BPlusTree() {
+        m_root = nullptr;
+        m_head = nullptr;
+        m_maxkey = 0;
+        size = 0;
     }
-    virtual ~bplustree(){
-
+    
+    ~BPlusTree(){
+        clear();
     }
-
-    KeyType search(KeyType data){
-
+    
+    bool insert(KeyType key, const DataType & data){
+        if (search(key) != -1) return false;
+        
+        size++;
+        if (m_root == nullptr){
+            m_root = new LeafNode();
+            m_head = (LeafNode*)m_root;
+            m_maxkey = key;
+        }
+        
+        if (m_root->getKeyNum() >= MAXNUM_KEY){
+            InterNode* newnode = new InterNode();
+            newnode->setChild(0, m_root);
+            m_root->split(newnode, 0);
+            m_root = newnode;
+        }
+        
+        if (key > m_maxkey) m_maxkey = key;
+        
+        inter_insert(m_root, key, data);
+        
+        return true;
+        
     }
-    bool Insert(KeyType data){
-
+    
+    long long getsize(){
+        return size;
     }
-    bool Delete(KeyType value){
-
+    
+    bool remove(KeyType key){
+        if (search(key) == -1) return false;
+        size--;
+        
+        if (m_root->getKeyNum() == 1){
+            if (m_root->getType() == LEAF){
+                clear();
+                return true;
+            }
+            CNode *ch1 = ((InterNode*)m_root)->getchild(0);
+            CNode *ch2 = ((InterNode*)m_root)->getchild(1);
+            if (ch1->getKeyNum() == MINNUM_KEY && ch2->getKeyNum() == MINNUM_KEY){
+                ch1->merge(m_root, ch2, 0);
+                delete m_root;
+                m_root = ch1;
+            }
+        }
+        
+        inter_remove(m_root, key);
+        return true;
     }
-
+    
+    bool update(KeyType key, DataType _new){
+        if (search(key) == -1) return false;
+        inter_update(m_root, key, _new);
+    }
+    
+    DataType search(KeyType key){
+        return inter_search(m_root, key);
+        
+    }
+    
     void clear(){
-
+        if (m_root != nullptr){
+            m_root->clear();
+            delete m_root;
+            m_root = nullptr;
+            m_head = nullptr;
+        }
+        
     }
-    bplustree *rotate(){
-
+    
+    
+    void print(){
+        cnt = 1;
+        if (m_root == nullptr) return;
+        print(m_root, cnt);
     }
-    //是否是一棵b+树
-    bool check(){
-
+    void print(CNode *p, int cnt){
+        cout << "第" << cnt << "层" ;
+        printnode(p);
+        cout << endl;
+        if (p->getType() != LEAF){
+            for (int i = 0; i <= p->getKeyNum(); ++i){
+                print(((InterNode*)p)->getchild(i), cnt + 1);
+            }
+        }
     }
-    bool checknode(){
-
+    void printnode(CNode *p){
+        for (int i = 0; i < p->getKeyNum(); ++i){
+            cout << p->getKey(i) << " ";
+        }
+        
     }
-    CNode *getroot(){
-        return m_root;
+    KeyType getmax(){
+        return m_maxkey;
     }
-    void setroot(CNode * root){
-        m_root = root;
+    
+private:
+    bool inter_update(CNode *p, KeyType key, DataType _new){
+        if (p == nullptr) return false;
+        int keyindex = p->getKeyIndex(key);
+        int childindex = p->getchildindex(key, keyindex);
+        if (p->getType() == LEAF){
+            if (key == p->getKey(keyindex)){
+                ((LeafNode*)p)->setdata(keyindex, _new);
+                return true;
+            }
+            else return false;
+        }
+        
+        return inter_update(((InterNode*)p)->getchild(childindex), key, _new);
     }
-    int getdepth(){
-        return m_depth;
+    
+    
+    
+    void inter_insert(CNode *fa, KeyType key, const DataType & data){
+        if (fa->getType() == LEAF){
+            ((LeafNode*)fa)->insert(key, data);
+            return;
+        }
+        
+        int keyindex = fa->getKeyIndex(key);
+        int childindex = fa->getchildindex(key, keyindex);
+        
+        CNode *childnode = ((InterNode*)fa)->getchild(childindex);
+        
+        if (childnode->getKeyNum() >= MAXNUM_KEY){
+            childnode->split(fa, childindex);
+            if (key >= fa->getKey(childindex)){
+                childnode = ((InterNode*)fa)->getchild(childindex + 1);
+            }
+        }
+        inter_insert(childnode, key, data);
+        
     }
-    void setdepth(int depth){
-        m_depth = depth;
+    
+    void inter_remove(CNode *fa, KeyType key){
+        int keyindex = fa->getKeyIndex(key);
+        int childindex = fa->getchildindex(key, keyindex);
+        if (fa->getType() == LEAF){
+            if (key == m_maxkey && keyindex > 0){
+                m_maxkey = fa->getKey(keyindex - 1);   //////
+            }
+            fa->removekey(keyindex, childindex);
+            if (childindex == 0 && m_root->getType() != LEAF && fa != m_head){
+                changekey(m_root, key, fa->getKey(0));
+            }
+        }
+        else {
+            CNode *child = ((InterNode*)fa)->getchild(childindex);
+            int u = child->getKeyNum();
+            if (child->getKeyNum() == MINNUM_KEY){
+                CNode *left = childindex > 0 ? ((InterNode*)fa)->getchild(childindex - 1) : nullptr;
+                CNode *right = childindex < fa->getKeyNum() ? ((InterNode*)fa)->getchild(childindex + 1): nullptr;
+                if (left && left->getKeyNum() > MINNUM_KEY) child->steal(left, fa, childindex - 1, LEFT);
+                else if (right && right->getKeyNum() > MINNUM_KEY) child->steal(right, fa, childindex, RIGHT);
+                else if (left){
+                    left->merge(fa, child, childindex - 1);
+                    child  = left;
+                }
+                else if (right){
+                    child->merge(fa, right, childindex);
+                }
+            }
+            inter_remove(child, key);
+        }
     }
+    
+    DataType inter_search(CNode *p, KeyType key) const{
+        if (p == nullptr) return -1;
+        int keyindex = p->getKeyIndex(key);
+        int childindex = p->getchildindex(key, keyindex);
+        if (p->getType() == LEAF){
+            if (key == p->getKey(keyindex)){
+                return ((LeafNode*)p)->getdata(keyindex);
+            }
+            else return -1;
+        }
+        
+        return inter_search(((InterNode*)p)->getchild(childindex), key);
+        
+    }
+    
+    void changekey(CNode * p, KeyType _old, KeyType _new){
+        if (p != nullptr && p->getType() != LEAF){
+            int keyindex = p->getKeyIndex(_old);
+            if (_old == p->getKey(keyindex)){
+                p->setKey(keyindex, _new);
+            }
+            else {
+                changekey(((InterNode*)p)->getchild(keyindex), _old, _new);
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
 };

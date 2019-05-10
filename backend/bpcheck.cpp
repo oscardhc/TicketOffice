@@ -9,6 +9,7 @@ map<int,int> mp;
 const int N = 100;
 pair<int, int> a[N];
 
+////ssfd。ssfd。ssfd。ssfd。
 int main(){
     srand(time(NULL));
 
