@@ -5,7 +5,7 @@
 #ifndef BACKEND_TICKET_VALUE_H
 #define BACKEND_TICKET_VALUE_H
 #include "constant.h"
-#include "utility.h"
+#include "utility.cpp"
 #include <cstring>
 
 class ticket_val{
