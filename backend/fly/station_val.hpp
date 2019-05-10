@@ -11,7 +11,7 @@ namespace sjtu{
 class station_val{
 public:
   //char name[NAME_SIZE];
-  int passby_train[186] = {0};//one bit save a passby_train
+  unsigned int passby_train[186] = {0};//one bit save a passby_train
 
   station_val() = default;
   void add(int train_num){
@@ -26,10 +26,11 @@ public:
     passby_train[index] &( (unsigned int)(-1) - (unsigned int)(1 << bit));//TODO need verify
   }
 
-  void getval(int train_num){
+  bool getval(int train_num){
     int index = train_num >> 5;
-    
-
+    int bit = train_num % 32;
+    unsigned int tmp = (passby_train[index] >> bit) & (unsigned int) 1;
+    return tmp;//need verify
   }
 
 

@@ -17,10 +17,13 @@ namespace sjtu{
   const int CATALOG_SIZE = 11;
   const int TICKET_KIND_SIZE = 21;
   const int TRAIN_ID_SIZE = 21;
+  const int TIME_SIZE = 6;
   const int COMMAND_SIZE = 21;
   const int PRIVILEGE_SIZE = 4;
   const int START_USER_ID = 2018;
   const int MOD = (int)1e9 + 7;
   const int BIT = 129;
+  const int MAX_TRAIN_NUM = 5940;
+
 }
 #endif //TRAINTICKET_CONSTANT_H

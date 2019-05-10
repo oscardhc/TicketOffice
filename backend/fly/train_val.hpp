@@ -12,16 +12,28 @@ namespace sjtu {
 
 class Train_val {
 
+public:
+  struct station;
+  int station_num = 0, price_num = 0;
+  short order;
+  char trainID[TRAIN_ID_SIZE];
+  char name[NAME_SIZE];
+  char catalog[CATALOG_SIZE];
+  station *stations;
+  char *pricename[TICKET_KIND_SIZE];
+  bool if_delete = true;
+  bool if_sale = true;
+
   struct station {
     char station_name[LOCATION_SIZE];
     short arrive;
     short start;
     short stopover;
-    double *price;
-    int ticket[31];
+    double price[5];
+    int ticket[31][5];//save the ticket on date i from this station to next station
     station() = default;
 
-    void setInp(char *inp) {
+    void setInp(char *inp, int price_num) {
       char time[6];
       int len = getNextWord(inp,station_name);
       inp += len;
@@ -34,29 +46,19 @@ class Train_val {
       len = getNextWord(inp,time);
       inp += len;
       stopover = timeToInt(time);
-      price = new double[price_num];
       for(int i = 0;i < price_num;++i){
         len = skipWhiteSpace(inp);
         inp += (len + 1);
         sscanf(inp,"%f",&price[i]);
+        if(i > 0)
+          price[i] += price[i - 1];
       }
-      memset(ticket,2000,sizeof(ticket));
+      memset(ticket,MAXTICKET,sizeof(ticket));
     }
     ~station(){
-      delete[]price;
+
     }
   };
-public:
-  int station_num = 0, price_num = 0;
-  short order;
-  char trainID[TRAIN_ID_SIZE];
-  char name[NAME_SIZE];
-  char catalog[CATALOG_SIZE];
-  station *stations;
-  char *pricename[TICKET_KIND_SIZE];
-  bool if_delete = true;
-  bool if_sale = true;
-
   Train_val(char *inp) {
     int len = 0;
     len = getNextWord(inp,trainID);
@@ -78,7 +80,7 @@ public:
       inp += len;
     }
     for(int i = 0;i < station_num;++i){
-      stations[i].setInp(inp);
+      stations[i].setInp(inp,price_num);
       len = skipWhiteSpace(inp);
       inp += len;
     }
@@ -114,12 +116,87 @@ public:
     if_sale = false;
     return 1;
   }
-  int refund(char *inp) {
+  int refund(int num,char *inp) {
+    int date;
+    char dateStr[DATE_SIZE];
+    char sta1[LOCATION_SIZE];
+    char sta2[LOCATION_SIZE];
+    char ticket_kind[TICKET_KIND_SIZE];
+    char *cur = inp;
+
+    int len = getNextWord(cur,sta1);
+    cur += len;
+    len = getNextWord(cur,sta2);
+    cur += len;
+    len = getNextWord(cur,dateStr);
+    date = dateToInt(dateStr);
+    cur += len;
+    len = getNextWord(cur,ticket_kind);
+    cur += len;
+
+    int i;//check if ticket_kind exists
+    for (i = 0;i < price_num;++i)
+      if (strcmp(ticket_kind,pricename[i]) == 0) break;
+    if (i == price_num) return 0;
+
+    int cnt1 = 0;//check loc1 and loc2 is exist
+    while(strcmp(stations[cnt1].station_name,sta1) != 0){
+      if (++cnt1 == station_num)
+        return 0;
+    }
+    int cnt2 = cnt1;
+    while(strcmp(stations[cnt2].station_name,sta2) != 0){
+      if (stations[cnt2].ticket[date][i] < num || ++cnt2 == station_num)
+        return 0;
+    }
+
+    for(int j = cnt1; j < cnt2; ++j)
+      stations[j].ticket[date][i] += num;
+    return 1;
+  }
+  double buy(int num, char *inp) {
+    int date;
+    char dateStr[DATE_SIZE];
+    char sta1[LOCATION_SIZE];
+    char sta2[LOCATION_SIZE];
+    char ticket_kind[TICKET_KIND_SIZE];
+    char *cur = inp;
+
+    int len = getNextWord(cur,sta1);
+    cur += len;
+    len = getNextWord(cur,sta2);
+    cur += len;
+    len = getNextWord(cur,dateStr);
+    date = dateToInt(dateStr);
+    cur += len;
+    len = getNextWord(cur,ticket_kind);
+    cur += len;
+
+    int i;//check if ticket_kind exists
+    for (i = 0;i < price_num;++i)
+      if (strcmp(ticket_kind,pricename[i]) == 0) break;
+    if (i == price_num) return 0;
+
+    int cnt1 = 0;//check loc1 and loc2 is exist
+    while(strcmp(stations[cnt1].station_name,sta1) != 0){
+      if (++cnt1 == station_num)
+        return 0;
+    }
+    int cnt2 = cnt1;
+    while(strcmp(stations[cnt2].station_name,sta2) != 0){
+      if (stations[cnt2].ticket[date][i] < num || ++cnt2 == station_num)
+        return 0;
+    }
+
+    for(int j = cnt1; j < cnt2; ++j)
+      stations[j].ticket[date][i] -= num;
+    return stations[cnt2].price[i] - stations[cnt1].price[i];
+
 
   }
-  int buy(char *inp) {
 
-  }
+
+
 
   ~Train_val(){
     delete []stations;

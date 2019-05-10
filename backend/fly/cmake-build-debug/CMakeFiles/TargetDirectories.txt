@@ -1,0 +1,3 @@
+/Users/fulingyue/Documents/GitHub/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/fulingyue/Documents/GitHub/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/fulingyue/Documents/GitHub/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir

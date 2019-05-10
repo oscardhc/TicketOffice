@@ -7,11 +7,19 @@
 #include "constant.h"
 #include "utility.cpp"
 #include <cstring>
-
-class ticket_val{
+namespace sjtu {
+  class ticket_val {
 public:
+  bool is_delete;
+  int ID;
+  char loc1[LOCATION_SIZE], loc2[LOCATION_SIZE];
+  char date[DATE_SIZE];
+  char time1[TIME_SIZE], time2[TIME_SIZE];
+  char catalog[CATALOG_SIZE];
+  void del(char *inp){
 
-
+  }
+  void add(char *inp) {};
 };
-
+}
 #endif //BACKEND_TICKET_VALUE_H

@@ -2,9 +2,10 @@
 #include <iostream>
 #include "utility.cpp"
 #include "user_key.hpp"
-#include "bplustree.hpp"
 #include "train_val.hpp"
-#include "station_value.hpp"
+#include "station_val.hpp"
+#include "constant.h"
+#include "ticket_value.hpp"
 
 namespace sjtu {
 typedef int ID;
@@ -179,28 +180,31 @@ private:
     cur += len;
     len = getNextWord(cur,train_id);
     cur += len;
-    len = getNextWord(cur,sta1);
-    cur += len;
-    len = getNextWord(cur,sta2);
-    cur += len;
-    len = getNextWord(cur,dateStr);
-    cur += len;
-    len = getNextWord(cur,ticketKind);
-    cur += len;
+
     int hashid = getID(train_id);
     //b+tree find(hashid)
     Train_val val;
+    if (!val.if_sale || val.if_delete){
+      sprintf(ret,"0");
+      return;
+    }
     int bit_id = val.order;
     int hashSta1 = getID(sta1), hashSta2 = getID(sta2);
     //bptree find sta1 sta2
     station_val station1, station2;
-    if(station1.bit_id)
+    double price = val.buy(num,cur);
+    if(station1.getval(bit_id) && station2.getval(bit_id) && price > 0){
+//add ticket_value
+    }
+    sprintf(ret,"0");
   }
   void execute_queryOrder(){
     //TODO
+
   }
   void execute_refundTicket(){
     //TODO
+
   }
   /*Train word*/
   void execute_addTrain(){
