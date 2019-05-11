@@ -1,0 +1,26 @@
+INIT FILESIZE 0
+         READ  0    0
+         READ  1    8192
+         READ  2    16384
+         READ  3    24576
+         READ  4    32768
+         READ  5    40960
+         READ  6    49152
+         READ  7    57344
+         READ  8    65536
+         READ  9    73728
+         READ  10    81920
+         READ  11    90112
+         FLUSH 0    0
+         FLUSH 1    8192
+         FLUSH 2    16384
+         FLUSH 3    24576
+         FLUSH 4    32768
+         FLUSH 5    40960
+         FLUSH 6    49152
+         FLUSH 7    57344
+         FLUSH 8    65536
+         FLUSH 9    73728
+         FLUSH 10    81920
+         FLUSH 11    90112
+TOTAL 2124582 HIT 2124570 RATIO 0.999994
