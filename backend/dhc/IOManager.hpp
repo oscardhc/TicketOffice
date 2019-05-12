@@ -11,29 +11,29 @@
 #include "utility.hpp"
 
 // 8K per page (There should be NO elements with sizes exceeding 8K)
-const size_t pageSize = 8192;
+const int pageSize = 8192;
 // Bufferpool size: 8K * 128 = 1M
-const size_t bufferSize = 128;
-const size_t hotListSize = 100;
-const size_t coldListSize = bufferSize - hotListSize;
+const int bufferSize = 128;
+const int hotListSize = 100;
+const int coldListSize = bufferSize - hotListSize;
 
 namespace sjtu {
     class IOManager {
     private:
         FILE *file;
         char pool[bufferSize][pageSize];
-        size_t poolAge;
-        size_t fileSize;
-        size_t totalQuery, hitQuery;
+        int poolAge;
+        int fileSize;
+        int totalQuery, hitQuery;
 
         struct Node {
-            size_t index; // Page id (1,2,3...) in hard drive file
-            size_t value; // Pool of this page
-            size_t age;
+            int index; // Page id (1,2,3...) in hard drive file
+            int value; // Pool of this page
+            int age;
             short isEdited;
         };
 
-        map<size_t, Node*> ageMap, idxMap;
+        map<int, Node*> ageMap, idxMap;
 
     public:
         IOManager(FILE *_f) {
@@ -41,9 +41,10 @@ namespace sjtu {
             initBuff();
         }
         IOManager(char *filename) {
-            FILE *tmp = fopen(filename, "a");
-            fclose(tmp);
-            file = fopen(filename, "r+");
+//            FILE *tmp = fopen(filename, "a");
+//            fclose(tmp);
+//            file = fopen(filename, "r+");
+            file = fopen(filename, "w+");
             initBuff();
         }
         void initBuff() {
@@ -106,7 +107,7 @@ namespace sjtu {
             return node;
         }
 
-        Node* getBufferId(size_t index) {
+        Node* getBufferId(int index) {
             totalQuery++;
             auto it = idxMap.find(index);
             if (it != idxMap.end()) {
@@ -121,10 +122,11 @@ namespace sjtu {
             }
         }
 
-        void getElement(char *t, size_t offset, size_t elementSize) {
-            size_t beginIndex = offset / pageSize;
-            size_t pagePosition = offset % pageSize;
-            size_t pageLeft = pageSize - pagePosition;
+        void getElement(char *t, int offset, int elementSize) {
+//            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ get to %u\n", offset);
+            int beginIndex = offset / pageSize;
+            int pagePosition = offset % pageSize;
+            int pageLeft = pageSize - pagePosition;
 //            printf("GET %d %d %d\n", beginIndex, pagePosition, pageLeft);
             if (pageLeft >= elementSize) {
                 Node *poolid = getBufferId(beginIndex);
@@ -137,15 +139,16 @@ namespace sjtu {
             }
         }
 
-        size_t createElement(size_t elementSize) {
+        int createElement(int elementSize) {
             fileSize += elementSize;
             return fileSize - elementSize;
         }
 
-        void setElement(char *t, size_t offset, size_t elementSize) {
-            size_t beginIndex = offset / pageSize;
-            size_t pagePosition = offset % pageSize;
-            size_t pageLeft = pageSize - pagePosition;
+        void setElement(char *t, int offset, int elementSize) {
+//            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ set to %u\n", offset);
+            int beginIndex = offset / pageSize;
+            int pagePosition = offset % pageSize;
+            int pageLeft = pageSize - pagePosition;
 //            printf("SET %d %d %d\n", beginIndex, pagePosition, pageLeft);
             if (pageLeft >= elementSize) {
                 Node *poolid = getBufferId(beginIndex);

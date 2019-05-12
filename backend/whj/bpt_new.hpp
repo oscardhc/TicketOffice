@@ -9,7 +9,7 @@ enum NODE_TYPE{INTERNAL = 0, LEAF = 1}; // 结点类型：内结点、叶子结�
 enum SIBLING_DIRECTION{LEFT, RIGHT}; // 兄弟结点方向：左兄弟结点、右兄弟结点
 typedef int KeyType; // 键类型
 typedef int DataType; // 值类型
-const int ORDER = 7; // B+树的阶（非根内结点的最小子树个数）
+const int ORDER = 40; // B+树的阶（非根内结点的最小子树个数）
 const int MINNUM_KEY = ORDER-1; // 最小键值个数
 const int MAXNUM_KEY = 2*ORDER-1; // 最大键值个数
 const int MINNUM_CHILD = MINNUM_KEY+1; // 最小子树个数
@@ -17,7 +17,8 @@ const int MAXNUM_CHILD = MAXNUM_KEY+1; // 最大子树个数
 const int MINNUM_LEAF = MINNUM_KEY; // 最小叶子结点键值个数
 const int MAXNUM_LEAF = MAXNUM_KEY; // 最大叶子结点键值个数
 
-const size_t NODE_SIZE = sizeof(NODE_TYPE) + sizeof(int) + sizeof(KeyType) * MAXNUM_KEY + 2 * sizeof(size_t) + sizeof(DataType) * MAXNUM_KEY;
+//const int NODE_SIZE = sizeof(NODE_TYPE) + sizeof(int) + sizeof(KeyType) * MAXNUM_KEY + 2 * sizeof(int) + sizeof(DataType) * (MAXNUM_CHILD);
+const int NODE_SIZE = ORDER * 16 + 24;
 
 
 sjtu::IOManager DataBase("./out.txt");
@@ -76,10 +77,9 @@ public:
     }
 
     virtual void removekey(int keyindex, int childindex) = 0;
-    virtual void split(size_t fa_off, int childindex, size_t this_off) = 0;
-    virtual void merge(size_t fa_off, size_t child_off, int keyindex) = 0;
-    //virtual void clear() = 0;
-    virtual void steal(size_t bro_off, size_t fa_off, int keyindex, SIBLING_DIRECTION d) = 0;
+    virtual void split(int fa_off, int childindex, int this_off) = 0;
+    virtual void merge(int fa_off, int child_off, int keyindex, int this_off) = 0;
+    virtual void steal(int bro_off, int fa_off, int keyindex, SIBLING_DIRECTION d, int this_off) = 0;
     virtual int getchildindex(KeyType key, int keyindex) const = 0;
 
 };
@@ -87,8 +87,9 @@ public:
 
 class InterNode:public CNode<KeyType, DataType>{
 private:
-//    CNode<KeyType, DataType> * m_Childs[MAXNUM_CHILD];
-    size_t m_Childs[MINNUM_CHILD];
+    int m_Childs[MAXNUM_CHILD];
+    int m_left;
+    int m_right;
 public:
     InterNode(){
         m_type = INTERNAL;
@@ -99,15 +100,15 @@ public:
 
     }
 
-    size_t getchild(int i) const{
+    int getchild(int i) const{
         return m_Childs[i];
     }
 
-    void setChild(int i, size_t child_off){
+    void setChild(int i, int child_off){
         m_Childs[i] = child_off;
     }
 
-    void insert(int keyindex, int childindex, KeyType key, size_t offset){
+    void insert(int keyindex, int childindex, KeyType key, int offset){
         for (int i = getKeyNum(); i  >= keyindex; --i){
             setChild(i + 1, m_Childs[i]);
         }
@@ -136,8 +137,8 @@ public:
         m_KeyNum--;
     }
 
-    virtual void split(size_t fa_off, int childindex, size_t this_off){
-        size_t new_off = DataBase.createElement();
+    virtual void split(int fa_off, int childindex, int this_off){
+        int new_off = DataBase.createElement(NODE_SIZE);
         InterNode *newnode  = new InterNode();
         newnode->setKeyNum(MINNUM_KEY);
         int i;
@@ -153,14 +154,14 @@ public:
         fa->insert(childindex, childindex + 1, m_keys[MINNUM_KEY], new_off);
         DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElement((char*)newnode, new_off, NODE_SIZE);
-
+        DataBase.setElement((char*)this, this_off, NODE_SIZE);
 
         delete newnode;
         delete fa;
 
     }
 
-    virtual void merge(size_t fa_off, size_t child_off, int keyindex){
+    virtual void merge(int fa_off, int child_off, int keyindex, int this_off){
         InterNode * fa = new InterNode();
         InterNode * child = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
@@ -173,21 +174,12 @@ public:
         fa->removekey(keyindex, keyindex + 1);
         DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElement((char*)child, child_off, NODE_SIZE);
+        DataBase.setElement((char*)this, this_off, NODE_SIZE);
         delete fa;
         delete child;
-        //delete (InterNode*)child;/////
     }
 
-//    virtual void clear(){
-//        for (int i = 0; i <= m_KeyNum; ++i){
-//            m_Childs[i]->clear();
-//            delete m_Childs[i];
-//            m_Childs[i] = nullptr;
-//        }
-//
-//    }
-
-    virtual void steal(size_t bro_off, size_t fa_off, int keyindex, SIBLING_DIRECTION d){
+    virtual void steal(int bro_off, int fa_off, int keyindex, SIBLING_DIRECTION d, int this_off){
         InterNode * fa = new InterNode();
         InterNode * bro = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
@@ -201,17 +193,17 @@ public:
             insert(getKeyNum(), getKeyNum() + 1, fa->getKey(keyindex), (bro)->getchild(0));
             fa->setKey(keyindex, bro->getKey(0));
             bro->removekey(0, -1);
-            ///fa->setKey(keyindex, bro->getKey(0));
         }
         DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElement((char*)bro, bro_off, NODE_SIZE);
+        DataBase.setElement((char*)this, this_off, NODE_SIZE);
         delete fa;
         delete bro;
 
     }
 
     virtual int getchildindex(KeyType key, int keyindex) const {
-        if (keyindex == getKeyNum()) return keyindex;
+        if (keyindex >= getKeyNum()) return keyindex;
         if (key == getKey(keyindex)){
             return keyindex + 1;
         }
@@ -224,9 +216,9 @@ public:
 
 class LeafNode: public CNode<KeyType, DataType>{
 private:
-    size_t m_left;
-    size_t m_right;
-    DataType m_Datas[MAXNUM_LEAF];
+    int m_left;
+    int m_right;
+    DataType m_Datas[MAXNUM_CHILD];
 
 public:
     LeafNode(){
@@ -237,19 +229,19 @@ public:
 
     }
 
-    size_t getleft()const{
+    int getleft()const{
         return m_left;
     }
 
-    void setleft(size_t left){
+    void setleft(int left){
         m_left = left;
     }
 
-    size_t getright()const{
+    int getright()const{
         return m_right;
     }
 
-    void setright(size_t right){
+    void setright(int right){
         m_right = right;
     }
 
@@ -270,7 +262,6 @@ public:
         setdata(i, data);
         setKey(i, key);
         m_KeyNum++;
-
     }
 
     virtual void removekey(int keyindex, int childindex){
@@ -282,8 +273,8 @@ public:
 
     }
 
-    virtual void split(size_t fa_off, int childindex, size_t this_off){
-        size_t new_off = DataBase.createElement();
+    virtual void split(int fa_off, int childindex, int this_off){
+        int new_off = DataBase.createElement(NODE_SIZE);
         LeafNode * newnode = new LeafNode();
         InterNode * fa = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
@@ -299,11 +290,11 @@ public:
         (fa)->insert(childindex, childindex + 1, m_keys[MINNUM_LEAF], new_off);
         DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElement((char*)newnode, new_off, NODE_SIZE);
-        delete fa;
+        DataBase.setElement((char*)this, this_off, NODE_SIZE);
         delete newnode;
     }
 
-    virtual void merge(size_t fa_off, size_t child_off, int keyindex){
+    virtual void merge(int fa_off, int child_off, int keyindex, int this_off){
         InterNode * fa = new InterNode();
         InterNode * child = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
@@ -316,16 +307,14 @@ public:
         fa->removekey(keyindex, keyindex + 1);
         DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElement((char*)child, child_off, NODE_SIZE);
+        DataBase.setElement((char*)this, this_off, NODE_SIZE);
         delete fa;
         delete child;
 
     }
 
-//    virtual void clear(){
-//
-//    }
 
-    virtual void steal(size_t bro_off, size_t fa_off, int keyindex, SIBLING_DIRECTION d){
+    virtual void steal(int bro_off, int fa_off, int keyindex, SIBLING_DIRECTION d, int this_off){
         InterNode * fa = new InterNode();
         InterNode * bro = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
@@ -342,10 +331,9 @@ public:
         }
         DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElement((char*)bro, bro_off, NODE_SIZE);
+        DataBase.setElement((char*)this, this_off, NODE_SIZE);
         delete fa;
         delete bro;
-
-
     }
 
     virtual int getchildindex(KeyType key, int keyindex) const {
@@ -361,36 +349,34 @@ class BPlusTree{
         LeafNode * node;
     };
 private:
-    size_t root_off;
-    size_t head_off;
+    int root_off;
+    int head_off;
     KeyType m_maxkey;
     int cnt;
     long long size;
-    InterNode *alter_inter[4];
-    LeafNode *alter_leaf[4];
+    InterNode *alter_inter[10];
+    LeafNode *alter_leaf[10];
 public:
     BPlusTree() {
-        for (int i = 0; i < 4; ++i){
+        for (int i = 0; i < 10; ++i){
             alter_inter[i] = new InterNode();
             alter_leaf[i] = new LeafNode();
         }
-        root_off = 0;
-        head_off = 0;
+        root_off = -1;
+        head_off = -1;
         m_maxkey = 0;
         size = 0;
     }
 
     ~BPlusTree(){
-        for (int i = 0; i < 4; ++i){
+        for (int i = 0; i < 10; ++i){
             delete alter_leaf[i];
             delete alter_inter[i];
         }
-        for (int i = 0)
-        root_off = 0;
-        m_maxkey = 0;
+        root_off = -1;
+        head_off = -1;
+        m_maxkey = -1;
         size = 0;
-        //clear();
-
     }
 
     bool insert(KeyType key, const DataType & data){
@@ -398,38 +384,43 @@ public:
 
 
         size++;
-        CNode < KeyType, DataType > *m_root = alter_inter[0];
-        if (root_off == 0){
-            size_t root_off = DataBase.createElement();
-            m_root = alter_leaf[0];
-            DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
+        CNode < KeyType, DataType > *m_root = new InterNode();
+        if (root_off == -1){
+            root_off = DataBase.createElement(NODE_SIZE);
+            delete m_root;
+            m_root = new LeafNode();
+            m_root->setKeyNum(0);
             head_off = root_off;
             m_maxkey = key;
         }
         else {
-            m_root = alter_inter[0];
             DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
             if (m_root->getType() == LEAF){
-                m_root = alter_leaf[0];
+                delete m_root;
+                m_root = new LeafNode();
                 DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
             }
         }
-        DataBase.setElement((char*)m_root, root_off, NODE_SIZE);
 
         if (m_root->getKeyNum() >= MAXNUM_KEY){
-            size_t new_off = DataBase.createElement();
-            InterNode *newnode = alter_inter[1];
-            DataBase.getElement((char*)newnode, new_off, NODE_SIZE);
+            int new_off = DataBase.createElement(NODE_SIZE);
+            InterNode *newnode = new InterNode();
+            newnode->setKeyNum(0);
             newnode->setChild(0, root_off);
+            DataBase.setElement((char*)newnode, new_off, NODE_SIZE);
             m_root->split(new_off, 0, root_off);
             root_off = new_off;
-            DataBase.setElement((char*)newnode, new_off, NODE_SIZE);
+
+
+            DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
         }
 
-        if (key > m_maxkey) m_maxkey = key;
-
-        inter_insert(root_off, key, data);
         DataBase.setElement((char*)m_root, root_off, NODE_SIZE);
+
+        if (key > m_maxkey) m_maxkey = key;
+        inter_insert(root_off, key, data, 0);
+
+        DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
 
         return true;
 
@@ -443,45 +434,48 @@ public:
         if (search(key) == -1) return false;
         size--;
 
-        CNode < KeyType , DataType > *m_root = alter_inter[0];
+        CNode < KeyType , DataType > *m_root = new InterNode();
         DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
         if (m_root->getKeyNum() == 1){
             if (m_root->getType() == LEAF){
                 m_root->setKey(0, 0);
                 m_root->setKeyNum(0);
-                root_off = 0;
-                head_off = 0;
+                root_off = -1;
+                head_off = -1;
                 //clear();
                 return true;
             }
-            size_t ch1_off = ((InterNode*)m_root)->getchild(0);
-            size_t ch2_off = ((InterNode*)m_root)->getchild(1);
-            CNode < KeyType , DataType > *ch1 = alter_inter[1], *ch2 = alter_inter[2];
+            int ch1_off = ((InterNode*)m_root)->getchild(0);
+            int ch2_off = ((InterNode*)m_root)->getchild(1);
+            CNode < KeyType , DataType > *ch1 = new InterNode(), *ch2 = new InterNode();
             DataBase.getElement((char*)ch1, ch1_off, NODE_SIZE);
             DataBase.getElement((char*)ch2, ch2_off, NODE_SIZE);
             if (ch1->getType() == LEAF){
-                ch1 = alter_leaf[0];
-                ch2 = alter_leaf[1];
+                delete ch1;
+                delete ch2;
+                ch1 = new LeafNode();
+                ch2 = new LeafNode();
                 DataBase.getElement((char*)ch1, ch1_off, NODE_SIZE);
                 DataBase.getElement((char*)ch2, ch2_off, NODE_SIZE);
             }
 
             if (ch1->getKeyNum() == MINNUM_KEY && ch2->getKeyNum() == MINNUM_KEY){
-                ch1->merge(root_off, ch2_off, 0);
+                ch1->merge(root_off, ch2_off, 0, ch1_off);
                 root_off = ch1_off;
             }
-            DataBase.setElement((char*)ch1, ch1_off, NODE_SIZE);
+
 
         }
-
+        DataBase.getElement((char*)m_root, root_off, NODE_SIZE);
         inter_remove(root_off, key);
-        DataBase.setElement((char*)m_root, root_off, NODE_SIZE);
+
+
         return true;
     }
 
     bool update(KeyType key, DataType _new){
         if (search(key) == -1) return false;
-        inter_update(root_off, key, _new);
+        inter_update(root_off, key, _new, 0);
     }
 
     DataType search(KeyType key){
@@ -489,48 +483,57 @@ public:
 
     }
 
-//    void clear(){
-//        if (m_root != nullptr){
-//            m_root->clear();
-//            delete m_root;
-//            m_root = nullptr;
-//            m_head = nullptr;
-//        }
-//
-//    }
 
+    void print(){
+        cout << "root_off: " << root_off << endl;
+        cnt = 1;
+        if (root_off == -1) return;
+        print(root_off, cnt);
+    }
+    void print(int p_off, int cnt){
+        CNode < KeyType, DataType > *p = new InterNode();
+        DataBase.getElement((char*)p, p_off, NODE_SIZE);
+        printf("type = %d\n", p->getType());
+        if (p->getType() == LEAF){
+            delete p;
+            p = new LeafNode();
+            DataBase.getElement((char*)p, p_off, NODE_SIZE);
+        }
+        cout << "第" << cnt << "层" << p_off  << "      ";
+        printnode(p_off);
+        if (p->getType() != LEAF) {
+            printf("[%u]", p->getKeyNum());
+            for (int i = 0; i <= p->getKeyNum(); ++i){
+                printf("%u ", ((InterNode*)p)->getchild(i));
+            }
+            printf("\n");
+        }
+        cout << endl;
+        if (p->getType() != LEAF){
+            for (int i = 0; i <= p->getKeyNum(); ++i){
+                print(((InterNode*)p)->getchild(i), cnt + 1);
+            }
+        }
+    }
+    void printnode(int p_off){
+        CNode < KeyType, DataType > *p = new InterNode();
+        DataBase.getElement((char*)p, p_off, NODE_SIZE);
+        for (int i = 0; i < p->getKeyNum(); ++i){
+            cout << p->getKey(i) << " ";
+        }
 
-//    void print(){
-//        cnt = 1;
-//        if (m_root == nullptr) return;
-//        print(m_root, cnt);
-//    }
-//    void print(CNode < KeyType, DataType > *p, int cnt){
-//        cout << "第" << cnt << "层" ;
-//        printnode(p);
-//        cout << endl;
-//        if (p->getType() != LEAF){
-//            for (int i = 0; i <= p->getKeyNum(); ++i){
-//                print(((InterNode*)p)->getchild(i), cnt + 1);
-//            }
-//        }
-//    }
-//    void printnode(CNode < KeyType, DataType > *p){
-//        for (int i = 0; i < p->getKeyNum(); ++i){
-//            cout << p->getKey(i) << " ";
-//        }
-//
-//    }
+    }
     KeyType getmax(){
         return m_maxkey;
     }
 
 private:
-    bool inter_update(size_t p_off, KeyType key, DataType _new){
-        CNode < KeyType, DataType > *p = alter_inter[0];
+    bool inter_update(int p_off, KeyType key, DataType _new, int depth){
+        CNode < KeyType, DataType > *p = new InterNode();
         DataBase.getElement((char*)p, p_off, NODE_SIZE);
         if (p->getType() == LEAF){
-            p = alter_leaf[0];
+            delete p;
+            p = new LeafNode();
             DataBase.getElement((char*)p, p_off, NODE_SIZE);
         }
         if (p == nullptr) return false;
@@ -545,50 +548,60 @@ private:
             else return false;
         }
 
-        return inter_update(((InterNode*)p)->getchild(childindex), key, _new);
+        return inter_update(((InterNode*)p)->getchild(childindex), key, _new, depth + 1);
     }
 
 
 
-    void inter_insert(size_t fa_off, KeyType key, const DataType & data){
-        CNode < KeyType , DataType > *fa = alter_inter[0];
+    void inter_insert(int fa_off, KeyType key, const DataType & data, int depth){
+        CNode < KeyType , DataType > *fa = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
+
         if (fa->getType() == LEAF){
-            fa = alter_leaf[0];
+            delete fa;
+            fa = new LeafNode();
             DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
-        }
-        if (fa->getType() == LEAF){
+
             ((LeafNode*)fa)->insert(key, data);
+
+            DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
             return;
         }
 
         int keyindex = fa->getKeyIndex(key);
         int childindex = fa->getchildindex(key, keyindex);
 
-        size_t child_off = ((InterNode*)fa)->getchild(childindex);
-        CNode < KeyType, DataType > *childnode = alter_inter[0];
+        int child_off = ((InterNode*)fa)->getchild(childindex);
+
+        CNode < KeyType, DataType > *childnode = new InterNode();
         DataBase.getElement((char*)childnode, child_off, NODE_SIZE);
         if (childnode->getType() == LEAF) {
-            childnode = alter_leaf[0];
+
+            delete childnode;
+            childnode = new LeafNode();
             DataBase.getElement((char*)childnode, child_off, NODE_SIZE);
         }
 
         if (childnode->getKeyNum() >= MAXNUM_KEY){
+            
             childnode->split(fa_off, childindex, child_off);
+
+            DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
+
             if (key >= fa->getKey(childindex)){
                 child_off = ((InterNode*)fa)->getchild(childindex + 1);
             }
+
         }
-        DataBase.setElement((char*)childnode, child_off, NODE_SIZE);
-        inter_insert(child_off, key, data);
-        DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
+        inter_insert(child_off, key, data, depth + 1);
     }
 
-    void inter_remove(size_t fa_off, KeyType key){
-        CNode < KeyType , DataType > *fa = alter_inter[0];
+    void inter_remove(int fa_off, KeyType key){
+        CNode < KeyType , DataType > *fa = new InterNode();
         DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
         if (fa->getType() == LEAF){
-            fa = alter_leaf[0];
+            delete fa;
+            fa = new LeafNode();
             DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
         }
         int keyindex = fa->getKeyIndex(key);
@@ -598,62 +611,80 @@ private:
                 m_maxkey = fa->getKey(keyindex - 1);   //////
             }
             fa->removekey(keyindex, childindex);
-            CNode < KeyType , DataType > *root = alter_inter[0];
+            DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
+            DataBase.getElement((char*)fa, fa_off, NODE_SIZE);
+            CNode < KeyType , DataType > *root = new InterNode();
             DataBase.getElement((char*)root, root_off, NODE_SIZE);
             if (childindex == 0 && root->getType() != LEAF && fa_off != head_off){
                 changekey(root_off, key, fa->getKey(0));
             }
             DataBase.setElement((char*)fa, fa_off, NODE_SIZE);
-            //DataBase.setElement((char*)root, root_off, NODE_SIZE);
         }
         else {
-            size_t child_off = ((InterNode*)fa)->getchild(childindex);
-            CNode < KeyType , DataType > *child = alter_inter[1];
+            int child_off = ((InterNode*)fa)->getchild(childindex);
+            CNode < KeyType , DataType > *child = new InterNode;
             DataBase.getElement((char*)child, child_off, NODE_SIZE);
             if (child->getType() == LEAF){
-                child = alter_leaf[1];
+                delete child;
+                child = new LeafNode();
                 DataBase.getElement((char*)child, child_off, NODE_SIZE);
             }
 
             if (child->getKeyNum() == MINNUM_KEY){
-                size_t left_off = childindex > 0 ? ((InterNode*)fa)->getchild(childindex - 1) : 0;
-                size_t right_off = childindex < fa->getKeyNum() ? ((InterNode*)fa)->getchild(childindex + 1): 0;
-                CNode < KeyType , DataType > *left = alter_inter[2], *right = alter_inter[3];
-                DataBase.getElement((char*)left, left_off, NODE_SIZE);
-                DataBase.getElement((char*)right, right_off, NODE_SIZE);
-                if (left->getType() == LEAF){
-                    left = alter_leaf[2];
+                int left_off = childindex > 0 ? ((InterNode*)fa)->getchild(childindex - 1) : -1;
+                int right_off = childindex < fa->getKeyNum() ? ((InterNode*)fa)->getchild(childindex + 1): -1;
+                CNode < KeyType , DataType > *left = new InterNode(), *right = new InterNode();
+                if (left_off != -1) {
                     DataBase.getElement((char*)left, left_off, NODE_SIZE);
-                    right = alter_leaf[3];
+                    if (left->getType() == LEAF){
+                        delete left;
+                        left = new LeafNode();
+                        DataBase.getElement((char*)left, left_off, NODE_SIZE);
+                        if (right_off != -1){
+                            delete right;
+                            right = new LeafNode();
+                            DataBase.getElement((char*)right, right_off, NODE_SIZE);
+                        }
+                    }
+                    else{
+                        DataBase.getElement((char*)right, right_off, NODE_SIZE);
+                    }
+
+                }
+                else if (right_off != -1){
                     DataBase.getElement((char*)right, right_off, NODE_SIZE);
+                    if (right->getType() == LEAF){
+                        delete right;
+                        right = new LeafNode();
+                        DataBase.getElement((char*)right, right_off, NODE_SIZE);
+                    }
+
                 }
 
-                if (left && left->getKeyNum() > MINNUM_KEY) child->steal(left_off, fa_off, childindex - 1, LEFT);
-                else if (right && right->getKeyNum() > MINNUM_KEY) child->steal(right_off, fa_off, childindex, RIGHT);
-                else if (left){
-                    left->merge(fa_off, child_off, childindex - 1);
+                if (left_off != -1 && left->getKeyNum() > MINNUM_KEY) child->steal(left_off, fa_off, childindex - 1, LEFT, child_off);
+                else if (right_off != -1 && right->getKeyNum() > MINNUM_KEY) child->steal(right_off, fa_off, childindex, RIGHT, child_off);
+                else if (left_off != -1){
+                    left->merge(fa_off, child_off, childindex - 1, left_off);
                     child_off  = left_off;
                 }
-                else if (right){
-                    child->merge(fa_off, right_off, childindex);
+                else if (right_off != -1){
+                    child->merge(fa_off, right_off, childindex, child_off);
                 }
-                DataBase.setElement((char*)left, left_off, NODE_SIZE);
-                DataBase.setElement((char*)right, right_off, NODE_SIZE);
-                DataBase.setElement((char*)child, child_off, NODE_SIZE);
             }
+            DataBase.getElement((char*)child, child_off, NODE_SIZE);
             inter_remove(child_off, key);
-            DataBase.setElement((char*)child, child_off, NODE_SIZE);
         }
     }
 
-    DataType inter_search(size_t p_off, KeyType key) const{
-        CNode < KeyType, DataType > *p = alter_inter[0];
+    DataType inter_search(int p_off, KeyType key) const{
+        CNode < KeyType, DataType > *p = new InterNode();
         DataBase.getElement((char*)p, p_off, NODE_SIZE);
         if (p->getType() == LEAF){
-            p = alter_leaf[0];
+            delete p;
+            p = new LeafNode();
             DataBase.getElement((char*)p, p_off, NODE_SIZE);
         }
-        if (p == nullptr) return -1;
+        if (root_off == -1) return -1;
         int keyindex = p->getKeyIndex(key);
         int childindex = p->getchildindex(key, keyindex);
         if (p->getType() == LEAF){
@@ -662,32 +693,27 @@ private:
             }
             else return -1;
         }
-
         return inter_search(((InterNode*)p)->getchild(childindex), key);
-
     }
 
-    void changekey(size_t p_off, KeyType _old, KeyType _new){
-        CNode < KeyType, DataType > *p = alter_inter[0];
+    void changekey(int p_off, KeyType _old, KeyType _new){
+        CNode < KeyType, DataType > *p = new InterNode();
         DataBase.getElement((char*)p, p_off, NODE_SIZE);
         if (p->getType() == LEAF){
-            p = alter_leaf[0];
+            delete p;
+            p = new LeafNode();
             DataBase.getElement((char*)p, p_off, NODE_SIZE);
         }
         if (p != nullptr && p->getType() != LEAF){
             int keyindex = p->getKeyIndex(_old);
             if (_old == p->getKey(keyindex)){
                 p->setKey(keyindex, _new);
+                DataBase.setElement((char*)p, p_off, NODE_SIZE);
             }
             else {
                 changekey(((InterNode*)p)->getchild(keyindex), _old, _new);
             }
         }
+
     }
-
-
-
-
-
-
 };
