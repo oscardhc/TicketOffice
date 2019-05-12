@@ -6,7 +6,7 @@
 #include "utility.cpp"
 #include <cstring>
 #include <iostream>
-#include "backend/whj/bpt_new.hpp"
+#include "../whj/bpt_new.hpp"
 #include "../dhc/IOManager.hpp"
 
 namespace sjtu {
@@ -97,35 +97,31 @@ private:
   int commandLength;
   int trainID[MAX_TRAIN_NUM];
   short cnt_train = 0;
-
-
-  bplustree userTree;
+  BPlusTree userTree;
+  BPlusTree trainTree;
+  BPlusTree stationTree;
   IOManager dataBase;
 
-  // bplustree<ID,
-  // TODO build bplustsree
 
+public:
   /*User word:*/
   void execute_register() {
     char *cur = cmd + commandLength;
-    sjtu::User_val val(cur);
-    // insert
-    size_t id = userTree.size() + 2019;
-    size_t offset = dataBase.createElement();
+    User_val val(cur);
+    size_t id = (size_t)userTree.getsize() + 2019;
+    size_t offset = dataBase.createElement(USER_SIZE);
     dataBase.setElement((char*)&val, offset, USER_SIZE);
     userTree.insert(id, offset);
   }
   void execute_login() {
-    // TODO
     char username[20], password[20];
     char *cur = cmd + commandLength;
     int userlen = getNextWord(cur, username);
     cur += userlen;
     int passlen = getNextWord(cur, password);
-    // find(getID(username))
-    User_val val;
+    sjtu::User_val val;
     size_t id = (size_t)getID(username);
-    size_t offset = userTree.find(id);
+    size_t offset = userTree.search(id);
     dataBase.getElement((char*)&val, offset, USER_SIZE);
 
     if (strcmp(val.password, password) == 0) {
@@ -136,35 +132,33 @@ private:
 
   }
   void execute_queryProfile() {
-    // TODO
     char *cur = cmd + commandLength;
     int id;
     skipWhiteSpace(cur);
     sscanf(cur, "%d", &id);
     User_val val;
-    size_t offset = userTree.find(id);
+    size_t offset = userTree.search(id);
     dataBase.getElement((char*)&val, offset, USER_SIZE);
     sprintf(ret, "%s %s %s %d\n", val.name, val.email, val.phone,
             val.privilege);
-//    sprintf(ret, "a b c d");
   }
   void execute_modifyProfile() {
-    // TODO
     char *cur = cmd + commandLength;
-    char id[4];
+    char id[ID_SIZE];
     int idlen = getNextWord(cur, id);
     cur += idlen;
-    int ID = 0;
-    for (int i = 0; i < 4; ++i)
+    int ID = 0, i = 0;
+    while(id[i] != '\0') {
       (ID *= 10) += (id[i] - '0');
-    // find(ID)
+      i++;
+    }
     User_val val(cur);
-    // modify in database
+    size_t offset = userTree.search(ID);
+    dataBase.setElement((char*)&val,offset,USER_SIZE);
   }
   void execute_modifyPrivilege() {
-    // TODO
     char *cur = cmd + commandLength;
-    char id1[4], id2[4];
+    char id1[ID_SIZE], id2[ID_SIZE];
     int privil;
     int p_id1, p_id2;
     int idlen = getNextWord(cur, id1);
@@ -174,7 +168,11 @@ private:
     int ID1 = 0, ID2 = 0;
     for (int i = 0; i < 4; ++i)
       (ID1 *= 10) += (id1[i] - '0');
-    // find (id1)
+
+    User_val val1;
+    size_t offset1 = userTree.search(ID1);
+    dataBase.getElement((char*)&val1,offset1,USER_SIZE);
+    p_id1 = val1.privilege;
     if (p_id1 == 1 || p_id1 == 0) {
       sprintf(ret, "0");
       return;
@@ -184,7 +182,10 @@ private:
     idlen = skipWhiteSpace(cur);
     cur += idlen;
     sscanf(cur, "%d", &privil);
-    // find(id2)
+    User_val val2;
+    size_t offset2 = userTree.search(ID1);
+    dataBase.getElement((char*)&val2,offset2,USER_SIZE);
+    p_id2 = val2.privilege;
     if (p_id2 == 2) {
       if (privil == 2) {
         sprintf(ret, "1");
@@ -193,7 +194,8 @@ private:
     }
     if (p_id2 == 1) {
       if (privil == 2) {
-        // setprivilege
+        val2.privilege = 2;
+        dataBase.setElement((char*)&val2,offset2,USER_SIZE);
         sprintf(ret, "1");
         return;
       }
@@ -210,12 +212,42 @@ private:
     int len = getNextWord(cur, loc1);
     cur += len;
     len = getNextWord(cur, loc2);
+    cur += len;
+    len = getNextWord(cur,date);
+    cur += len;
+    len = getNextWord(cur,catalog);
+    len = strlen(catalog);
+    int hash1 = getID(loc1), hash2 = getID(loc2);
+    size_t offset1 = stationTree.search(hash1);
+    size_t offset2 = stationTree.search(hash2);
+    station_val sta1,sta2;
+    dataBase.getElement((char*)&sta1,offset1,STATION_SIZE);
+    dataBase.getElement((char*)&sta2,offset2,STATION_SIZE);
+    int biString1,biString2,biString;
+    int cnt = 0;
+    for (int i = 0;i < 186;++i){
+      biString1 = sta1.passby_train[i];
+      biString2 = sta2.passby_train[i];
+      biString = biString1 & biString2;
+      while(biString){
+        biString = biString & (biString - 1);
+        cnt++;
+      }
+    }
+    sprintf(ret,"%d",cnt);
+    Train_val train[cnt];
+    for(int i = 0;i < MAX_TRAIN_NUM; ++i){
+      if(sta1.getval(i) & sta2.getval(i)){
+        dataBase.getElement((char*)&train[cnt])
+      }
+    }
+
+
   }
   void execute_queryTransfer() {
     // TODO
   }
   void execute_buyTicket() {
-    // TODO
     char *cur = cmd + commandLength;
     char user_id[ID_SIZE], train_id[TRAIN_ID_SIZE];
     int num;
@@ -233,18 +265,19 @@ private:
     cur += len;
     len = getNextWord(cur, train_id);
     cur += len;
-
     int hashid = getID(train_id);
-    // b+tree find(hashid)
+    size_t offset = trainTree.search(hashid);
     Train_val val;
+    dataBase.getElement((char*)&val,offset,TRAIN_SIZE);//TODO
     if (!val.if_sale || val.if_delete) {
       sprintf(ret, "0");
       return;
     }
-    int bit_id = val.order;
     double price = val.buy(num, cur);
     if (price > 0) {
       // add ticket_value
+      sprintf(ret,"1");
+      return;
     }
     sprintf(ret, "0");
   }
@@ -252,7 +285,6 @@ private:
     // TODO
   }
   void execute_refundTicket() {
-    //
     char *cur = cmd + commandLength;
     char user_id[ID_SIZE], train_id[TRAIN_ID_SIZE];
     int num;
@@ -272,22 +304,21 @@ private:
     cur += len;
 
     int hashid = getID(train_id);
-    // b+tree find(hashid)
+    size_t offset = trainTree.search(hashid);
     Train_val val;
+    dataBase.getElement((char*)&val,offset,TRAIN_SIZE);
     if (!val.if_sale || val.if_delete) {
       sprintf(ret, "0");
       return;
     }
-    int bit_id = val.order;
     if (val.refund(num, cur)) {
-      // del ticket_value
+      // TODO del ticket_value
       sprintf(ret, "1");
     }
     sprintf(ret, "0");
   }
   /*Train word*/
   void execute_addTrain() {
-    // TODO
     char *cur = cmd + commandLength;
     char ID[TRAIN_ID_SIZE];
     int len = getNextWord(cur, ID);
@@ -295,25 +326,28 @@ private:
 
     Train_val val(cur);
     val.setOrder(cnt_train++);
-    // database.insert<hashid,val>
+    size_t offset = dataBase.createElement(TRAIN_SIZE);
+    dataBase.setElement((char*)&val,offset,TRAIN_SIZE);
+    trainTree.insert(hashid,offset);
     sprintf(ret, "1");
   }
   void execute_saleTrain() {
-    // TODO
     char *cur = cmd + commandLength;
     char ID[TRAIN_ID_SIZE];
     int len = getNextWord(cur, ID);
     int hashid = getID(ID);
-    // database.find(hashid) failed:ret = "0"
-    Train_val val; //此文件中所有这样的形式都是假装找到
+    size_t offset = trainTree.search(hashid);
+    Train_val val;
+    dataBase.getElement((char*)&val, offset,TRAIN_SIZE);
     if (!val.if_sale && !val.if_delete) {
       val.if_sale = true;
-      // insert<hashid,val>into bptree
       for (int i = 0; i < val.station_num; ++i) {
-        int station_id = getID(val.stations[i].station_name);
-        // find(stationid)
+        int station_id = getID(val.getStation(i)->station_name);
+        offset = stationTree.search(hashid);
         station_val sta;
+        dataBase.getElement((char*)&sta,offset,STATION_SIZE);
         sta.add(hashid);
+        dataBase.setElement((char*)&sta,offset,STATION_SIZE);
       }
       sprintf(ret, "1");
       return;
@@ -321,13 +355,13 @@ private:
       sprintf(ret, "0");
   }
   void execute_queryTrain() {
-    // TODO
     char *cur = cmd + commandLength;
     char ID[TRAIN_ID_SIZE];
     int len = getNextWord(cur, ID);
     int hashid = getID(ID);
-    // find(hashid) failed:ret = "0"
+    size_t offset = trainTree.search(hashid);
     Train_val val;
+    dataBase.getElement((char*)&val,offset,TRAIN_SIZE);
     if (val.if_sale && !val.if_delete) {
       val.print(ret);
       return;
@@ -335,44 +369,49 @@ private:
     sprintf(ret, "0");
   }
   void execute_deleteTrain() {
-    // TODO
+
     char *cur = cmd + commandLength;
     char ID[TRAIN_ID_SIZE];
     int len = getNextWord(cur, ID);
     int hashid = getID(ID);
-    // find(hashid) failed:ret = "0"
+    size_t offset = trainTree.search(hashid);
     Train_val val;
+    dataBase.getElement((char*)&val,offset,TRAIN_SIZE);
+
     if (!val.if_sale && !val.if_delete) {
       val.if_delete = true;
-      sprintf(ret, "1");
+      dataBase.setElement((char*)&val,offset,TRAIN_SIZE);
       for (int i = 0; i < val.station_num; ++i) {
-        int station_id = getID(val.stations[i].station_name);
-        // find(stationid)
+        int station_id = getID(val.getStation(i)->station_name);
+        offset = stationTree.search(station_id);
         station_val sta;
+        dataBase.getElement((char*)&sta,offset,STATION_SIZE);
         sta.del(hashid);
+        dataBase.setElement((char*)&sta,offset,STATION_SIZE);
       }
+      sprintf(ret, "1");
       return;
     }
     sprintf(ret, "0");
   }
   void execute_modifyTrain() {
-    // TODO
     char *cur = cmd + commandLength;
     char ID[TRAIN_ID_SIZE];
     int len = getNextWord(cur, ID);
     int hashid = getID(ID);
-    // find(hashid) failed:ret = "0"
+    size_t offset = trainTree.search(hashid);
     Train_val val;
-    val.del();
+    dataBase.getElement((char*)&val,offset,TRAIN_SIZE);
     for (int i = 0; i < val.station_num; ++i) {
-      int station_id = getID(val.stations[i].station_name);
-      // find(stationid)
+      int station_id = getID(val.getStation(i)->station_name);
+      size_t offset2 = stationTree.search(hashid);
       station_val sta;
+      dataBase.getElement((char*)&sta,offset,STATION_SIZE);
       sta.del(hashid);
+      dataBase.setElement((char*)&sta,offset,STATION_SIZE);
     }
     Train_val value(cur);
-    // insert to database
-    // bplustree modify address
+    dataBase.setElement((char*)&value,offset,TRAIN_SIZE);
   }
   /*Administrate*/
   void clean(){

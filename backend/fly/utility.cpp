@@ -3,8 +3,6 @@
 // Created by 傅凌玥 on 2019/5/5.
 //
 
-#ifndef TRAINTICKET_UTILITY_H
-#define TRAINTICKET_UTILITY_H
 
 #include <cstdio>
 #include <cstring>
@@ -86,9 +84,8 @@ void intToTime(const int &inte,char *time){
 }
 
 
-
 }
-#endif //TRAINTICKET_UTILITY_H
+
 
 
 
