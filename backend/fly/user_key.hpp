@@ -2,14 +2,12 @@
 // Created by 傅凌玥 on 2019/5/5.
 //
 
-#ifndef TRAINTICKET_USER_KEY_H
-#define TRAINTICKET_USER_KEY_H
+
 #include "constant.h"
 #include "utility.cpp"
 #include <cstring>
 
 namespace sjtu{
-typedef int user_ID;
 class User_val{
 public:
   char name[NAME_SIZE];
@@ -18,6 +16,7 @@ public:
   char phone[PHONE_SIZE];
   int privilege = 0;
 
+  User_val() {}
   User_val(char * inp){
     int len = getNextWord(inp,name);
     inp += len;
@@ -50,5 +49,4 @@ public:
 };
 }
 
-#endif //TRAINTICKET_USER_KEY_H
 

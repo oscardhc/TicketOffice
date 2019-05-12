@@ -2,8 +2,6 @@
 // Created by 傅凌玥 on 2019/5/8.
 //
 
-#ifndef BACKEND_TRAIN_VAL_H
-#define BACKEND_TRAIN_VAL_H
 #include "utility.cpp"
 #include "constant.h"
 #include <string>
@@ -19,11 +17,13 @@ public:
   char trainID[TRAIN_ID_SIZE];
   char name[NAME_SIZE];
   char catalog[CATALOG_SIZE];
-  station *stations;
-  char *pricename[TICKET_KIND_SIZE];
+  char *_stations;
+  char pricename[5][TICKET_KIND_SIZE];
   bool if_delete = true;
   bool if_sale = true;
+  station *getStation(int index){
 
+  }
   struct station {
     char station_name[LOCATION_SIZE];
     short arrive;
@@ -59,6 +59,7 @@ public:
 
     }
   };
+  Train_val (){}
   Train_val(char *inp) {
     int len = 0;
     len = getNextWord(inp,trainID);
@@ -75,7 +76,6 @@ public:
     inp += len;
     sscanf(inp, "%d", &price_num);
     for(int i = 0;i < price_num;++i){
-      pricename[i] = new char[price_num];
       len = getNextWord(inp,pricename[i]);
       inp += len;
     }
@@ -187,7 +187,6 @@ public:
       if (stations[cnt2].ticket[date][i] < num || ++cnt2 == station_num)
         return 0;
     }
-
     for(int j = cnt1; j < cnt2; ++j)
       stations[j].ticket[date][i] -= num;
     return stations[cnt2].price[i] - stations[cnt1].price[i];
@@ -196,14 +195,12 @@ public:
   }
 
 
-
-
   ~Train_val(){
     delete []stations;
   }
 
 };
 }
-#endif //BACKEND_TRAIN_VAL_H
+
 
 

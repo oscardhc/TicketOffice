@@ -2,8 +2,7 @@
 // Created by 傅凌玥 on 2019/5/8.
 //
 
-#ifndef BACKEND_STATION_VALUE_H
-#define BACKEND_STATION_VALUE_H
+
 #include "utility.cpp"
 #include "constant.h"
 #include <cstring>
@@ -38,5 +37,5 @@ public:
 };
 }
 
-#endif //BACKEND_STATION_VALUE_H
+
 
