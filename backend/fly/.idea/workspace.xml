@@ -12,125 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5e129fb-42ba-4d42-90d9-8a4ca0db652c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../dhc/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/IOManager.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeCCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeSystem.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/a.out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdCXX/a.out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/CXX.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/main.cpp.o" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/feature_tests.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/feature_tests.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/feature_tests.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/backend_dhc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/backend_dhc.cbp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/backend_dhc.dSYM/Contents/Info.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/backend_dhc.dSYM/Contents/Resources/DWARF/backend_dhc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/out.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/stdout.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/exceptions.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/map.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../dhc/utility.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/.idea/whj.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/bpt_new.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeCCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeSystem.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdC/a.out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/Progress/1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/Progress/count.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/CXX.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/backend_whj.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/feature_tests.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/feature_tests.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/feature_tests.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/backend_dhc.cbp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/cmake_install.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.DS_Store" beforeDir="false" afterPath="$PROJECT_DIR$/../whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdCXX/a.out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../dhc/.idea/dhc.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../whj/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../dhc/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../dhc/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../whj/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dhc/DataBase.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../dhc/DataBase.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dhc/DataBase.hpp.gch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dhc/database/database.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dhc/database/tree.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant.h" beforeDir="false" afterPath="$PROJECT_DIR$/constant.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/program.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/station_val.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/station_val.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ticket_value.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ticket_value.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_val.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/train_val.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_key.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/user_key.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../init.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../main" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../run.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ser.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../whj/bpcheck.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../whj/bpcheck.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../web/project/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../web/project/main.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -173,12 +55,12 @@
           <entry key="CMakeLists" value="21" />
           <entry key="cpp" value="75" />
           <entry key="h" value="341" />
-          <entry key="hpp" value="4463" />
+          <entry key="hpp" value="4839" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="4879" />
+          <entry key="ObjectiveC" value="5255" />
           <entry key="PLAIN_TEXT" value="21" />
         </counts>
       </usages-collector>
@@ -219,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/program.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2262">
-              <caret line="240" column="45" selection-start-line="240" selection-start-column="45" selection-end-line="240" selection-end-column="45" />
+            <state relative-caret-position="2291">
+              <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
                 <element signature="e#385#2320#0" />
@@ -230,6 +112,12 @@
                 <element signature="e#3683#4053#0" />
                 <element signature="e#4056#5257#0" />
                 <element signature="e#6440#7238#0" />
+                <element signature="e#7287#8048#0" />
+                <element signature="e#8051#8454#0" />
+                <element signature="e#8457#9223#0" />
+                <element signature="e#9226#9613#0" />
+                <element signature="e#9616#10442#0" />
+                <element signature="e#10445#11145#0" />
               </folding>
             </state>
           </provider>
@@ -247,7 +135,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_val.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4264">
+            <state relative-caret-position="5521">
               <caret line="195" selection-start-line="195" selection-end-line="195" />
               <folding>
                 <element signature="e#38#60#0" expanded="true" />
@@ -365,12 +253,12 @@
       <workItem from="1557574520568" duration="62000" />
       <workItem from="1557639939730" duration="10802000" />
       <workItem from="1557655191176" duration="333000" />
-      <workItem from="1557656107634" duration="585000" />
+      <workItem from="1557656107634" duration="2240000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19241000" />
+    <option name="totallyTimeSpent" value="20896000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="168" y="23" width="1095" height="800" extended-state="0" />
@@ -474,13 +362,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constant.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-378">
-          <caret line="4" column="30" lean-forward="true" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ticket_value.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="589">
@@ -514,7 +395,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_val.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4264">
+        <state relative-caret-position="5521">
           <caret line="195" selection-start-line="195" selection-end-line="195" />
           <folding>
             <element signature="e#38#60#0" expanded="true" />
@@ -522,10 +403,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/constant.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="4" column="30" lean-forward="true" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/program.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2262">
-          <caret line="240" column="45" selection-start-line="240" selection-start-column="45" selection-end-line="240" selection-end-column="45" />
+        <state relative-caret-position="2291">
+          <caret line="250" lean-forward="true" selection-start-line="250" selection-end-line="250" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
             <element signature="e#385#2320#0" />
@@ -535,6 +423,12 @@
             <element signature="e#3683#4053#0" />
             <element signature="e#4056#5257#0" />
             <element signature="e#6440#7238#0" />
+            <element signature="e#7287#8048#0" />
+            <element signature="e#8051#8454#0" />
+            <element signature="e#8457#9223#0" />
+            <element signature="e#9226#9613#0" />
+            <element signature="e#9616#10442#0" />
+            <element signature="e#10445#11145#0" />
           </folding>
         </state>
       </provider>

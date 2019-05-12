@@ -5,6 +5,7 @@
 #include "user_key.hpp"
 #include "utility.cpp"
 #include <cstring>
+#include <algorithm>
 #include <iostream>
 #include "../whj/bpt_new.hpp"
 #include "../dhc/IOManager.hpp"
@@ -217,6 +218,7 @@ public:
     cur += len;
     len = getNextWord(cur,catalog);
     len = strlen(catalog);
+
     int hash1 = getID(loc1), hash2 = getID(loc2);
     size_t offset1 = stationTree.search(hash1);
     size_t offset2 = stationTree.search(hash2);
@@ -236,11 +238,16 @@ public:
     }
     sprintf(ret,"%d",cnt);
     Train_val train[cnt];
+    size_t offset;
+    int tmp = cnt;
     for(int i = 0;i < MAX_TRAIN_NUM; ++i){
       if(sta1.getval(i) & sta2.getval(i)){
-        dataBase.getElement((char*)&train[cnt])
+        offset = trainTree.search(trainID[i]);
+        dataBase.getElement((char*)&train[tmp--],offset,TRAIN_SIZE);
       }
     }
+    sort(train,train + cnt, sortTrain);
+
 
 
   }
@@ -416,6 +423,12 @@ public:
   /*Administrate*/
   void clean(){
       // TODO
-  };
+  }
+  bool sortTrain(Train_val train1, Train_val train2) {
+    if(strcmp(train1.trainID, train2.trainID) > 0)
+      return false;
+    return true;
+  }
 };
+
 } // namespace sjtu
