@@ -18,6 +18,7 @@ public:
   char phone[PHONE_SIZE];
   int privilege = 0;
 
+  User_val() {}
   User_val(char * inp){
     int len = getNextWord(inp,name);
     inp += len;

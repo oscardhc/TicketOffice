@@ -24,6 +24,7 @@ namespace sjtu{
   const int MOD = (int)1e9 + 7;
   const int BIT = 129;
   const int MAX_TRAIN_NUM = 5940;
+  const int USER_SIZE = NAME_SIZE + PASSWORD_SIZE + EMAIL_SIZE + PHONE_SIZE + sizeof(int);
 
 }
 #endif //TRAINTICKET_CONSTANT_H

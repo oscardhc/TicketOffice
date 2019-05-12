@@ -187,7 +187,6 @@ public:
       if (stations[cnt2].ticket[date][i] < num || ++cnt2 == station_num)
         return 0;
     }
-
     for(int j = cnt1; j < cnt2; ++j)
       stations[j].ticket[date][i] -= num;
     return stations[cnt2].price[i] - stations[cnt1].price[i];
