@@ -78,7 +78,10 @@ def manage():
 
 @app.route('/exec', methods=['POST'])
 def exec():
+    print("!!!!!!")
+    print(request.form)
     if request.method == 'POST' :
+        print(request.form)
         res = con.exeCmd([request.form['cmd']])
         return jsonify({'result': res})
 

@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/IOManager.hpp
+stdio.h
+-
+string.h
+-
+map.hpp
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/map.hpp
+utility.hpp
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/utility.hpp
+
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/exceptions.hpp
+cstddef
+-
+cstring
+-
+string
+-
+
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/main.cpp
+IOManager.hpp
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/IOManager.hpp
+assert.h
+-
+
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/map.hpp
+functional
+-
+cstddef
+-
+iostream
+-
+utility.hpp
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/utility.hpp
+exceptions.hpp
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/exceptions.hpp
+
+/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/utility.hpp
+

@@ -1,10 +1,11 @@
-#include "bplustree.hpp"
+#include "bpt_new.hpp"
 #include <map>
+#include <iostream>
 #include <stdlib.h>
 #include <algorithm>
 using namespace std;
 
-bplustree bt;
+BPlusTree bt;
 map<int,int> mp;
 const int N = 100;
 pair<int, int> a[N];

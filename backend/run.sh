@@ -1,2 +1,0 @@
-pwd
-./main > ./out.txt
