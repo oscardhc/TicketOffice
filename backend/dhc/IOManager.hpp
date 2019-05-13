@@ -13,7 +13,7 @@
 // 8K per page (There should be NO elements with sizes exceeding 8K)
 const int pageSize = 8192;
 // Bufferpool size: 8K * 128 = 1M
-const int bufferSize = 128;
+const int bufferSize = 32;
 const int hotListSize = 100;
 const int coldListSize = bufferSize - hotListSize;
 
@@ -41,17 +41,17 @@ namespace sjtu {
             initBuff();
         }
         IOManager(char *filename) {
-//            FILE *tmp = fopen(filename, "a");
-//            fclose(tmp);
-//            file = fopen(filename, "r+");
-            file = fopen(filename, "w+");
+            FILE *tmp = fopen(filename, "a");
+            fclose(tmp);
+            file = fopen(filename, "r+");
+//            file = fopen(filename, "w+");
             initBuff();
         }
         void initBuff() {
             totalQuery = hitQuery = 0;
             fseek(file, 0, SEEK_END);
             fileSize = ftell(file);
-            printf("INIT FILESIZE %d\n", fileSize);
+            fprintf(stderr, "INIT FILESIZE %d\n", fileSize);
             memset(pool, 0, sizeof(pool));
             for (int i = 0; i < bufferSize; i++) {
                 Node *node = new Node();
@@ -71,7 +71,8 @@ namespace sjtu {
                 }
                 delete it->second;
             }
-            printf("TOTAL %u HIT %u RATIO %lf\n", totalQuery, hitQuery, 1.0 * hitQuery / totalQuery);
+            fprintf(stderr, "TOTAL %u HIT %u RATIO %lf\n", totalQuery, hitQuery, 1.0 * hitQuery / totalQuery);
+            fprintf(stderr, "time used: %lf s\n", 1. * clock() / 1000000);
         }
 
         void flushToDisk(Node* node) {
@@ -123,7 +124,6 @@ namespace sjtu {
         }
 
         void getElement(char *t, int offset, int elementSize) {
-//            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ get to %u\n", offset);
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
@@ -137,6 +137,11 @@ namespace sjtu {
                 memcpy(t, pool[poolid1->value] + pagePosition, pageLeft);
                 memcpy(t + pageLeft, pool[poolid2->value], elementSize - pageLeft);
             }
+//            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ get from %d %d\n                  ", offset, elementSize);
+//            for (int i = 0; i < elementSize; i++) {
+//                printf("%d ", t[i]);
+//            }
+//            printf("\n");
         }
 
         int createElement(int elementSize) {
@@ -145,7 +150,11 @@ namespace sjtu {
         }
 
         void setElement(char *t, int offset, int elementSize) {
-//            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ set to %u\n", offset);
+//            printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ set to %d %d\n                  ", offset, elementSize);
+//            for (int i = 0; i < elementSize; i++) {
+//                printf("%d ", t[i]);
+//            }
+//            printf("\n");
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
@@ -162,6 +171,16 @@ namespace sjtu {
                 poolid1->isEdited = true;
                 poolid2->isEdited = true;
             }
+        }
+
+        int createElementVirt(int elementSize) {
+            return createElement(elementSize - 8);
+        }
+        void getElementVirt(char *t, int offset, int elementSize) {
+            getElement(t + 8, offset, elementSize - 8);
+        }
+        void setElementVirt(char *t, int offset, int elementSize) {
+            setElement(t + 8, offset, elementSize - 8);
         }
 
     };

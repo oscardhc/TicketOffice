@@ -1,4 +1,4 @@
-# Install script for directory: /Users/fulingyue/Documents/GitHub/TicketOffice/backend/fly
+# Install script for directory: /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/fulingyue/Documents/GitHub/TicketOffice/backend/fly/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

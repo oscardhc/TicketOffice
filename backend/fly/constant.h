@@ -4,6 +4,7 @@
 
 #ifndef TRAINTICKET_CONSTANT_H
 #define TRAINTICKET_CONSTANT_H
+
 namespace sjtu{
   const int MAXTICKET = 2000;
 
@@ -30,4 +31,5 @@ namespace sjtu{
       TRAIN_ID_SIZE + NAME_SIZE + CATALOG_SIZE + 5 * TICKET_KIND_SIZE;
   const int STATION_SIZE = 186 * sizeof(unsigned int);
 }
-#endif //TRAINTICKET_CONSTANT_H
+
+#endif

@@ -4,7 +4,7 @@
 
 
 #include "constant.h"
-#include "utility.cpp"
+#include "utility.hpp"
 #include <cstring>
 namespace sjtu {
   class ticket_val {

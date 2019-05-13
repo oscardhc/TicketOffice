@@ -4,7 +4,7 @@
 
 
 #include "constant.h"
-#include "utility.cpp"
+#include "utility.hpp"
 #include <cstring>
 
 namespace sjtu{
@@ -26,7 +26,6 @@ public:
     inp += len;
     len = getNextWord(inp,phone);
     privilege = 1;
-    delete inp; //?
   };
   User_val &operator=(const User_val &other) {
     privilege = other.privilege;

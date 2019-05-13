@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/fly.dir/test.cpp.o"
+  "CMakeFiles/fly.dir/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/whj/bpcheck.cpp.o"
+  "CMakeFiles/fly.dir/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/main.cpp.o"
   "fly.pdb"
   "fly"
 )
