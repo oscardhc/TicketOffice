@@ -2,8 +2,10 @@
 // Created by 傅凌玥 on 2019/5/8.
 //
 
+#ifndef TRAINTICKET_STA
+#define TRAINTICKET_STA
 
-#include "utility.cpp"
+#include "utility.hpp"
 #include "constant.h"
 #include <cstring>
 namespace sjtu{
@@ -38,4 +40,4 @@ public:
 }
 
 
-
+#endif

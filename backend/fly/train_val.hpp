@@ -2,7 +2,7 @@
 // Created by 傅凌玥 on 2019/5/8.
 //
 
-#include "utility.cpp"
+#include "utility.hpp"
 #include "constant.h"
 #include <string>
 
@@ -21,6 +21,7 @@ public:
   char pricename[5][TICKET_KIND_SIZE];
   bool if_delete = true;
   bool if_sale = true;
+  station *stations;
   station *getStation(int index){
 
   }

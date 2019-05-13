@@ -29,6 +29,7 @@ def hello():
 
 @app.route('/login', methods=['POST'])
 def login():
+
     if request.method == 'POST':
         user = request.form['user']
         pswd = request.form['password']
