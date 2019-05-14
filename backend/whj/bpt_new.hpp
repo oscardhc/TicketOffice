@@ -9,7 +9,7 @@ enum NODE_TYPE{INTERNAL = 0, LEAF = 1}; // 结点类型：内结点、叶子结�
 enum SIBLING_DIRECTION{LEFT, RIGHT}; // 兄弟结点方向：左兄弟结点、右兄弟结点
 typedef int KeyType; // 键类型
 typedef int DataType; // 值类型
-const int ORDER = 40; // B+树的阶（非根内结点的最小子树个数）
+const int ORDER = 35; // B+树的阶（非根内结点的最小子树个数）
 const int MINNUM_KEY = ORDER-1; // 最小键值个数
 const int MAXNUM_KEY = 2*ORDER-1; // 最大键值个数
 const int MINNUM_CHILD = MINNUM_KEY+1; // 最小子树个数
@@ -92,8 +92,6 @@ public:
     int m_Childs[MAXNUM_CHILD];
     int m_left;
     int m_right;
-    //NODE_TYPE m_type;
-    //InterNode * alter_inter[3];
 public:
     InterNode(){
         m_type = INTERNAL;
@@ -141,7 +139,6 @@ public:
     }
 
     virtual void split(int fa_off, int childindex, int this_off){
-        //cout << "nonon" << endl;
         int new_off = DataBase.createElementVirt(NODE_SIZE);
         InterNode *newnode  = new InterNode();
         newnode->setKeyNum(MINNUM_KEY);
@@ -159,10 +156,8 @@ public:
         DataBase.setElementVirt((char*)fa, fa_off, NODE_SIZE);
         DataBase.setElementVirt((char*)newnode, new_off, NODE_SIZE);
         DataBase.setElementVirt((char*)this, this_off, NODE_SIZE);
-        //cout << newnode->getType();
-
-        delete newnode;
         delete fa;
+        delete newnode;
 
     }
 
@@ -279,7 +274,6 @@ public:
     }
 
     virtual void split(int fa_off, int childindex, int this_off){
-        //cout << "nonon";
         int new_off = DataBase.createElementVirt(NODE_SIZE);
         LeafNode * newnode = new LeafNode();
         InterNode * fa = new InterNode();
@@ -376,7 +370,6 @@ public:
             for (int i = 0; i < ALTER_SIZE; ++i){
                 inter_buf[i] = new InterNode();
                 leaf_buf[i] = new LeafNode();
-                inter_buf[i]->setType(INTERNAL);
             }
             root_off = -1;
             DataBase.setElement((char*)&root_off, meta_off + 0 * sizeof(int), sizeof(int));
@@ -392,7 +385,6 @@ public:
             for (int i = 0; i < ALTER_SIZE; ++i){
                 inter_buf[i] = new InterNode();
                 leaf_buf[i] = new LeafNode();
-                inter_buf[i]->setType(INTERNAL);
             }
             DataBase.getElement((char*)&root_off, meta_off + 0 * sizeof(int), sizeof(int));
             DataBase.getElement((char*)&head_off, meta_off + 1 * sizeof(int), sizeof(int));
@@ -422,7 +414,6 @@ public:
             head_off = root_off;
             m_maxkey = key;
             int u = root_off;
-            printf("root_off %d\n", root_off);
         }
         else {
             DataBase.getElementVirt((char*)m_root, root_off, NODE_SIZE);
@@ -509,12 +500,11 @@ public:
     }
 
     DataType search(KeyType key){
-        return inter_search(root_off, key);
+        return inter_search(root_off, key, 0);
     }
 
 
     void print(){
-//        cout << "root_off: " << root_off << endl;
         cnt = 1;
         if (root_off == -1) return;
         print(root_off, cnt);
@@ -558,10 +548,10 @@ public:
 
 private:
     bool inter_update(int p_off, KeyType key, DataType _new, int depth){
-        CNode < KeyType, DataType > *p = inter_buf[(++tot1) % ALTER_SIZE];
+        CNode < KeyType, DataType > *p = inter_buf[depth];
         DataBase.getElementVirt((char*)p, p_off, NODE_SIZE);
         if (p->getType() == LEAF){
-            p = leaf_buf[(++tot2) % ALTER_SIZE];
+            p = leaf_buf[depth];
             DataBase.getElementVirt((char*)p, p_off, NODE_SIZE);
         }
         if (p == nullptr) return false;
@@ -582,11 +572,12 @@ private:
 
 
     void inter_insert(int fa_off, KeyType key, const DataType & data, int depth){
-        CNode < KeyType , DataType > *fa = inter_buf[(++tot1) % ALTER_SIZE];
+        //cout << depth << "!!" << endl;
+        CNode < KeyType , DataType > *fa = inter_buf[depth];
         DataBase.getElementVirt((char*)fa, fa_off, NODE_SIZE);
 
         if (fa->getType() == LEAF){
-            fa = leaf_buf[(++tot2) % ALTER_SIZE];
+            fa = leaf_buf[depth];
             DataBase.getElementVirt((char*)fa, fa_off, NODE_SIZE);
 
             ((LeafNode*)fa)->insert(key, data);
@@ -600,10 +591,10 @@ private:
 
         int child_off = ((InterNode*)fa)->getchild(childindex);
 
-        CNode < KeyType, DataType > *childnode = inter_buf[(++tot1) % ALTER_SIZE];
+        CNode < KeyType, DataType > *childnode = inter_buf[depth << 1];
         DataBase.getElementVirt((char*)childnode, child_off, NODE_SIZE);
         if (childnode->getType() == LEAF) {
-            childnode = leaf_buf[(++tot2) % ALTER_SIZE];
+            childnode = leaf_buf[depth << 1];
             DataBase.getElementVirt((char*)childnode, child_off, NODE_SIZE);
         }
 
@@ -701,14 +692,11 @@ private:
         }
     }
 
-    DataType inter_search(int p_off, KeyType key){
-        //cout << "hhh" << endl;
+    DataType inter_search(int p_off, KeyType key, int depth){
         if (root_off == -1) return -1;
-        CNode < KeyType, DataType > *p = inter_buf[(++tot1) % ALTER_SIZE];
+        CNode < KeyType, DataType > *p = inter_buf[depth];
         DataBase.getElementVirt((char*)p, p_off, NODE_SIZE);
         if (p->getType() == LEAF){
-            //delete p;
-            //p = new LeafNode();
             p = leaf_buf[(++tot2) % ALTER_SIZE];
             DataBase.getElementVirt((char*)p, p_off, NODE_SIZE);
         }
@@ -720,19 +708,16 @@ private:
             }
 
             else {
-                //cout << "fuck" << endl;
                 return -1;
             }
         }
-        return inter_search(((InterNode*)p)->getchild(childindex), key);
+        return inter_search(((InterNode*)p)->getchild(childindex), key, depth + 1);
     }
 
     void changekey(int p_off, KeyType _old, KeyType _new){
         CNode < KeyType, DataType > *p = inter_buf[(++tot1) % ALTER_SIZE];
         DataBase.getElementVirt((char*)p, p_off, NODE_SIZE);
         if (p->getType() == LEAF){
-            //delete p;
-            //p = new LeafNode();
             p = leaf_buf[(++tot2) % ALTER_SIZE];
             DataBase.getElementVirt((char*)p, p_off, NODE_SIZE);
         }
