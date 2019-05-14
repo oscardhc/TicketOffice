@@ -5,7 +5,7 @@
 //#include <algorithm>
 //using namespace std;
 //
-//BPlusTree bt;
+//BPlusTree bt(0,0);
 //map<int,int> mp;
 //const int N = 100000;
 //pair<int, int> a[N + 2];

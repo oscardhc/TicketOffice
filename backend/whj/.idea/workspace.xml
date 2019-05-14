@@ -12,7 +12,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e88c02d-7561-4579-a750-646c3bf6eebd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/whj.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdCXX/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/feature_tests.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/feature_tests.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/feature_tests.c" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/feature_tests.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/feature_tests.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/feature_tests.cxx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/main.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/whj/bpcheck.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/fly" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fly/cmake-build-debug/fly.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/../fly/cmake-build-debug/fly.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bpcheck.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bpcheck.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bpt_new.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/bpt_new.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/backend_whj.dir/bpcheck.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/backend_whj.dir/bpcheck.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/backend_whj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/backend_whj" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,9 +73,10 @@
     <session id="672824336">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -47,26 +95,26 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="657" />
-          <entry key="hpp" value="3364" />
+          <entry key="cpp" value="662" />
+          <entry key="hpp" value="3431" />
           <entry key="txt" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CMakeLists.txt" value="44" />
-          <entry key="ObjectiveC" value="4021" />
+          <entry key="ObjectiveC" value="4093" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bpcheck.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+            <state relative-caret-position="-184">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -77,11 +125,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bpt_new.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1425">
-              <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="-17">
+              <caret line="362" lean-forward="true" selection-start-line="362" selection-end-line="362" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <element signature="e#852#883#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,8 +137,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../dhc/IOManager.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-860">
-              <caret line="90" column="34" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="34" />
+            <state relative-caret-position="1350">
+              <caret line="90" column="29" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="29" />
               <folding>
                 <element signature="e#106#124#0" expanded="true" />
               </folding>
@@ -102,8 +149,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../dhc/map.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3060">
-              <caret line="212" column="36" lean-forward="true" selection-start-line="212" selection-start-column="36" selection-end-line="212" selection-end-column="36" />
+            <state relative-caret-position="114">
+              <caret line="72" selection-start-line="72" selection-end-line="72" />
             </state>
           </provider>
         </entry>
@@ -112,7 +159,7 @@
         <entry file="file://$PROJECT_DIR$/bplustree.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="5025">
-              <caret line="335" column="44" lean-forward="true" selection-start-line="335" selection-start-column="44" selection-end-line="335" selection-end-column="44" />
+              <caret line="335" column="44" selection-start-line="335" selection-start-column="44" selection-end-line="335" selection-end-column="44" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -180,7 +227,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="y" value="26" />
     <option name="width" value="1280" />
     <option name="height" value="721" />
   </component>
@@ -249,18 +296,19 @@
       <option name="presentableId" value="Default" />
       <updated>1557640514155</updated>
       <workItem from="1557640515648" duration="25652000" />
+      <workItem from="1557754197692" duration="2192000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25652000" />
+    <option name="totallyTimeSpent" value="27844000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="721" extended-state="0" />
+    <frame x="0" y="26" width="1280" height="721" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.10662359" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.22778675" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="1" />
@@ -269,7 +317,7 @@
       <window_info anchor="bottom" id="Messages" order="4" weight="0.3290938" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
-      <window_info anchor="bottom" id="Run" order="7" weight="0.14626391" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.43720192" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.3290938" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="CMake" order="10" />
@@ -313,6 +361,16 @@
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/out.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/../dhc/IOManager.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="90" column="29" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="29" />
+          <folding>
+            <element signature="e#106#124#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -323,47 +381,36 @@
     <entry file="file://$PROJECT_DIR$/bplustree.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5025">
-          <caret line="335" column="44" lean-forward="true" selection-start-line="335" selection-start-column="44" selection-end-line="335" selection-end-column="44" />
+          <caret line="335" column="44" selection-start-line="335" selection-start-column="44" selection-end-line="335" selection-end-column="44" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bpcheck.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../dhc/map.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3060">
-          <caret line="212" column="36" lean-forward="true" selection-start-line="212" selection-start-column="36" selection-end-line="212" selection-end-column="36" />
+        <state relative-caret-position="114">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dhc/IOManager.hpp">
+    <entry file="file://$PROJECT_DIR$/bpcheck.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-860">
-          <caret line="90" column="34" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="34" />
+        <state relative-caret-position="-184">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
           <folding>
-            <element signature="e#106#124#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bpt_new.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+        <state relative-caret-position="-17">
+          <caret line="362" lean-forward="true" selection-start-line="362" selection-end-line="362" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#852#883#0" expanded="true" />
           </folding>
         </state>
       </provider>

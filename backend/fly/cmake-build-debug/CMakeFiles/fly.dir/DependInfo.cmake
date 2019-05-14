@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/main.cpp" "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/main.cpp.o"
-  "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/whj/bpcheck.cpp" "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/whj/bpcheck.cpp.o"
-  "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/test.cpp" "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o"
+  "/Users/lizhijian/Desktop/TicketOffice/backend/dhc/main.cpp" "/Users/lizhijian/Desktop/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir/Users/lizhijian/Desktop/TicketOffice/backend/dhc/main.cpp.o"
+  "/Users/lizhijian/Desktop/TicketOffice/backend/whj/bpcheck.cpp" "/Users/lizhijian/Desktop/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir/Users/lizhijian/Desktop/TicketOffice/backend/whj/bpcheck.cpp.o"
+  "/Users/lizhijian/Desktop/TicketOffice/backend/fly/test.cpp" "/Users/lizhijian/Desktop/TicketOffice/backend/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
