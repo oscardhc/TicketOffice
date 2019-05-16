@@ -71,7 +71,7 @@ def reg():
     if request.method == 'POST' :
             res = con.exeCmd(['register', request.form['name'], request.form['password'], request.form['email'], request.form['phone']])
             id = int(res)
-            return jsonify({'status': '0'})
+            return jsonify({'status': '0', 'id': id})
 
 @app.route('/manage')
 def manage():
@@ -79,7 +79,6 @@ def manage():
 
 @app.route('/exec', methods=['POST'])
 def exec():
-    print("!!!!!!")
     print(request.form)
     if request.method == 'POST' :
         print(request.form)

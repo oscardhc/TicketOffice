@@ -1,0 +1,2 @@
+pwd
+./main > ./runout.txt

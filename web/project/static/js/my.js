@@ -24,6 +24,7 @@ function openError(msg) {
 
 var loginDialogue = new mdui.Dialog('#exampleDialog')
 function openLogin() {
+    getCaptcha()
     loginDialogue.open()
 }
 
@@ -60,6 +61,7 @@ function eraseBtnClicked () {
         if (d.status === '-1') {
             openError('用户名或密码错误')
         } else {
+            localStorage.removeItem('userInfo', JSON.stringify(userInfo))
             var url = location.href.replace('#mdui-dialog','')
             location.href = url
         }
@@ -92,9 +94,11 @@ function registerBtnClicked () {
                 openError('注册失败')
             } else {
                 // document.execCommand('Refresh')
-                var url = location.href.replace('#mdui-dialog','')
+                openError('注册成功，您的用户ID为' + d.id)
+                localStorage.removeItem('userInfo', JSON.stringify(userInfo))
+                // var url = location.href.replace('#mdui-dialog','')
                 // alert(url)
-                location.href = url
+                // location.href = url
             }
         })
     }
@@ -247,12 +251,22 @@ function profileConfirmBtnClicked() {
 function profileSubmitBtnClicked() {
     confirmPasswordDialog.close()
     processDialogue.open()
+    execCommand('modify_profile' + ' ' + userId + ' ' + $('#profileUsername').val() + ' ' + $('#profilePassword').val() + ' ' + $('#profileEmail').val() + ' ' + $('#profilePhone').val(), function (d) {
+        let res = d.result;
+        // alert(JSON.stringify(userInfo))
+        processDialogue.close()
+        localStorage.removeItem('userInfo')
+        var url = location.href.replace('#mdui-dialog','')
+        location.href = url
+    })
+
 }
 
 // alert('user = ' + user)
 
 function getUserInfo(userId) {
     if (!localStorage.getItem('userInfo')) {
+        // alert(userId);
         execCommand('query_profile ' + userId, function (d) {
             let res = d.result;
             userInfo = res.split(" ")
@@ -279,9 +293,13 @@ function getUserInfo(userId) {
 
 }
 
-$.post('/captcha', {}, function (d) {
-    captcha = d
-    $('#capLable').html('$\\displaystyle\\int_{x=0}^{1}' + captcha.diff + '=?$（保留一位小数）')
-    $('#capinput').val(captcha.val)
-    $('body').append("<script src=" + mjpath + "></script>")
-})
+function getCaptcha() {
+    $.post('/captcha', {}, function (d) {
+        captcha = d
+        $('#capLable').html('$\\displaystyle\\int_{x=0}^{1}' + captcha.diff + '=?$（保留一位小数）')
+        $('#capinput').val(captcha.val)
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub])
+    })
+}
+
+getCaptcha()
