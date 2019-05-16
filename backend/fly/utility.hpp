@@ -9,8 +9,11 @@
 #include <cstdio>
 #include <cstring>
 #include "constant.h"
+#include <ctime>
 
 namespace sjtu{
+
+    int mdf = 0, qry = 0, exe = 0;
 
     int getNextWord(char *str, char *word){
         int pos = 0, len = strlen(str);

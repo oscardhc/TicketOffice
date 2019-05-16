@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    {% if 'user' in ses %}
+    {% if ( 'user' in ses ) or 1 %}
 
         <div class="mdui-typo">
             <h1 class="mdui-text-color-theme">查询</h1>
@@ -96,7 +96,11 @@
 
 {% block scr %}
 
+    <script src="{{ url_for('static', filename='js/pinyin4js.js') }}"></script>
     <script>
+
+        {#console.log()#}
+
         $(document).ready(function () {
             for (var i = 1; i <= 30; i++) {
                 $('#dateInput').append('<option>2019-06-' + (i < 10 ? '0' : '') + i + '</option>')

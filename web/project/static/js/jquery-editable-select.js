@@ -34,10 +34,17 @@
 	EditableSelect.prototype.filter = function () {
 		var hiddens = 0;
 		var search  = this.$input.val().toLowerCase().trim();
-		
+
 		this.$list.find('li').addClass('es-visible').show();
+
 		if (this.options.filter) {
-			hiddens = this.$list.find('li').filter(function (i, li) { return $(li).text().toLowerCase().indexOf(search) < 0; }).hide().removeClass('es-visible').length;
+			hiddens = this.$list.find('li').filter(function (i, li) {
+				let py1 = PinyinHelper.convertToPinyinString($(li).text().toLowerCase(), '', PinyinFormat.WITHOUT_TONE)
+				let py2 = PinyinHelper.convertToPinyinString($(li).text().toLowerCase(), '', PinyinFormat.FIRST_LETTER)
+				return $(li).text().toLowerCase().indexOf(search) < 0 && py1.indexOf(search) < 0 && py2.indexOf(search) < 0;
+			}).hide().removeClass('es-visible').length;
+			// hiddens = this.$list.find('li').filter(function (i, li) { return false; }).hide().removeClass('es-visible').length;
+			console.log(hiddens)
 			if (this.$list.find('li').length == hiddens) this.hide();
 		}
 	};
@@ -155,6 +162,7 @@
 				break;
 		}
 		that.es.$input.on('input keydown', function (e) {
+			// console.log(e.KeyCode)
 			switch (e.keyCode) {
 				case 38: // Up
 					var visibles = that.es.$list.find('li.es-visible:not([disabled])');

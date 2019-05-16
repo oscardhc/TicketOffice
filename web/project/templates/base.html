@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/live2d.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='pic/hd_7.png') }}">
-    {#    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-editable-select.css') }}" />#}
-    <link rel="stylesheet" href="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-editable-select.css') }}" />
+{#    <link rel="stylesheet" href="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css">#}
 
     {% block head %} {% endblock %}
 </head>
@@ -244,7 +244,8 @@
 <script src="{{ url_for('static', filename='js/mdui.js') }}"></script>
 <script src="{{ url_for("static", filename="js/my.js") }}"></script>
 <script src="{{ url_for('static', filename='js/autoload.js') }}"></script>
-<script src="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
+<script src="{{ url_for('static', filename='js/jquery-editable-select.js') }}"></script>
+{#<script src="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>#}
 
 {% if 'user' in ses %}
     <script>

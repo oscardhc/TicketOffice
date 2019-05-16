@@ -1,11 +1,12 @@
+#ifndef DEMO1_SPL
+#define DEMO1_SPL
+
 #include <iostream>
 #include <algorithm>
 #include <iomanip>
 using namespace std;
-typedef int KeyType;
-typedef int DataType;
 
-//template <KeyType, DataType>
+template <class KeyType, class DataType>
 class SplayTree{
 private:
     struct Node{
@@ -28,7 +29,7 @@ private:
 
     DataType inter_search(Node * t, KeyType key) {
 
-        if (t == nullptr) return -1;
+        if (t == nullptr) return nullptr;
         if (key < t->key) {
             return inter_search(t->left, key);
         }
@@ -91,6 +92,7 @@ private:
     bool inter_insert(Node * &t, KeyType key, DataType data){
 
         Node *newnode = new Node(key, data, nullptr, nullptr);
+        size++;
 
         if (t == nullptr) {
             m_root = newnode;
@@ -110,9 +112,11 @@ private:
             m_root = newnode;
         }
         else {
+            size--;
             delete newnode;
             return false;
         }
+
 
         return true;
 //        if (t == nullptr){
@@ -188,11 +192,18 @@ private:
 
 public:
 
+    int size;
+
+    KeyType getRootKey() {
+        return m_root->key;
+    }
+
     SplayTree(){
         m_root = nullptr;
         tag_max = 0;
         tag_min = 0;
         maxkey = 0;
+        size = 0;
     }
 
     ~SplayTree(){
@@ -221,13 +232,15 @@ public:
         }
         if (key > maxkey) maxkey = key;
         if (key < minkey) minkey = key;
-        inter_insert(m_root, key, data);
+        return inter_insert(m_root, key, data);
     }
 
     bool remove(KeyType key){
-        if (search(key) == -1) return false;
+        if (search(key) == nullptr) return false;
         if (key == maxkey) tag_max = 1;
         if (key == minkey) tag_min = 1;
+
+        size--;
 
         inter_remove(m_root, key);
         return true;
@@ -241,3 +254,5 @@ public:
     }
 
 };
+
+#endif

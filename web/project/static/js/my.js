@@ -1,6 +1,6 @@
 var userInfo = []
 var allCata = ['C','D','E']
-var allCity = ['上海','闵行']
+var allCity = ['你好','上海','闵行','HHHHHH','hasdasd','asdfasdf','hbbbb','haaaa']
 var captcha = []
 
 function execCommand(cmd, done) {

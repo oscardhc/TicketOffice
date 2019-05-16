@@ -21,23 +21,26 @@ namespace sjtu {
 
     public:
         Program() {
-            if (DataBase.createElement(0) == 0) {
+            if (DataBase.createElement(0) == sizeof(int)) {
+                userCurId = 2019;
                 int off = DataBase.createElement(4 * sizeof(int));
-                userTree = BPlusTree(off, 1);
-                off = DataBase.createElement(4 * sizeof(int));
                 trainTree = BPlusTree(off, 1);
                 off = DataBase.createElement(4 * sizeof(int));
                 stationTree = BPlusTree(off, 1);
+                off = DataBase.createElement(sizeof(int));
+                DataBase.setElement((char*)(&userCurId), off, sizeof(int));
             } else {
-                int off = 0;
-                userTree = BPlusTree(off, 0);
-                off = 4 * sizeof(int);
+                int off = sizeof(int);
                 trainTree = BPlusTree(off, 0);
-                off = 8 * sizeof(int);
+                off += 4 * sizeof(int);
                 stationTree = BPlusTree(off, 0);
+                off += 4 * sizeof(int);
+                DataBase.getElement((char*)(&userCurId), off, sizeof(int));
             }
         };  // TODO
         ~Program() {
+            DataBase.setElement((char*)(&userCurId), sizeof(int) * 9, sizeof(int));
+            fprintf(stderr, ">>>>>> %lf %lf %lf     %lf\n", 1. * mdf / 1000000, 1. * qry / 1000000, 1. * exe / 1000000, 1. * clock() / 1000000);
         }; // TODO
 
         inline void exec(char *_cmd, char *_ret) {
@@ -62,13 +65,17 @@ namespace sjtu {
                 execute_login();
                 return;
             } else if (strcmp(word, "query_profile") == 0) {
+                int _t = clock();
                 execute_queryProfile();
+                qry += (clock() - _t);
                 return;
             } else if (strcmp(word, "modify_profile") == 0) {
                 execute_modifyProfile();
                 return;
             } else if (strcmp(word, "modify_privilege") == 0) {
+                int _t = clock();
                 execute_modifyPrivilege();
+                mdf += (clock() - _t);
                 return;
             }
                 /*Ticket command:*/
@@ -118,22 +125,28 @@ namespace sjtu {
         int commandLength;
         int trainID[MAX_TRAIN_NUM];
         short cnt_train = 0;
-        BPlusTree userTree;
+        int userCurId;
+//        BPlusTree userTree;
         BPlusTree trainTree;
         BPlusTree stationTree;
 
     public:
+        int calculateOffset(int index) {
+            if (index < userCurId) return sizeof(int) + (index - 2019) * USER_SIZE;
+            else return -1;
+        }
         /*User word:*/
         void execute_register() {
+//            printf("--\n");
             char *cur = cmd + commandLength;
             User_val val(cur);
-            int id = (int)userTree.getsize() + 2019;
+            int id = userCurId++;
             if (id == 2019) {
                 val.privilege = 2;
             }
-            int offset = DataBase.createElement(USER_SIZE);
-            DataBase.setElement((char*)&val, offset, USER_SIZE);
-            userTree.insert(id, offset);
+            int offset = DataBase.createElement(USER_SIZE, 1);
+            DataBase.setElement((char*)&val, offset, USER_SIZE, 1);
+//            userTree.insert(id, offset);
             sprintf(ret, "%d", id);
         }
         void execute_login() {
@@ -144,12 +157,12 @@ namespace sjtu {
             int passlen = getNextWord(cur, password);
             sjtu::User_val val;
             int id = stringToInt(username);
-            int offset = userTree.search(id);
+            int offset = calculateOffset(id);
             if (offset == -1) {
                 sprintf(ret, "0");
                 return;
             }
-            DataBase.getElement((char*)&val, offset, USER_SIZE);
+            DataBase.getElement((char*)&val, offset, USER_SIZE, 1);
 
             if (strcmp(val.password, password) == 0) {
                 sprintf(ret, "1");
@@ -163,13 +176,13 @@ namespace sjtu {
             int id;
             skipWhiteSpace(cur);
             sscanf(cur, "%d", &id);
-            User_val val;
-            int offset = userTree.search(id);
+            static User_val val;
+            int offset = calculateOffset(id);
             if (offset == -1) {
                 sprintf(ret, "0");
                 return;
             }
-            DataBase.getElement((char*)&val, offset, USER_SIZE);
+            DataBase.getElement((char*)&val, offset, USER_SIZE, 1);
             sprintf(ret, "%s %s %s %d", val.name, val.email, val.phone,
                     val.privilege);
         }
@@ -180,12 +193,12 @@ namespace sjtu {
             cur += idlen;
             int ID = stringToInt(id);
             User_val val(cur);
-            int offset = userTree.search(ID);
+            int offset = calculateOffset(ID);
             if (offset == -1) {
                 sprintf(ret, "0");
                 return;
             }
-            DataBase.setElement((char*)&val,offset,USER_SIZE - sizeof(int));
+            DataBase.setElement((char*)&val,offset,USER_SIZE - sizeof(int), 1);
             sprintf(ret, "1");
         }
         void execute_modifyPrivilege() {
@@ -200,12 +213,12 @@ namespace sjtu {
             int ID1 = stringToInt(id1), ID2 = stringToInt(id2);
 
             User_val val1;
-            int offset1 = userTree.search(ID1);
+            int offset1 = calculateOffset(ID1);
             if (offset1 == -1) {
                 sprintf(ret, "0");
                 return;
             }
-            DataBase.getElement((char*)&val1,offset1,USER_SIZE);
+            DataBase.getElement((char*)&val1,offset1,USER_SIZE,1);
             p_id1 = val1.privilege;
             if (p_id1 == 1 || p_id1 == 0) {
                 sprintf(ret, "0");
@@ -215,14 +228,13 @@ namespace sjtu {
             cur += idlen;
             sscanf(cur, "%d", &privil);
             User_val val2;
-            int offset2 = userTree.search(ID2);
+            int offset2 = calculateOffset(ID2);
             if (offset2 == -1) {
                 sprintf(ret, "0");
                 return;
             }
-            DataBase.getElement((char*)&val2,offset2,USER_SIZE);
+            DataBase.getElement((char*)&val2,offset2,USER_SIZE,1);
             p_id2 = val2.privilege;
-//            printf("> %d %d %d ", p_id1, p_id2, privil);
             if (p_id2 == 2) {
                 if (privil == 2) {
                     sprintf(ret, "1");
@@ -235,7 +247,7 @@ namespace sjtu {
             if (p_id2 == 1) {
                 if (privil == 2) {
                     val2.privilege = 2;
-                    DataBase.setElement((char*)&val2,offset2,USER_SIZE);
+                    DataBase.setElement((char*)&val2,offset2,USER_SIZE,1);
                 }
                 sprintf(ret, "1");
                 return;

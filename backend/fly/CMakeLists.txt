@@ -1,9 +1,7 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(fly)
 
-set(CMAKE_CXX_STANDARD 14)
+add_compile_options(-O2)
+set(CMAKE_CXX_STANDARD 17)
 
-aux_source_directory(. FLYSRC)
-aux_source_directory(../whj/ WHJSRC)
-aux_source_directory(../dhc/ DHCSRC)
-add_executable(fly ${FLYSRC} ${WHJSRC} ${DHCSRC})
+add_executable(fly test.cpp)

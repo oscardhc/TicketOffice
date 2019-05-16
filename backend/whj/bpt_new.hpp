@@ -9,7 +9,7 @@ enum NODE_TYPE{INTERNAL = 0, LEAF = 1}; // 结点类型：内结点、叶子结�
 enum SIBLING_DIRECTION{LEFT, RIGHT}; // 兄弟结点方向：左兄弟结点、右兄弟结点
 typedef int KeyType; // 键类型
 typedef int DataType; // 值类型
-const int ORDER = 35; // B+树的阶（非根内结点的最小子树个数）
+const int ORDER = 50; // B+树的阶（非根内结点的最小子树个数）
 const int MINNUM_KEY = ORDER-1; // 最小键值个数
 const int MAXNUM_KEY = 2*ORDER-1; // 最大键值个数
 const int MINNUM_CHILD = MINNUM_KEY+1; // 最小子树个数
@@ -20,7 +20,8 @@ const int MAXNUM_LEAF = MAXNUM_KEY; // 最大叶子结点键值个数
 const int NODE_SIZE = ORDER * 16 + 24;
 const int ALTER_SIZE = 30;
 
-sjtu::IOManager DataBase("./out.txt");
+sjtu::IOManager DataBase(2);
+//sjtu::IOManagerList DataBase("out");
 
 template <class KeyType, class DataType>
 class CNode{
@@ -404,6 +405,7 @@ public:
         return root_off;
     }
     bool insert(KeyType key, const DataType & data){
+//        printf("insert %d %d\n", key, data);
         if (search(key) != -1) return false;
         size++;
         CNode < KeyType, DataType > *m_root = inter_buf[(++tot1) % ALTER_SIZE];

@@ -2,10 +2,8 @@
 #include <algorithm>
 #include <iomanip>
 using namespace std;
-typedef int KeyType;
-typedef int DataType;
 
-template <KeyType, DataType>
+template <class KeyType, class DataType>
 class SplayTree{
 private:
     struct Node{
@@ -28,7 +26,7 @@ private:
 
     DataType inter_search(Node * t, KeyType key) {
 
-        if (t == nullptr) return -1;
+        if (t == nullptr) return nullptr;
         if (key < t->key) {
             return inter_search(t->left, key);
         }
@@ -161,12 +159,18 @@ private:
 
 
 public:
+    int size;
+
+    KeyType getRootKey() {
+        return m_root->key;
+    }
 
     SplayTree(){
         m_root = nullptr;
         tag_max = 0;
         tag_min = 0;
         maxkey = 0;
+        size = 0;
     }
 
     ~SplayTree(){
@@ -198,12 +202,17 @@ public:
             m_root = splay(m_root, key);
             if (key > maxkey) maxkey = key;
             if (key < minkey) minkey = key;
+            size++;
         }
         return flag;
     }
 
     bool remove(KeyType key){
-        if (search(key) == -1) return false;
+
+        if (search(key) == nullptr) return false;
+
+        size--;
+
         if (key == maxkey) tag_max = 1;
         if (key == minkey) tag_min = 1;
 
