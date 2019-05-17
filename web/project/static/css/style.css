@@ -19,6 +19,13 @@
     overflow: hidden;
 }
 
+.manageCard {
+    display: inline-block;
+    float: left;
+    width: 46%;
+    margin: auto 2% 20px 2%;
+}
+
 ul {
     padding-left: 0 !important;
 }

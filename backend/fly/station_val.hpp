@@ -1,43 +1,42 @@
+
 //
 // Created by 傅凌玥 on 2019/5/8.
 //
 
-#ifndef TRAINTICKET_STA
-#define TRAINTICKET_STA
 
 #include "utility.hpp"
 #include "constant.h"
 #include <cstring>
 namespace sjtu{
-class station_val{
-public:
-  //char name[NAME_SIZE];
-  unsigned int passby_train[186] = {0};//one bit save a passby_train
+    class station_val{
+    public:
+        //char name[NAME_SIZE];
+        unsigned long passby_train[1485] = {0};//eight bit save a passby_train station number
 
-  station_val() = default;
-  void add(int train_num){
-    int index = train_num / 32;
-    int bit = train_num % 32;
-    passby_train[index] | (1 << bit);//need verify
-  }
+        station_val() = default;
+        void add(int train_num, int num){
+            int index = train_num >> 2;
+            int bit = train_num & 3;
+            passby_train[index] |= ((255) << (bit * 8));
+            passby_train[index] &= (num << (bit * 8));
+        }
 
-  void del(int train_num){
-    int index = train_num >> 5;
-    int bit = train_num % 32;
-    passby_train[index] &( (unsigned int)(-1) - (unsigned int)(1 << bit));//TODO need verify
-  }
+        void del(int train_num){
+            int index = train_num >> 2;
+            int bit = train_num & 3;
+            for (int i = 0;i<6;++i){
+                passby_train[index] &= ~(1 << (bit * 8 + i));
+            }
+            //TODO need verify
+        }
 
-  bool getval(int train_num){
-    int index = train_num >> 5;
-    int bit = train_num % 32;
-    unsigned int tmp = (passby_train[index] >> bit) & (unsigned int) 1;
-    return tmp;//need verify
-  }
+        short getval(int train_num){
+            int index = train_num >> 2;
+            int bit = train_num & 3;
+            return (passby_train[index] >> (bit * 8)) & 255;//TODO need verify
+        }
 
 
 
-};
+    };
 }
-
-
-#endif

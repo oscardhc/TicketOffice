@@ -21,6 +21,8 @@ const int bufferSize = 256;
 const int hotListSize = 100;
 const int coldListSize = bufferSize - hotListSize;
 
+enum FOR_FILE{BPT = 0, USER = 1, TRAIN = 2, STATION = 3, TRID = 4};
+
 namespace sjtu {
 
     class IOManager {
@@ -163,7 +165,8 @@ namespace sjtu {
                 return node;
             }
         }
-        void getElement(char *t, int offset, int elementSize, int nFile = 0) {
+        void getElement(char *t, int offset, int elementSize, FOR_FILE nFile = BPT) {
+//            printf("GET %d %d %d\n", offset, elementSize, nFile);
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
@@ -177,11 +180,11 @@ namespace sjtu {
                 memcpy(t + pageLeft, pool[poolid2->value], elementSize - pageLeft);
             }
         }
-        int createElement(int elementSize, int nFile = 0) {
+        int createElement(int elementSize, FOR_FILE nFile = BPT) {
             fileSize[nFile] += elementSize;
             return fileSize[nFile] - elementSize;
         }
-        void setElement(char *t, int offset, int elementSize, int nFile = 0) {
+        void setElement(char *t, int offset, int elementSize, FOR_FILE nFile = BPT) {
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
@@ -199,13 +202,13 @@ namespace sjtu {
             }
         }
 
-        int createElementVirt(int elementSize, int nFile = 0) {
+        int createElementVirt(int elementSize, FOR_FILE nFile = BPT) {
             return createElement(elementSize - 8, nFile);
         }
-        void getElementVirt(char *t, int offset, int elementSize, int nFile = 0) {
+        void getElementVirt(char *t, int offset, int elementSize, FOR_FILE nFile = BPT) {
             getElement(t + 8, offset, elementSize - 8, nFile);
         }
-        void setElementVirt(char *t, int offset, int elementSize, int nFile = 0) {
+        void setElementVirt(char *t, int offset, int elementSize, FOR_FILE nFile = BPT) {
             setElement(t + 8, offset, elementSize - 8, nFile);
         }
     };

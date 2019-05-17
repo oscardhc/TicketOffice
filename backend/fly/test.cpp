@@ -5,13 +5,12 @@
 #include "program.hpp"
 #include "utility.hpp"
 
-char cmd[200],ret[200];
+char cmd[1000],ret[1000];
 
 void work() {
     sjtu::Program prog;
     while (1) {
         fgets(cmd, 200, stdin);
-//        gets(cmd);
         cmd[strlen(cmd) - 1] = 0;
         int _t = clock();
         prog.exec(cmd, ret);
@@ -23,16 +22,16 @@ void work() {
 
 inline void test1() {
 //    freopen("./stdout.txt", "w", stdout);
-    freopen("../test_kit/1/1.in", "r", stdin);
+    freopen("../../../test_kit/1/1.in", "r", stdin);
     work();
     fprintf(stderr, "1\n");
-    freopen("../test_kit/1/2.in", "r", stdin);
+    freopen("../../../test_kit/1/2.in", "r", stdin);
     work();
     fprintf(stderr, "2\n");
-    freopen("../test_kit/1/3.in", "r", stdin);
+    freopen("../../../test_kit/1/3.in", "r", stdin);
     work();
     fprintf(stderr, "3\n");
-    freopen("../test_kit/1/4.in", "r", stdin);
+    freopen("../../../test_kit/1/4.in", "r", stdin);
     work();
     fprintf(stderr, "4\n");
 }
@@ -59,6 +58,24 @@ inline void test2() {
     fprintf(stderr, "6\n");
 }
 
+inline void test4() {
+    freopen("./stdout.txt", "w", stdout);
+    freopen("../../../test_kit/4/1.in", "r", stdin);
+    work();
+    fprintf(stderr, "1\n");
+    freopen("../../../test_kit/4/2.in", "r", stdin);
+    work();
+    fprintf(stderr, "2\n");
+    freopen("../../../test_kit/4/3.in", "r", stdin);
+    work();
+    fprintf(stderr, "3\n");
+    freopen("../../../test_kit/4/4.in", "r", stdin);
+    work();
+    fprintf(stderr, "4\n");
+    freopen("../../../test_kit/4/5.in", "r", stdin);
+    work();
+    fprintf(stderr, "5\n");
+}
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
@@ -77,10 +94,10 @@ inline void test2() {
 int wfd,rfd;
 char ubuf[BUF_SIZE];
 char resl[BUF_SIZE];
-sjtu::Program prog;
 
 void realWork()
 {
+    sjtu::Program prog;
     freopen("./out.txt", "r", stdout);
     umask(0);
     wfd=open(FIFO_WRITE,O_SYNC | O_WRONLY, 0777);
@@ -112,9 +129,10 @@ void realWork()
 }
 
 int main(){
-//    work();
+    work();
 //    test2();
 //    test1();
-    realWork();
+//    test4();
+//    realWork();
     return 0;
 }

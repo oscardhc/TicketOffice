@@ -108,16 +108,18 @@ function registerBtnClicked () {
 
 var logoutbtn = document.querySelector('#logoutbtn')
 
+function logout() {
+    localStorage.removeItem('userInfo')
+    $.post('/logout', {}, function (d) {
+        // alert('logged out!')
+        // location.reload()
+        location.href = "/"
+        // alert('reloaded!')
+    })
+}
+
 if (logoutbtn) {
-    logoutbtn.onclick = function () {
-        localStorage.removeItem('userInfo')
-        $.post('/logout', {}, function (d) {
-            // alert('logged out!')
-            // location.reload()
-            location.href = "/"
-            // alert('reloaded!')
-        })
-    }
+    logoutbtn.onclick = logout
 }
 
 function ClickUsername() {
@@ -284,7 +286,7 @@ function getUserInfo(userId) {
         $('.userName').html(userInfo[0])
         $('.userEmail').html(userInfo[1])
         $('.userPhone').html(userInfo[2])
-        $('.userPriv').html(userInfo[3])
+        $('.userPriv').html(userInfo[3] == "2" ? "管理员" : "注册用户")
         // document.querySelector('#userName').innerText = userInfo[0]
         // document.querySelector('#userEmail').innerText = userInfo[1]
         // document.querySelector('#userPhone').innerText = userInfo[2]

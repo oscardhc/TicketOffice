@@ -26,9 +26,9 @@ namespace sjtu{
   const int BIT = 129;
   const int MAX_TRAIN_NUM = 5940;
   const int USER_SIZE = NAME_SIZE + PASSWORD_SIZE + EMAIL_SIZE + PHONE_SIZE + sizeof(int);
-  const int LOC_SIZE = LOCATION_SIZE + 3 * sizeof(short) + sizeof(double) + sizeof(int);
+  const int LOC_SIZE = LOCATION_SIZE + 3 * sizeof(short) + 5 * sizeof(double) + 31 * 5 * sizeof(short);
   const int TRAIN_SIZE = 2 * sizeof(int) + 2 * sizeof(bool) + sizeof(short) +
-      TRAIN_ID_SIZE + NAME_SIZE + CATALOG_SIZE + 5 * TICKET_KIND_SIZE;
+      TRAIN_ID_SIZE + 1 + NAME_SIZE + 1 + 2 + 5 * TICKET_KIND_SIZE;
   const int STATION_SIZE = 186 * sizeof(unsigned int);
 }
 

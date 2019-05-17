@@ -7,10 +7,70 @@
     {% if 'user' in ses %}
 
         <div class="mdui-typo">
+
+
             <h1 class="mdui-text-color-theme">管理</h1>
 
-            <p>This is the management page.</p>
+            {% if ses['pri'] != '2' %}
+                <div id="content">
+                    你必须拥有管理员权限才能进行管理，请联系管理员。
+                </div>
+            {% else %}
+                <div id="content">
 
+                    <div>Welcome to the management page!</div>
+
+                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
+                        <div style="width: 80%;">
+                            <h3>修改用户信息</h3>
+                            <div class="mdui-divider"></div>
+                            2333
+                        </div>
+                    </div>
+
+                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
+                        <div style="width: 80%;">
+                            <h3>修改用户权限</h3>
+                            <div class="mdui-divider"></div>
+                            2333
+                        </div>
+                    </div>
+
+                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
+                        <div style="width: 80%;">
+                            <h3>新建车次</h3>
+                            <div class="mdui-divider"></div>
+                            2333
+                        </div>
+                    </div>
+
+                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
+                        <div style="width: 80%;">
+                            <h3>公开车次</h3>
+                            <div class="mdui-divider"></div>
+                            2333
+                        </div>
+                    </div>
+
+                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
+                        <div style="width: 80%;">
+                            <h3>删除车次</h3>
+                            <div class="mdui-divider"></div>
+                            2333
+                        </div>
+                    </div>
+
+                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
+                        <div style="width: 80%;">
+                            <h3>修改车次</h3>
+                            <div class="mdui-divider"></div>
+                            2333
+                        </div>
+                    </div>
+
+
+                </div>
+            {% endif %}
         </div>
 
 

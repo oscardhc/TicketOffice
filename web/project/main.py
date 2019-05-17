@@ -19,6 +19,11 @@ app.permanent_session_lifetime = timedelta(seconds=60*30)
 
 con = interaction.intereaction(BackEndPath)
 
+def getUserPrivilege(user):
+    res = con.exeCmd(['query_profile', user])
+    arr = str(res).split(' ')
+    return arr[3]
+
 @app.route('/')
 def hello():
     if 'user' not in session:
@@ -43,6 +48,7 @@ def login():
         if res == '1' :
             session['user'] = user
             session['headIcon'] = randint(1, 15)
+            session['pri'] = getUserPrivilege(user)
             print(session)
             session.permanent = True
             return jsonify({'status': '0'})
@@ -69,9 +75,9 @@ def query():
 @app.route('/register', methods=['POST'])
 def reg():
     if request.method == 'POST' :
-            res = con.exeCmd(['register', request.form['name'], request.form['password'], request.form['email'], request.form['phone']])
-            id = int(res)
-            return jsonify({'status': '0', 'id': id})
+        res = con.exeCmd(['register', request.form['name'], request.form['password'], request.form['email'], request.form['phone']])
+        id = int(res)
+        return jsonify({'status': '0', 'id': id})
 
 @app.route('/manage')
 def manage():
@@ -89,7 +95,7 @@ def exec():
 def capt():
     if request.method == 'POST' :
         a = captcha.generate()
-        return jsonify({'origin':a[0], 'diff':a[1], 'val':str(a[2])})
+        return jsonify({'origin': a[0], 'diff': a[1], 'val': str(a[2])})
 
 
 if __name__ == '__main__':

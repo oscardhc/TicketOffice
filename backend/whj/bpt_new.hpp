@@ -1,3 +1,6 @@
+#ifndef DEMO1_BPT
+#define DEMO1_BPT
+
 #include <iostream>
 #include <map>
 #include <stdlib.h>
@@ -20,7 +23,7 @@ const int MAXNUM_LEAF = MAXNUM_KEY; // 最大叶子结点键值个数
 const int NODE_SIZE = ORDER * 16 + 24;
 const int ALTER_SIZE = 30;
 
-sjtu::IOManager DataBase(2);
+sjtu::IOManager DataBase(5);
 //sjtu::IOManagerList DataBase("out");
 
 template <class KeyType, class DataType>
@@ -362,8 +365,9 @@ private:
     int tot1, tot2;
 public:
     BPlusTree() {
+        meta_off = -1;
     }
-    BPlusTree(int _meta_off, int is_init) {
+    void init(int _meta_off, int is_init) {
         meta_off = _meta_off;
         if (is_init) {
             tot1 = 0;
@@ -395,10 +399,12 @@ public:
     }
 
     ~BPlusTree(){
-        DataBase.setElement((char*)&root_off, meta_off + 0 * sizeof(int), sizeof(int));
-        DataBase.setElement((char*)&head_off, meta_off + 1 * sizeof(int), sizeof(int));
-        DataBase.setElement((char*)&m_maxkey, meta_off + 2 * sizeof(int), sizeof(int));
-        DataBase.setElement((char*)&size, meta_off + 3 * sizeof(int), sizeof(int));
+        if (meta_off != -1) {
+            DataBase.setElement((char*)&root_off, meta_off + 0 * sizeof(int), sizeof(int));
+            DataBase.setElement((char*)&head_off, meta_off + 1 * sizeof(int), sizeof(int));
+            DataBase.setElement((char*)&m_maxkey, meta_off + 2 * sizeof(int), sizeof(int));
+            DataBase.setElement((char*)&size, meta_off + 3 * sizeof(int), sizeof(int));
+        }
     }
 
     int getRootOff() {
@@ -498,7 +504,7 @@ public:
 
     bool update(KeyType key, DataType _new){
         if (search(key) == -1) return false;
-        inter_update(root_off, key, _new, 0);
+        return inter_update(root_off, key, _new, 0);
     }
 
     DataType search(KeyType key){
@@ -1468,3 +1474,5 @@ private:
 //    }
 //};
 //
+
+#endif

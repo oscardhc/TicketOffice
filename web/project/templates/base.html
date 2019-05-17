@@ -42,15 +42,15 @@
                 <li class="mdui-menu-item">
                     <a class="mdui-typo">你好，<div class="userName" style="display: inline-block"></div>({{ ses['user'] }})！</a>
                 </li>
-                <li class="mdui-menu-item" disabled>
-                    <a href="javascript:;">Help & feedback</a>
-                </li>
+{#                <li class="mdui-menu-item" disabled>#}
+{#                    <a href="javascript:;">Help & feedback</a>#}
+{#                </li>#}
                 <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">Settings</a>
+                    <a href="/account" class="mdui-ripple">设置</a>
                 </li>
                 <li class="mdui-divider"></li>
                 <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">Sign out</a>
+                    <a class="mdui-ripple" onclick="logout()">登出</a>
                 </li>
             </ul>
 
@@ -251,7 +251,7 @@
 <script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/mdui.js') }}"></script>
 <script src="{{ url_for("static", filename="js/my.js") }}"></script>
-<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>
+{#<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>#}
 <script src="{{ url_for('static', filename='js/jquery-editable-select.js') }}"></script>
 {#<script src="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>#}
 

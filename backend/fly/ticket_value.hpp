@@ -7,18 +7,26 @@
 #include "utility.hpp"
 #include <cstring>
 namespace sjtu {
-  class ticket_val {
-public:
-  bool is_delete;
-  int ID;
-  char loc1[LOCATION_SIZE], loc2[LOCATION_SIZE];
-  char date[DATE_SIZE];
-  char time1[TIME_SIZE], time2[TIME_SIZE];
-  char catalog[CATALOG_SIZE];
-  void del(char *inp){
+    class ticket_val {
+    public:
+        bool is_delete;
+        int ID;
+        int trainID;
+        short loc1, loc2;
+        char date[DATE_SIZE];
+        short price_num, ticket_num;
+        char catalog[CATALOG_SIZE];
 
-  }
-  void add(char *inp) {};
-};
+
+        void del(){
+            is_delete = false;
+        }
+        void setInput(char *ID, char* Date,char* Catalog, char*p) {
+
+        };
+        void print(char*ret) {
+
+        }
+    };
 }
 

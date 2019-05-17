@@ -64,13 +64,14 @@ namespace sjtu{
     }
 
     short timeToInt(char *time){
+        fprintf(stderr, "TIME %s\n", time);
         short hour = 0,minute = 0;
         if(time[0] == 'x')
             return -1;
         hour += (short)time[0] - '0';
         (hour *= 10) += (short)time[1] - '0';
         minute += (short)(time[3] - '0');
-        minute += (short)(time[4] - '0');
+        (minute *= 10) += (short)(time[4] - '0');
         return (short)(hour * 60) + minute;
     }
     void intToTime(const int &inte,char *time){
@@ -83,14 +84,14 @@ namespace sjtu{
             time[1] = (char)((hour % 10) + '0');
             time[2] = ':';
             time[3] = (char)((minute / 10) + '0');
-            time[4] = (char)((minute / 10) + '0');
+            time[4] = (char)((minute % 10) + '0');
             time[5] = '\0';
         }
     }
     int stringToInt(char* str) {
         int a = 0;
         char* cur = str;
-        while (*cur) {
+        while ((*cur) >= '0' && (*cur) <= '9') {
             a = a * 10 + (*cur) - '0';
             cur++;
         }
