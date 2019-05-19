@@ -211,6 +211,7 @@ public:
     }
 
     DataType search(KeyType key){
+//        fprintf(stderr, "ser %d\n", key);
         return inter_search(m_root, key);
     }
 
@@ -226,6 +227,7 @@ public:
 
 
     bool insert(KeyType key, DataType data){
+//        fprintf(stderr, "ins %d %llu\n", key, data);
         if (m_root == nullptr){
             minkey = key;
             maxkey = key;
@@ -236,6 +238,7 @@ public:
     }
 
     bool remove(KeyType key){
+//        fprintf(stderr, "rem %d %llu\n", key, search(key));
         if (search(key) == nullptr) return false;
         if (key == maxkey) tag_max = 1;
         if (key == minkey) tag_min = 1;

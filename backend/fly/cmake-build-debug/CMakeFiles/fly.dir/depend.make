@@ -5,7 +5,7 @@ CMakeFiles/fly.dir/test.cpp.o: /Users/oscar/Documents/SJTU/1819_Spring/Data_Stru
 CMakeFiles/fly.dir/test.cpp.o: /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/exceptions.hpp
 CMakeFiles/fly.dir/test.cpp.o: /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/listMap.hpp
 CMakeFiles/fly.dir/test.cpp.o: /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/map.hpp
-CMakeFiles/fly.dir/test.cpp.o: ../constant.h
+CMakeFiles/fly.dir/test.cpp.o: ../constant.hpp
 CMakeFiles/fly.dir/test.cpp.o: ../program.hpp
 CMakeFiles/fly.dir/test.cpp.o: ../station_val.hpp
 CMakeFiles/fly.dir/test.cpp.o: ../test.cpp

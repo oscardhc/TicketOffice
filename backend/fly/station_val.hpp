@@ -5,20 +5,22 @@
 
 
 #include "utility.hpp"
-#include "constant.h"
+#include "constant.hpp"
 #include <cstring>
 namespace sjtu{
     class station_val{
     public:
         //char name[NAME_SIZE];
-        unsigned long passby_train[1485] = {0};//eight bit save a passby_train station number
+        unsigned int passby_train[1485] = {0};//eight bit save a passby_train station number
 
         station_val() = default;
         void add(int train_num, int num){
             int index = train_num >> 2;
             int bit = train_num & 3;
-            passby_train[index] |= ((255) << (bit * 8));
-            passby_train[index] &= (num << (bit * 8));
+//            fprintf(stderr, "[%d ", passby_train[index]);
+            passby_train[index] &= ((~0u) - (255u << (bit * 8)));
+            passby_train[index] |= ((unsigned long)num << (bit * 8));
+//            fprintf(stderr, "%d]", passby_train[index]);
         }
 
         void del(int train_num){

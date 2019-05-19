@@ -8,7 +8,7 @@
 
 #include <cstdio>
 #include <cstring>
-#include "constant.h"
+#include "constant.hpp"
 #include <ctime>
 
 namespace sjtu{
@@ -51,6 +51,10 @@ namespace sjtu{
         return ret;
     }
     void intToDate(const int &inte,char *date){
+        if (inte == 31) {
+            sprintf(date, "2019-07-01");
+            return;
+        }
         date[0] = '2';
         date[1] = '0';
         date[2] = '1';
@@ -64,7 +68,6 @@ namespace sjtu{
     }
 
     short timeToInt(char *time){
-        fprintf(stderr, "TIME %s\n", time);
         short hour = 0,minute = 0;
         if(time[0] == 'x')
             return -1;

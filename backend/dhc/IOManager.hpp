@@ -15,9 +15,9 @@
 #include "../whj/splay_new.hpp"
 
 // 8K per page (There should be NO elements with sizes exceeding 8K)
-const int pageSize = 4096;
+const int pageSize = 8192;
 // Bufferpool size: 8K * 128 = 1M
-const int bufferSize = 256;
+const int bufferSize = 1600;
 const int hotListSize = 100;
 const int coldListSize = bufferSize - hotListSize;
 
@@ -27,6 +27,7 @@ namespace sjtu {
 
     class IOManager {
     private:
+        char tmp[pageSize];
         char pool[bufferSize][pageSize];
         int poolAge;
         int totalQuery, hitQuery;
@@ -52,7 +53,6 @@ namespace sjtu {
 //        }
 
         SplayTree<int, Node*> ageMap, idxMap;
-
         void moveToFront(Node* node) {
             if (ageMap.getmax() != node->age) {
                 ageMap.remove(node->age);
@@ -120,10 +120,12 @@ namespace sjtu {
         }
         void flushToDisk(Node* node) {
             int nfile = node->index % 10, idx = node->index / 10;
+//            fprintf(stderr, "FLUSH %d %d %d -> %d\n", nfile, idx, *((int*)&pool[node->value][948]), node->value);
             fseek(file[nfile], idx * pageSize, SEEK_SET);
             fwrite(pool[node->value], pageSize, 1, file[nfile]);
         }
         void readFromDisk(Node* node) {
+//            fprintf(stderr, "READ %d %d -> %d\n", node->index % 10, node->index / 10, node->value);
             fseek(file[node->index % 10], (node->index / 10) * pageSize, SEEK_SET);
             fread(pool[node->value], pageSize, 1, file[node->index % 10]);
         }
@@ -166,19 +168,35 @@ namespace sjtu {
             }
         }
         void getElement(char *t, int offset, int elementSize, FOR_FILE nFile = BPT) {
-//            printf("GET %d %d %d\n", offset, elementSize, nFile);
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
             if (pageLeft >= elementSize) {
                 Node *poolid = getBufferId(beginIndex * 10 + nFile);
                 memcpy(t, pool[poolid->value] + pagePosition, elementSize);
-            } else {
+            } else if (elementSize <= 8192 + pageLeft) {
                 Node *poolid1 = getBufferId(beginIndex * 10 + nFile);
                 Node *poolid2 = getBufferId((beginIndex + 1) * 10 + nFile);
                 memcpy(t, pool[poolid1->value] + pagePosition, pageLeft);
                 memcpy(t + pageLeft, pool[poolid2->value], elementSize - pageLeft);
+            } else if (elementSize <= 8192 * 2 + pageLeft) {
+                Node *poolid1 = getBufferId(beginIndex * 10 + nFile);
+                Node *poolid2 = getBufferId((beginIndex + 1) * 10 + nFile);
+                Node *poolid3 = getBufferId((beginIndex + 2) * 10 + nFile);
+                memcpy(t, pool[poolid1->value] + pagePosition, pageLeft);
+                memcpy(t + pageLeft, pool[poolid2->value], 8192);
+                memcpy(t + pageLeft + 8192, pool[poolid3->value], elementSize - pageLeft - 8192);
+            } else {
+                Node *poolid1 = getBufferId(beginIndex * 10 + nFile);
+                Node *poolid2 = getBufferId((beginIndex + 1) * 10 + nFile);
+                Node *poolid3 = getBufferId((beginIndex + 2) * 10 + nFile);
+                Node *poolid4 = getBufferId((beginIndex + 3) * 10 + nFile);
+                memcpy(t, pool[poolid1->value] + pagePosition, pageLeft);
+                memcpy(t + pageLeft, pool[poolid2->value], 8192);
+                memcpy(t + pageLeft + 8192, pool[poolid3->value], 8192);
+                memcpy(t + pageLeft + 8192 + 8192, pool[poolid4->value], elementSize - pageLeft - 8192 - 8192);
             }
+//            if (nFile == TRAIN) fprintf(stderr, "GET %d %d %d   [%d]\n", offset, elementSize, nFile, *(int*)t);
         }
         int createElement(int elementSize, FOR_FILE nFile = BPT) {
             fileSize[nFile] += elementSize;
@@ -188,18 +206,44 @@ namespace sjtu {
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
+//            if (nFile == TRAIN) fprintf(stderr, "SET %d %d %d   %d [%d]  %d %d\n", offset, elementSize, nFile, *(int*)t, *((int*)(&pool[0][948])), pagePosition, pageLeft);
             if (pageLeft >= elementSize) {
-                Node *poolid = getBufferId(beginIndex * 10 + nFile);
+                Node* poolid = getBufferId(beginIndex * 10 + nFile);
                 memcpy(pool[poolid->value] + pagePosition, t, elementSize);
+//                if (nFile == TRAIN) fprintf(stderr, "- %d %d\n", beginIndex, poolid->value);
                 poolid->isEdited = true;
-            } else {
+            } else if (elementSize <= 8192 + pageLeft){
                 Node *poolid1 = getBufferId(beginIndex * 10 + nFile);
                 Node *poolid2 = getBufferId((beginIndex + 1) * 10 + nFile);
                 memcpy(pool[poolid1->value] + pagePosition, t, pageLeft);
                 memcpy(pool[poolid2->value], t + pageLeft, elementSize - pageLeft);
                 poolid1->isEdited = true;
                 poolid2->isEdited = true;
+            } else  if (elementSize <= 8192 + 8192 + pageLeft) {
+                Node *poolid1 = getBufferId(beginIndex * 10 + nFile);
+                Node *poolid2 = getBufferId((beginIndex + 1) * 10 + nFile);
+                Node *poolid3 = getBufferId((beginIndex + 2) * 10 + nFile);
+                memcpy(pool[poolid1->value] + pagePosition, t, pageLeft);
+                memcpy(pool[poolid2->value], t + pageLeft, 8192);
+                memcpy(pool[poolid3->value], t + pageLeft + 8192, elementSize - pageLeft - 8192);
+                poolid1->isEdited = true;
+                poolid2->isEdited = true;
+                poolid3->isEdited = true;
+            } else {
+                Node *poolid1 = getBufferId(beginIndex * 10 + nFile);
+                Node *poolid2 = getBufferId((beginIndex + 1) * 10 + nFile);
+                Node *poolid3 = getBufferId((beginIndex + 2) * 10 + nFile);
+                Node *poolid4 = getBufferId((beginIndex + 3) * 10 + nFile);
+                memcpy(pool[poolid1->value] + pagePosition, t, pageLeft);
+                memcpy(pool[poolid2->value], t + pageLeft, 8192);
+                memcpy(pool[poolid3->value], t + pageLeft + 8192, 8192);
+                memcpy(pool[poolid4->value], t + pageLeft + 8192 + 8192, elementSize - pageLeft - 8192 - 8192);
+                poolid1->isEdited = true;
+                poolid2->isEdited = true;
+                poolid3->isEdited = true;
+                poolid4->isEdited = true;
             }
+//            if (nFile == TRAIN) fprintf(stderr, "[%d]\n", *((int*)(&pool[0][948])));
         }
 
         int createElementVirt(int elementSize, FOR_FILE nFile = BPT) {
@@ -214,157 +258,157 @@ namespace sjtu {
     };
 
 
-    class IOManagerList {
-    private:
-        FILE *file;
-        char pool[bufferSize][pageSize];
-        int poolAge;
-        int fileSize;
-        int totalQuery, hitQuery;
-
-        ListMap list;
-
-    public:
-        IOManagerList(const char *filename) {
-            init(filename);
-        }
-        void init(const char *filename) {
-            FILE *tmp = fopen(filename, "a");
-            fclose(tmp);
-            file = fopen(filename, "r+");
-            initBuff();
-        }
-        void initBuff() {
-            totalQuery = hitQuery = 0;
-            int ret = fread((char*)(&fileSize), sizeof(int), 1, file);
-
-            if (ret == 0) {
-                fileSize = sizeof(int);
-                fwrite((char*)(&fileSize), sizeof(int), 1, file);
-            }
-
-            fprintf(stderr, "INIT FILESIZE %d\n", fileSize);
-            memset(pool, 0, sizeof(pool));
-            for (int i = 0; i < bufferSize; i++) {
-                ListMap::Node* node = new ListMap::Node();
-
-//                std::cerr << "newed " << node << std::endl;
-
-                node->index = - i - 1;
-                node->value = i;
-                node->isEdited = -1;
-                list.insertAtFront(node);
-            }
-        }
-
-        ~IOManagerList() {
-            for (auto it = list.begin; it != list.end; ) {
-                if (it->isEdited == 1) {
-                    flushToDisk(it);
-                }
-                auto tmp = it;
-                it = it->nxt;
-                delete tmp;
-            }
-            fseek(file, 0, SEEK_SET);
-            fwrite((char*)(&fileSize), sizeof(int), 1, file);
-            fprintf(stderr, "TOTAL %u HIT %u RATIO %lf\n", totalQuery, hitQuery, 1.0 * hitQuery / totalQuery);
-            fprintf(stderr, "time used: %lf s\n", 1. * clock() / 1000000);
-        }
-
-        void flushToDisk(ListMap::Node* node) {
-            fseek(file, node->index * pageSize, SEEK_SET);
-            fwrite(pool[node->value], pageSize, 1, file);
-        }
-        void readFromDisk(ListMap::Node* node) {
-            fseek(file, node->index * pageSize, SEEK_SET);
-            fread(pool[node->value], pageSize, 1, file);
-        }
-
-        ListMap::Node* getLastPage() {
-            auto it = list.getLast();
-            if (it->isEdited == 1) {
-                flushToDisk(it);
-            }
-            return it;
-        }
-
-        ListMap::Node* getAvailableMemory(int forIndex) {
-            ListMap::Node* node = getLastPage();
-
-            node->index = forIndex;
-            list.makeYoung(node);
-
-            readFromDisk(node);
-            return node;
-        }
-
-        ListMap::Node* getBufferId(int index) {
-            totalQuery++;
-            auto it = list.find(index);
-            if (it != list.end) {
-                hitQuery++;
-                list.makeYoung(it);
-                return it;
-            } else {
-                ListMap::Node* node = getAvailableMemory(index);
-                return node;
-            }
-        }
-
-        void getElement(char *t, int offset, int elementSize, int nFile = 0) {
-            int _t = clock();
-            int beginIndex = offset / pageSize;
-            int pagePosition = offset % pageSize;
-            int pageLeft = pageSize - pagePosition;
-//            fprintf(stderr, "GET %d %d %d\n", beginIndex, pagePosition, pageLeft);
-            if (pageLeft >= elementSize) {
-                ListMap::Node *poolid = getBufferId(beginIndex);
-                memcpy(t, pool[poolid->value] + pagePosition, elementSize);
-            } else {
-                ListMap::Node *poolid1 = getBufferId(beginIndex);
-                ListMap::Node *poolid2 = getBufferId(beginIndex + 1);
-                memcpy(t, pool[poolid1->value] + pagePosition, pageLeft);
-                memcpy(t + pageLeft, pool[poolid2->value], elementSize - pageLeft);
-            }
-        }
-
-        int createElement(int elementSize, int nFile = 0) {
-            fileSize += elementSize;
-            return fileSize - elementSize;
-        }
-
-        void setElement(char *t, int offset, int elementSize, int nFile = 0) {
-            int _t = clock();
-            int beginIndex = offset / pageSize;
-            int pagePosition = offset % pageSize;
-            int pageLeft = pageSize - pagePosition;
-//            printf("SET %d %d %d\n", beginIndex, pagePosition, pageLeft);
-            if (pageLeft >= elementSize) {
-                ListMap::Node *poolid = getBufferId(beginIndex);
-                memcpy(pool[poolid->value] + pagePosition, t, elementSize);
-                poolid->isEdited = true;
-            } else {
-                ListMap::Node *poolid1 = getBufferId(beginIndex);
-                ListMap::Node *poolid2 = getBufferId(beginIndex + 1);
-                memcpy(pool[poolid1->value] + pagePosition, t, pageLeft);
-                memcpy(pool[poolid2->value], t + pageLeft, elementSize - pageLeft);
-                poolid1->isEdited = true;
-                poolid2->isEdited = true;
-            }
-        }
-
-        int createElementVirt(int elementSize, int nFile = 0) {
-            return createElement(elementSize - 8);
-        }
-        void getElementVirt(char *t, int offset, int elementSize, int nFile = 0) {
-            getElement(t + 8, offset, elementSize - 8);
-        }
-        void setElementVirt(char *t, int offset, int elementSize, int nFile = 0) {
-            setElement(t + 8, offset, elementSize - 8);
-        }
-
-    };
+//    class IOManagerList {
+//    private:
+//        FILE *file;
+//        char pool[bufferSize][pageSize];
+//        int poolAge;
+//        int fileSize;
+//        int totalQuery, hitQuery;
+//
+//        ListMap list;
+//
+//    public:
+//        IOManagerList(const char *filename) {
+//            init(filename);
+//        }
+//        void init(const char *filename) {
+//            FILE *tmp = fopen(filename, "a");
+//            fclose(tmp);
+//            file = fopen(filename, "r+");
+//            initBuff();
+//        }
+//        void initBuff() {
+//            totalQuery = hitQuery = 0;
+//            int ret = fread((char*)(&fileSize), sizeof(int), 1, file);
+//
+//            if (ret == 0) {
+//                fileSize = sizeof(int);
+//                fwrite((char*)(&fileSize), sizeof(int), 1, file);
+//            }
+//
+//            fprintf(stderr, "INIT FILESIZE %d\n", fileSize);
+//            memset(pool, 0, sizeof(pool));
+//            for (int i = 0; i < bufferSize; i++) {
+//                ListMap::Node* node = new ListMap::Node();
+//
+////                std::cerr << "newed " << node << std::endl;
+//
+//                node->index = - i - 1;
+//                node->value = i;
+//                node->isEdited = -1;
+//                list.insertAtFront(node);
+//            }
+//        }
+//
+//        ~IOManagerList() {
+//            for (auto it = list.begin; it != list.end; ) {
+//                if (it->isEdited == 1) {
+//                    flushToDisk(it);
+//                }
+//                auto tmp = it;
+//                it = it->nxt;
+//                delete tmp;
+//            }
+//            fseek(file, 0, SEEK_SET);
+//            fwrite((char*)(&fileSize), sizeof(int), 1, file);
+//            fprintf(stderr, "TOTAL %u HIT %u RATIO %lf\n", totalQuery, hitQuery, 1.0 * hitQuery / totalQuery);
+//            fprintf(stderr, "time used: %lf s\n", 1. * clock() / 1000000);
+//        }
+//
+//        void flushToDisk(ListMap::Node* node) {
+//            fseek(file, node->index * pageSize, SEEK_SET);
+//            fwrite(pool[node->value], pageSize, 1, file);
+//        }
+//        void readFromDisk(ListMap::Node* node) {
+//            fseek(file, node->index * pageSize, SEEK_SET);
+//            fread(pool[node->value], pageSize, 1, file);
+//        }
+//
+//        ListMap::Node* getLastPage() {
+//            auto it = list.getLast();
+//            if (it->isEdited == 1) {
+//                flushToDisk(it);
+//            }
+//            return it;
+//        }
+//
+//        ListMap::Node* getAvailableMemory(int forIndex) {
+//            ListMap::Node* node = getLastPage();
+//
+//            node->index = forIndex;
+//            list.makeYoung(node);
+//
+//            readFromDisk(node);
+//            return node;
+//        }
+//
+//        ListMap::Node* getBufferId(int index) {
+//            totalQuery++;
+//            auto it = list.find(index);
+//            if (it != list.end) {
+//                hitQuery++;
+//                list.makeYoung(it);
+//                return it;
+//            } else {
+//                ListMap::Node* node = getAvailableMemory(index);
+//                return node;
+//            }
+//        }
+//
+//        void getElement(char *t, int offset, int elementSize, int nFile = 0) {
+//            int _t = clock();
+//            int beginIndex = offset / pageSize;
+//            int pagePosition = offset % pageSize;
+//            int pageLeft = pageSize - pagePosition;
+////            fprintf(stderr, "GET %d %d %d\n", beginIndex, pagePosition, pageLeft);
+//            if (pageLeft >= elementSize) {
+//                ListMap::Node *poolid = getBufferId(beginIndex);
+//                memcpy(t, pool[poolid->value] + pagePosition, elementSize);
+//            } else {
+//                ListMap::Node *poolid1 = getBufferId(beginIndex);
+//                ListMap::Node *poolid2 = getBufferId(beginIndex + 1);
+//                memcpy(t, pool[poolid1->value] + pagePosition, pageLeft);
+//                memcpy(t + pageLeft, pool[poolid2->value], elementSize - pageLeft);
+//            }
+//        }
+//
+//        int createElement(int elementSize, int nFile = 0) {
+//            fileSize += elementSize;
+//            return fileSize - elementSize;
+//        }
+//
+//        void setElement(char *t, int offset, int elementSize, int nFile = 0) {
+//            int _t = clock();
+//            int beginIndex = offset / pageSize;
+//            int pagePosition = offset % pageSize;
+//            int pageLeft = pageSize - pagePosition;
+//            fprintf(stderr, "SET %d %d %d\n", beginIndex, pagePosition, pageLeft);
+//            if (pageLeft >= elementSize) {
+//                ListMap::Node *poolid = getBufferId(beginIndex);
+//                memcpy(pool[poolid->value] + pagePosition, t, elementSize);
+//                poolid->isEdited = true;
+//            } else {
+//                ListMap::Node *poolid1 = getBufferId(beginIndex);
+//                ListMap::Node *poolid2 = getBufferId(beginIndex + 1);
+//                memcpy(pool[poolid1->value] + pagePosition, t, pageLeft);
+//                memcpy(pool[poolid2->value], t + pageLeft, elementSize - pageLeft);
+//                poolid1->isEdited = true;
+//                poolid2->isEdited = true;
+//            }
+//        }
+//
+//        int createElementVirt(int elementSize, int nFile = 0) {
+//            return createElement(elementSize - 8);
+//        }
+//        void getElementVirt(char *t, int offset, int elementSize, int nFile = 0) {
+//            getElement(t + 8, offset, elementSize - 8);
+//        }
+//        void setElementVirt(char *t, int offset, int elementSize, int nFile = 0) {
+//            setElement(t + 8, offset, elementSize - 8);
+//        }
+//
+//    };
 }
 
 #endif //DEMO1_IOMANAGER_HPP

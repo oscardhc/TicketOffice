@@ -5,13 +5,15 @@
 #include "program.hpp"
 #include "utility.hpp"
 
-char cmd[1000],ret[1000];
+char cmd[1000],ret[100000];
 
 void work() {
     sjtu::Program prog;
     while (1) {
         fgets(cmd, 200, stdin);
         cmd[strlen(cmd) - 1] = 0;
+//        puts(cmd);
+//        fprintf(stderr, "%s\n", cmd);
         int _t = clock();
         prog.exec(cmd, ret);
         sjtu::exe += (clock() - _t);
@@ -35,29 +37,27 @@ inline void test1() {
     work();
     fprintf(stderr, "4\n");
 }
-
 inline void test2() {
     freopen("./stdout.txt", "w", stdout);
-    freopen("../test_kit/2/1.in", "r", stdin);
+    freopen("../../../test_kit/2/1.in", "r", stdin);
     work();
     fprintf(stderr, "1\n");
-    freopen("../test_kit/2/2.in", "r", stdin);
+    freopen("../../../test_kit/2/2.in", "r", stdin);
     work();
     fprintf(stderr, "2\n");
-    freopen("../test_kit/2/3.in", "r", stdin);
+    freopen("../../../test_kit/2/3.in", "r", stdin);
     work();
     fprintf(stderr, "3\n");
-    freopen("../test_kit/2/4.in", "r", stdin);
+    freopen("../../../test_kit/2/4.in", "r", stdin);
     work();
     fprintf(stderr, "4\n");
-    freopen("../test_kit/2/5.in", "r", stdin);
+    freopen("../../../test_kit/2/5.in", "r", stdin);
     work();
     fprintf(stderr, "5\n");
-    freopen("../test_kit/2/6.in", "r", stdin);
+    freopen("../../../test_kit/2/6.in", "r", stdin);
     work();
     fprintf(stderr, "6\n");
 }
-
 inline void test4() {
     freopen("./stdout.txt", "w", stdout);
     freopen("../../../test_kit/4/1.in", "r", stdin);
@@ -76,6 +76,48 @@ inline void test4() {
     work();
     fprintf(stderr, "5\n");
 }
+inline void test5() {
+//    freopen("./stdout.txt", "w", stdout);
+    freopen("../../../test_kit/5/1.in", "r", stdin);
+    work();
+    fprintf(stderr, "1\n");
+    freopen("../../../test_kit/5/2.in", "r", stdin);
+    work();
+    fprintf(stderr, "2\n");
+}
+inline void test7() {
+    freopen("./stdout.txt", "w", stdout);
+    freopen("../../../test_kit/7/1.in", "r", stdin);
+    work();
+    fprintf(stderr, "1\n");
+    freopen("../../../test_kit/7/2.in", "r", stdin);
+    work();
+    fprintf(stderr, "2\n");
+}
+inline void test8() {
+    freopen("./stdout.txt", "w", stdout);
+    freopen("./stderr.txt", "w", stderr);
+    freopen("../../../test_kit/8/1.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 1\n");
+    freopen("../../../test_kit/8/2.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 2\n");
+    freopen("../../../test_kit/8/3.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 3\n");
+    freopen("../../../test_kit/8/4.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 4\n");
+    freopen("../../../test_kit/8/5.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 5\n");
+    freopen("../../../test_kit/8/6.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 6\n");
+}
+
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
@@ -133,6 +175,9 @@ int main(){
 //    test2();
 //    test1();
 //    test4();
+//    test5();
+//    test7();
+//    test8();
 //    realWork();
     return 0;
 }
