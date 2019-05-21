@@ -13,6 +13,7 @@
 #include "../whj/bpt_new.hpp"
 #include "../dhc/IOManager.hpp"
 #include <vector>
+#include "record.hpp"
 
 namespace sjtu {
     typedef int ID;
@@ -146,10 +147,7 @@ namespace sjtu {
         BPlusTree stationTree;
 
     public:
-        int calculateOffset(int index) {
-            if (index < userCurId) return sizeof(int) + (index - 2019) * USER_SIZE;
-            else return -1;
-        }
+
         /*User word:*/
         void execute_register() {
 //            printf("--\n");
@@ -157,7 +155,7 @@ namespace sjtu {
             User_val val(cur);
             int id = userCurId++;
             if (id == 2019) {
-                val.privilege = 2;
+                val.setPrivilege(2);
             }
             int offset = DataBase.createElement(USER_SIZE, USER);
             DataBase.setElement((char*)&val, offset, USER_SIZE, USER);
@@ -172,7 +170,7 @@ namespace sjtu {
             int passlen = getNextWord(cur, password);
             sjtu::User_val val;
             int id = stringToInt(username);
-            int offset = calculateOffset(id);
+            int offset = calculateOffset(id, userCurId);
             if (offset == -1) {
                 sprintf(ret, "0");
                 return;
@@ -192,14 +190,14 @@ namespace sjtu {
             skipWhiteSpace(cur);
             sscanf(cur, "%d", &id);
             static User_val val;
-            int offset = calculateOffset(id);
+            int offset = calculateOffset(id, userCurId);
             if (offset == -1) {
                 sprintf(ret, "0");
                 return;
             }
             DataBase.getElement((char*)&val, offset, USER_SIZE, USER);
             sprintf(ret, "%s %s %s %d", val.name, val.email, val.phone,
-                    val.privilege);
+                    val.getPrivilege());
         }
         void execute_modifyProfile() {
             char *cur = cmd + commandLength;
@@ -208,7 +206,7 @@ namespace sjtu {
             cur += idlen;
             int ID = stringToInt(id);
             User_val val(cur);
-            int offset = calculateOffset(ID);
+            int offset = calculateOffset(ID, userCurId);
             if (offset == -1) {
                 sprintf(ret, "0");
                 return;
@@ -228,13 +226,13 @@ namespace sjtu {
             int ID1 = stringToInt(id1), ID2 = stringToInt(id2);
 
             User_val val1;
-            int offset1 = calculateOffset(ID1);
+            int offset1 = calculateOffset(ID1, userCurId);
             if (offset1 == -1) {
                 sprintf(ret, "0");
                 return;
             }
             DataBase.getElement((char*)&val1,offset1,USER_SIZE,USER);
-            p_id1 = val1.privilege;
+            p_id1 = val1.getPrivilege();
             if (p_id1 == 1 || p_id1 == 0) {
                 sprintf(ret, "0");
                 return;
@@ -243,13 +241,13 @@ namespace sjtu {
             cur += idlen;
             sscanf(cur, "%d", &privil);
             User_val val2;
-            int offset2 = calculateOffset(ID2);
+            int offset2 = calculateOffset(ID2, userCurId);
             if (offset2 == -1) {
                 sprintf(ret, "0");
                 return;
             }
             DataBase.getElement((char*)&val2,offset2,USER_SIZE,USER);
-            p_id2 = val2.privilege;
+            p_id2 = val2.getPrivilege();
             if (p_id2 == 2) {
                 if (privil == 2) {
                     sprintf(ret, "1");
@@ -261,7 +259,7 @@ namespace sjtu {
             }
             if (p_id2 == 1) {
                 if (privil == 2) {
-                    val2.privilege = 2;
+                    val2.setPrivilege(2);
                     DataBase.setElement((char*)&val2,offset2,USER_SIZE,USER);
                 }
                 sprintf(ret, "1");
@@ -340,7 +338,7 @@ namespace sjtu {
                 int start = sta1.getval(trains[i]->order) - 1,end = sta2.getval(trains[i]->order) - 1;
                 int trstart = trains[i]->getStation(0)->start;
                 int ticketNum;
-                double price;
+                float price;
 
                 char time1[8], time2[8];
                 intToTime(trains[i]->getStation(start)->start % 1440, time1);
@@ -364,7 +362,7 @@ namespace sjtu {
                         if (ticketNum > trains[i]->getStation(j)->ticket[dateToInt(date)][k])
                             ticketNum = trains[i]->getStation(j)->ticket[dateToInt(date)][k];
                     }
-                    sprintf(ret + strlen(ret)," %s %d %6f",trains[i]->pricename[k],ticketNum,price);
+                    sprintf(ret + strlen(ret)," %s %d %f",trains[i]->pricename[k],ticketNum,price);
                 }
                 if (i != trains.size() - 1) {
                     sprintf(ret + strlen(ret), "\n");
@@ -375,106 +373,124 @@ namespace sjtu {
             }
         }
         void execute_queryTransfer() {
-//            char * cur = cmd + commandLength;
-//            char loc1[LOCATION_SIZE], loc2[LOCATION_SIZE];
-//            char dat[DATE_SIZE];
-//            int date;
-//            char catalog[CATALOG_SIZE];
-//            int minTime = 1e9;
-//            char *info = "";
-//
-//            int len = getNextWord(cur,loc1);
-//            cur += len;
-//            len = getNextWord(cur,loc2);
-//            cur += len;
-//            len = getNextWord(cur,dat);
-//            cur += len;
-//            date = dateToInt(dat);
-//            len = getNextWord(cur,catalog);
-//
-//            station_val sta1;
-//            int offset1 = stationTree.search(getID(loc2));
-//            DataBase.getElement((char*)&sta1,offset1,STATION_SIZE);
-//            station_val sta2;
-//            int offset2 = stationTree.search(getID(loc2));
-//            DataBase.getElement((char*)&sta2,offset2,STATION_SIZE);
-//            // traverse all train
-//            for (int j = 0;j < cnt_train; ++j){
-//                int ord_end = sta2.getval(j) - 1;
-//                if (ord_end <= 0)
-//                    continue;
-//                else{
-//                    int offset_train2 = trainTree.search(trainID[j]);
+            char * cur = cmd + commandLength;
+            char loc1[LOCATION_SIZE], loc2[LOCATION_SIZE];
+            char dat[DATE_SIZE];
+            int date;
+            char catalog[CATALOG_SIZE];
+            int minTime = 1e9;
+            char info[1000];
+            info[0] = 0;
+
+            int len = getNextWord(cur,loc1);
+            cur += len;
+            len = getNextWord(cur,loc2);
+            cur += len;
+            len = getNextWord(cur,dat);
+            cur += len;
+            date = dateToInt(dat);
+            len = getNextWord(cur,catalog);
+
+            station_val sta1;
+            int offset1 = stationTree.search(getID(loc1));
+            if (offset1 < 0) {
+                sprintf(ret, "-1");
+                return;
+            }
+            DataBase.getElement((char*)&sta1,offset1,STATION_SIZE,STATION);
+            station_val sta2;
+            int offset2 = stationTree.search(getID(loc2));
+            if (offset2 < 0) {
+                sprintf(ret, "-1");
+                return;
+            }
+            DataBase.getElement((char*)&sta2,offset2,STATION_SIZE,STATION);
+            // traverse all train
+            for (int j = 0;j < cnt_train; ++j){
+                int ord_end = sta2.getval(j) - 1;
+                if (ord_end < 0)
+                    continue;
+                else{
+                    int offset_train2 = getTrainID(j);
 //                    Train_val train2;
 //                    DataBase.getElement((char*)&train2,offset_train2,TRAIN_SIZE);
-//                    int i = 0;
-//                    for (;i < len; ++i){
-//                        if(train2.catalog[0] == catalog[i])
-//                            break;
-//                    }
-//                    if(i == len)
-//                        continue;
-//                    for (int k = 0;k < ord_end - 1;++k){
-//                        int loc_transfer = getID(train2.getStation(k)->station_name);
-//                        station_val sta_transfer;
-//                        int offset_station_transfer = stationTree.search(loc_transfer);
-//                        DataBase.getElement((char*)&sta_transfer,offset_station_transfer,STATION_SIZE);
-//                        for(int l = 0;l < cnt_train;++l){
-//                            int ord_start = sta1.getval(l) - 1, ord_transfer1 = sta_transfer.getval(l) - 1;
-//                            int ord_transfer2 = k;
-//                            if(ord_start <= 0 || ord_transfer1 <= 0 ||
-//                               ord_start > ord_transfer1)
-//                                continue;
+                    Train_val *train2 = createTrainWithOffset(offset_train2);
+                    int i = 0;
+                    for (;i < len; ++i){
+                        if(train2->catalog[0] == catalog[i])
+                            break;
+                    }
+                    if(i == len)
+                        continue;
+                    for (int k = 0;k < ord_end;++k){
+                        int loc_transfer = getID(train2->getStation(k)->station_name);
+                        station_val sta_transfer;
+                        int offset_station_transfer = stationTree.search(loc_transfer);
+                        DataBase.getElement((char*)&sta_transfer,offset_station_transfer,STATION_SIZE,STATION);
+                        for(int l = 0;l < cnt_train;++l){
+                            int ord_start = sta1.getval(l) - 1, ord_transfer1 = sta_transfer.getval(l) - 1;
+                            int ord_transfer2 = k;
+                            if(ord_start < 0 || ord_transfer1 < 0 ||
+                               ord_start > ord_transfer1)
+                                continue;
 //                            Train_val train1;
-//                            int offset_train1 = trainTree.search(trainID[l]);
+                            int offset_train1 = getTrainID(l);
+                            Train_val *train1 = createTrainWithOffset(offset_train1);
 //                            DataBase.getElement((char*)&train1,offset_train1,TRAIN_SIZE);
-//                            short transfer_arrive = train1.getStation(ord_transfer1)->arrive;
-//                            short transfer_start = train2.getStation(ord_transfer2)->start;
-//                            if (transfer_arrive > transfer_start)
-//                                continue;
-//                            int start = train1.getStation(ord_start)->start;
-//                            int arrive = train2.getStation(ord_end)->arrive;
-//                            int whole_time =  arrive - start;
-//
-//                            if(whole_time < minTime){
+                            short transfer_arrive = train1->getStation(ord_transfer1)->arrive;
+                            short transfer_start = train2->getStation(ord_transfer2)->start;
+                            if (transfer_arrive > transfer_start)
+                                continue;
+                            int start = train1->getStation(ord_start)->start;
+                            int arrive = train2->getStation(ord_end)->arrive;
+                            int whole_time =  arrive - start;
+
+                            if(whole_time < minTime){
 //                                info = nullptr;
-//                                char time1[TIME_SIZE],time2[TIME_SIZE];
-//                                intToTime(start,time1);
-//                                intToTime(transfer_arrive,time2);
-//                                sprintf(info,"%s %s %s %s %s %s %s ",train1.trainID,
-//                                        train1.getStation(ord_start)->station_name,dat,
-//                                        time1,train1.getStation(ord_transfer1)->station_name,
-//                                        dat,time2);
-//                                double price;
-//                                for (int p = 0;p < train1.price_num;++p){
-//                                    price = train1.getStation(ord_transfer1)->price[p] - train1.getStation(ord_start)->price[p]; //TODO
-//                                    sprintf(info,"%s %d %f ",train1.pricename[p],train1.getSurplus(ord_start,ord_transfer1,date,i),
-//                                            price);
-//                                }
-//                                sprintf(info,"\n");
-//
-//                                intToTime(transfer_start,time1);
-//                                intToTime(arrive,time2);
-//                                sprintf(info,"%s %s %s %s %s %s %s ",train2.trainID,
-//                                        train2.getStation(ord_transfer2)->station_name,dat,
-//                                        time1,train2.getStation(ord_end)->station_name,
-//                                        dat,time2);
-//                                for (int p = 0;p < train1.price_num;++p){
-//                                    price = train2.getStation(ord_end)->price[p] - train1.getStation(ord_transfer2)->price[p];
-//                                    sprintf(info,"%s %d %f ",train1.pricename[p],train1.getSurplus(ord_transfer2,ord_end,date,i),
-//                                            price);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            if(info == ""){
-//                sprintf(ret,"-1");
-//                return;
-//            }
-//            sprintf(ret,info);
-//            // TODO verify
+                                char time1[TIME_SIZE],time2[TIME_SIZE];
+                                intToTime(start,time1);
+                                intToTime(transfer_arrive,time2);
+                                sprintf(info + strlen(info),"%s %s %s %s %s %s %s ",train1->trainID,
+                                        train1->getStation(ord_start)->station_name,dat,
+                                        time1,train1->getStation(ord_transfer1)->station_name,
+                                        dat,time2);
+                                float price;
+                                for (int p = 0;p < train1->price_num;++p){
+                                    price = 0;
+                                    for (int kk = ord_start + 1; kk <= ord_transfer1; kk++) {
+                                        price += train1->getStation(kk)->price[p];
+                                    }
+                                    sprintf(info + strlen(info),"%s %d %f ",train1->pricename[p],train1->getSurplus(ord_start,ord_transfer1,date,i),
+                                            price);
+                                }
+                                sprintf(info + strlen(info),"\n");
+
+                                intToTime(transfer_start,time1);
+                                intToTime(arrive,time2);
+                                sprintf(info + strlen(info),"%s %s %s %s %s %s %s ",train2->trainID,
+                                        train2->getStation(ord_transfer2)->station_name,dat,
+                                        time1,train2->getStation(ord_end)->station_name,
+                                        dat,time2);
+                                for (int p = 0;p < train1->price_num;++p){
+//                                    price = train2->getStation(ord_end)->price[p] - train1->getStation(ord_transfer2)->price[p];
+                                    price = 0;
+                                    for (int kk = ord_transfer2 + 1; kk <= ord_end; kk++) {
+                                        price += train2->getStation(kk)->price[p];
+                                    }
+                                    sprintf(info + strlen(info),"%s %d %f ",train1->pricename[p],train1->getSurplus(ord_transfer2,ord_end,date,i),
+                                            price);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if(strlen(info) == 0){
+                sprintf(ret,"-1");
+                return;
+            }
+            sprintf(ret,"%s", info);
+            // TODO verify
         }
         void execute_buyTicket() {
             char *cur = cmd + commandLength;
@@ -495,16 +511,13 @@ namespace sjtu {
                 sprintf(ret,"0");
                 return;
             }
-//            Train_val val;
-//            DataBase.getElement((char*)&val,offset,TRAIN_SIZE);
 
             Train_val *val = createTrainWithOffset(offset);
-
             if (!val->if_sale || val->if_delete) {
                 sprintf(ret, "0");
                 return;
             }
-            double price = val->buy(num, cur);
+            float price = val->buy(num, cur, stringToInt(user_id), hashid);
             if (price < 0) {
                 deleteTrain(val);
                 sprintf(ret, "0");
@@ -516,37 +529,96 @@ namespace sjtu {
         }
         void execute_queryOrder() {
             // TODO
+            char *cur = cmd + commandLength;
+            char user_id[ID_SIZE], date[DATE_SIZE], cata[10];
+            int len = getNextWord(cur, user_id);
+            cur += len;
+            len = getNextWord(cur,date);
+            cur += len;
+            len = getNextWord(cur,cata);
+            cur += len;
+            int calalen = strlen(cata);
+
+            int userid = stringToInt(user_id), da = dateToInt(date);
+            Record rec;
+            int offset = calculateOffset(userid, 999999);
+            User_val user;
+            int dt = dateToInt(date);
+
+            char tmp[10000];
+            int tot = 0;
+            tmp[0] = 0;
+
+            DataBase.getElement((char*)&user, offset, USER_SIZE, USER);
+            for (int off = user.getFirst(); off; ){
+//                printf("!!! %d\n", off);
+                DataBase.getElement((char*)&rec, off, RECORD_SIZE, RECORD);
+                int flag = 0;
+                for (int i = 0; i < calalen; i++) {
+                    if (rec.cata == cata[i]) {
+                        flag = 1;
+                        break;
+                    }
+                }
+//                printf("~~~~~~~ %d %d\n", dt, rec.getDate());
+                if (flag == 1 && dt == rec.getDate()) {
+                    tot++;
+                    int troff = trainTree.search(rec.trainid);
+                    Train_val *val = createTrainWithOffset(troff);
+                    char ds[11],dt[11];
+                    intToTime(val->getStation(rec.getStart())->start, ds);
+                    intToTime(val->getStation(rec.getEnd())->arrive, dt);
+                    sprintf(tmp + strlen(tmp), "%s %s %s %s %s %s %s ",
+                            val->trainID,
+                            val->getStation(rec.getStart())->station_name, date, ds,
+                            val->getStation(rec.getEnd())->station_name, date, dt
+                            );
+                    for (int j = 0; j < val->price_num; j++) {
+                        float price = 0.0;
+                        for (int k = rec.getStart() + 1; k <= rec.getEnd(); k++) {
+                            price += val->getStation(k)->price[j];
+                        }
+                        sprintf(tmp + strlen(tmp), "%s %d %f ", val->pricename[j], j == rec.getType() ? rec.getQuantity() : 0, price);
+                    }
+                    sprintf(tmp + strlen(tmp), "\n");
+
+                }
+                off = rec.nxt;
+            }
+            tmp[strlen(tmp) - 1] = 0;
+            sprintf(ret, "%d\n", tot);
+            sprintf(ret + strlen(ret), "%s", tmp);
         }
         void execute_refundTicket() {
-//            char *cur = cmd + commandLength;
-//            char user_id[ID_SIZE], train_id[TRAIN_ID_SIZE];
-//            int num;
-//            char Num[6];
-//            int len = getNextWord(cur, user_id);
-//            cur += len;
-//            len = getNextWord(cur,Num);
-//            num = stringToInt(Num);
-//            cur += len;
-//            len = getNextWord(cur, train_id);
-//            cur += len;
+            char *cur = cmd + commandLength;
+            char user_id[ID_SIZE], train_id[TRAIN_ID_SIZE];
+            int num;
+            char Num[6];
+            int len = getNextWord(cur, user_id);
+            cur += len;
+            len = getNextWord(cur,Num);
+            num = stringToInt(Num);
+            cur += len;
+            len = getNextWord(cur, train_id);
+            cur += len;
 
-//            int hashid = getID(train_id);
-//            int offset = trainTree.search(hashid);
-//            if(offset == -1){
-//                sprintf(ret,"0");
-//                return;
-//            }
+            int hashid = getID(train_id);
+            int offset = trainTree.search(hashid);
+            if(offset == -1){
+                sprintf(ret,"0");
+                return;
+            }
 //            Train_val val;
 //            DataBase.getElement((char*)&val,offset,TRAIN_SIZE);
-//            //TODO(TRAIN_SIZE need verify: get an big big size of data
-//            if (!val.if_sale || val.if_delete) {
-//                sprintf(ret, "0");
-//                return;
-//            }
-//            if (val.refund(num, cur)) {//refund include search ticket record
-//                sprintf(ret, "1");
-//            }
-//            sprintf(ret, "0");
+
+            Train_val *val = createTrainWithOffset(offset);
+
+            if (val->refund(num, cur, stringToInt(user_id), hashid)) {//refund include search ticket record
+                sprintf(ret, "1");
+                return;
+            }
+            sprintf(ret, "0");
+            return;
         }
         /*Train word*/
         void execute_addTrain() {
@@ -575,7 +647,7 @@ namespace sjtu {
                 fgets(cmd + slen, 200, stdin);
                 slen = strlen(cmd);
                 cmd[slen - 1] = ' ';
-                //TODO: This method maybe extremely slow!!!
+                //TODO: This method can be extremely slow!!!
             }
             cmd[slen - 1] = 0;
 
@@ -602,9 +674,7 @@ namespace sjtu {
                     stationTree.insert(id, off);
                 }
             }
-
             deleteTrain(val);
-
             sprintf(ret, "1");
         }
         void execute_saleTrain() {
@@ -628,9 +698,7 @@ namespace sjtu {
                 for (int i = 0;i < val->station_num; ++i){
                     int offset = stationTree.search(getID(val->getStation(i)->station_name));
                     DataBase.getElement((char*)&sta,offset,STATION_SIZE,STATION);
-//                    fprintf(stderr, "s %d %d %d %d->", offset, val->order, i + 1, sta.getval(val->order));
                     sta.add(val->order, i + 1);
-//                    fprintf(stderr, "%d\n", sta.getval(val->order));
                     DataBase.setElement((char*)&sta,offset,STATION_SIZE,STATION);
                 }
                 DataBase.setElement((char*)val, troffset, TRAIN_SIZE + val->station_num * LOC_SIZE, TRAIN);

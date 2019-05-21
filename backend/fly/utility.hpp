@@ -100,6 +100,10 @@ namespace sjtu{
         }
         return a;
     }
+    int calculateOffset(int index, int userCurId) {
+        if (index < userCurId) return sizeof(int) + (index - 2019) * USER_SIZE;
+        else return -1;
+    }
 
 
 }

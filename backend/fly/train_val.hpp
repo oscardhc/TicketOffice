@@ -2,18 +2,23 @@
 // Created by 傅凌玥 on 2019/5/8->
 //
 
+#ifndef FLY_TRAIN_HPP
+#define FLY_TRAIN_HPP
+
 #include "utility.hpp"
 #include "constant.hpp"
 #include <string>
 #include <new>
 #include "../whj/bpt_new.hpp"
+#include "record.hpp"
+#include "user_key.hpp"
 
 namespace sjtu {
 
     struct Train_val {
     public:
         struct station {
-            double price[5];
+            float price[5];
             short arrive;
             short start;
             // stopover time can be calculated by arrive and start time
@@ -53,7 +58,7 @@ namespace sjtu {
                     char buff[20];
                     len = getNextWord(inp, buff);
                     inp += len;
-                    sscanf(buff, "%lf", &price[i]);
+                    sscanf(buff, "%f", &price[i]);
                 }
                 for (int i = 0; i <= 30; i++) {
                     for (int j = 0; j < price_num; j++) {
@@ -109,7 +114,7 @@ namespace sjtu {
             sprintf(ret + strlen(ret),"\n");
             for(int i = 0;i < station_num;++i){
                 char arri[6],st[6],stop[6];
-                fprintf(stderr, "%d %d\n", getStation(i)->arrive, getStation(i)->start );
+//                fprintf(stderr, "%d %d\n", getStation(i)->arrive, getStation(i)->start );
                 intToTime(getStation(i)->arrive,arri);
                 intToTime(getStation(i)->start == -1 ? getStation(i)->arrive : getStation(i)->start ,st);
                 intToTime(getStation(i)->arrive == -1 || getStation(i)->start == -1 ? -1 : getStation(i)->start - getStation(i)->arrive,stop);
@@ -128,7 +133,7 @@ namespace sjtu {
             if_sale = false;
             return 1;
         }
-        int refund(int num,char *inp) {
+        int refund(int num,char *inp,int userid, int trainid) {
             int date;
             char dateStr[DATE_SIZE];
             char sta1[LOCATION_SIZE];
@@ -162,12 +167,34 @@ namespace sjtu {
                     return 0;
             }
 
+            bool flag = 0;
+            Record a(trainid, catalog[0], 0, i, date, cnt1, cnt2, num);
+            static User_val val;
+            int offset = calculateOffset(userid, 9999999);
+            DataBase.getElement((char*)&val, offset, USER_SIZE, USER);
+            for (int off = val.getFirst(); off != 0; ){
+                static Record rec;
+                DataBase.getElement((char*)&rec, off, RECORD_SIZE, RECORD);
+//                printf("... %d %d %d\n", rec.trainid, rec.data, a.data);
+                if (rec.trainid == a.trainid && (rec.data >> 11) == (a.data >> 11) && rec.getQuantity() > num) {
+                    flag = 1;
+                    rec.data -= num;
+                    DataBase.setElement((char*)&rec, off, RECORD_SIZE, RECORD);
+                    break;
+                }
+                off = rec.nxt;
+            }
+
+            if (flag == 0) {
+                return 0;
+            }
+
             for(int j = cnt1 + 1; j <= cnt2; ++j)
                 getStation(j)->ticket[date][i] += num;
             //TODO del ticket record
             return 1;
         }
-        double buy(int num, char *inp) {
+        float buy(int num, char *inp, int userid, int trainid) {
             int date;
             char dateStr[DATE_SIZE];
             char sta1[LOCATION_SIZE];
@@ -200,7 +227,7 @@ namespace sjtu {
                 if (getStation(cnt2)->ticket[date][i] < num || ++cnt2 == station_num)
                     return -1.0;
             }
-            double price = 0;
+            float price = 0;
             for(int j = cnt1 + 1; j <= cnt2; ++j) {
                 if (getStation(j)->ticket[date][i] < num) {
                     return -1.0;
@@ -211,6 +238,15 @@ namespace sjtu {
                 price += getStation(j)->price[i];
             }
             //TODO add ticket record
+
+//            static User_val val;
+//            int offset = calculateOffset(userid, 9999999);
+//            DataBase.getElement((char*)&val, offset, USER_SIZE, USER);
+            int noff = DataBase.createElement(RECORD_SIZE, RECORD);
+            Record a(trainid, catalog[0], 0, i, date, cnt1, cnt2, num);
+            DataBase.setElement((char*)&a, noff, RECORD_SIZE, RECORD);
+//            val.setFirst(noff);
+//            DataBase.setElement((char*)&val, offset, USER_SIZE, USER);
             return price;
         }
         short getSurplus(int start,int end,int cata,int dat){
@@ -252,5 +288,5 @@ namespace sjtu {
 
 }
 
-
+#endif
 

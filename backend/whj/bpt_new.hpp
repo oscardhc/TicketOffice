@@ -23,7 +23,7 @@ const int MAXNUM_LEAF = MAXNUM_KEY; // 最大叶子结点键值个数
 const int NODE_SIZE = ORDER * 16 + 24;
 const int ALTER_SIZE = 30;
 
-sjtu::IOManager DataBase(5);
+sjtu::IOManager DataBase(6);
 //sjtu::IOManagerList DataBase("out");
 
 template <class KeyType, class DataType>
@@ -295,6 +295,7 @@ public:
         DataBase.setElementVirt((char*)newnode, new_off, NODE_SIZE);
         DataBase.setElementVirt((char*)this, this_off, NODE_SIZE);
         //cout << fa->getType() << endl;
+        delete fa;
         delete newnode;
     }
 
@@ -398,6 +399,10 @@ public:
     }
 
     ~BPlusTree(){
+        for (int i = 0; i < ALTER_SIZE; ++i){
+            delete inter_buf[i];
+            delete leaf_buf[i];
+        }
         if (meta_off != -1) {
             DataBase.setElement((char*)&root_off, meta_off + 0 * sizeof(int), sizeof(int));
             DataBase.setElement((char*)&head_off, meta_off + 1 * sizeof(int), sizeof(int));

@@ -13,6 +13,7 @@
 #include "listMap.hpp"
 //#include <filesystem>
 #include "../whj/splay_new.hpp"
+#include <unistd.h>
 
 // 8K per page (There should be NO elements with sizes exceeding 8K)
 const int pageSize = 8192;
@@ -21,7 +22,7 @@ const int bufferSize = 1600;
 const int hotListSize = 100;
 const int coldListSize = bufferSize - hotListSize;
 
-enum FOR_FILE{BPT = 0, USER = 1, TRAIN = 2, STATION = 3, TRID = 4};
+enum FOR_FILE{BPT = 0, USER = 1, TRAIN = 2, STATION = 3, TRID = 4, RECORD = 5};
 
 namespace sjtu {
 
@@ -114,6 +115,7 @@ namespace sjtu {
                 fprintf(stderr, "END FILESIZE %d: %d\n", i, fileSize[i]);
                 fclose(file[i]);
 //                std::filesystem::resize_file(filename, fileSize[i]);
+                truncate(filename, fileSize[i]);
             }
             fprintf(stderr, "TOTAL %u HIT %u RATIO %lf\n", totalQuery, hitQuery, 1.0 * hitQuery / totalQuery);
             fprintf(stderr, "time used: %lf s\n", 1. * clock() / 1000000);

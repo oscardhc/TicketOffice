@@ -3,6 +3,8 @@
 // Created by 傅凌玥 on 2019/5/8.
 //
 
+#ifndef STATION_VAL
+#define STATION_VAL
 
 #include "utility.hpp"
 #include "constant.hpp"
@@ -42,3 +44,5 @@ namespace sjtu{
 
     };
 }
+
+#endif

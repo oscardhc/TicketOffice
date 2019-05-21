@@ -1,2 +1,2 @@
 pwd
-./main > ./runout.txt
+./main 2333

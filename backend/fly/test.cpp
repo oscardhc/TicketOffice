@@ -4,8 +4,10 @@
 
 #include "program.hpp"
 #include "utility.hpp"
+#include "station_val.hpp"
+#include "constant.hpp"
 
-char cmd[1000],ret[100000];
+char cmd[1000],ret[50000];
 
 void work() {
     sjtu::Program prog;
@@ -85,6 +87,15 @@ inline void test5() {
     work();
     fprintf(stderr, "2\n");
 }
+inline void test6() {
+//    freopen("./stdout.txt", "w", stdout);
+    freopen("../../../test_kit/6/1.in", "r", stdin);
+    work();
+    fprintf(stderr, "1\n");
+    freopen("../../../test_kit/6/2.in", "r", stdin);
+    work();
+    fprintf(stderr, "2\n");
+}
 inline void test7() {
     freopen("./stdout.txt", "w", stdout);
     freopen("../../../test_kit/7/1.in", "r", stdin);
@@ -96,7 +107,7 @@ inline void test7() {
 }
 inline void test8() {
     freopen("./stdout.txt", "w", stdout);
-    freopen("./stderr.txt", "w", stderr);
+//    freopen("./stderr.txt", "w", stderr);
     freopen("../../../test_kit/8/1.in", "r", stdin);
     work();
     fprintf(stderr, "complete 1\n");
@@ -170,14 +181,21 @@ void realWork()
     close(rfd);
 }
 
-int main(){
-    work();
+int main(int argc, char** argv){
+//    test8();
+//    printf("%d %d %d %d\n", sizeof(sjtu::Train_val), sjtu::TRAIN_SIZE, sizeof(sjtu::User_val), sjtu::USER_SIZE);
+    return 0;
+    if (argc > 1) {
+        test8();
+        realWork();
+    } else {
+        work();
+    }
+//    test6();
 //    test2();
 //    test1();
 //    test4();
 //    test5();
 //    test7();
-//    test8();
-//    realWork();
     return 0;
 }
