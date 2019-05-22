@@ -127,6 +127,28 @@ inline void test8() {
     work();
     fprintf(stderr, "complete 6\n");
 }
+inline void preRun() {
+    freopen("./stdout.txt", "w", stdout);
+//    freopen("./stderr.txt", "w", stderr);
+    freopen("../test_kit/8/1.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 1\n");
+    freopen("../test_kit/8/2.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 2\n");
+    freopen("../test_kit/8/3.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 3\n");
+    freopen("../test_kit/8/4.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 4\n");
+    freopen("../test_kit/8/5.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 5\n");
+    freopen("../test_kit/8/6.in", "r", stdin);
+    work();
+    fprintf(stderr, "complete 6\n");
+}
 
 
 #include <sys/types.h>
@@ -185,7 +207,7 @@ int main(int argc, char** argv){
 //    test8();
 //    return 0;
     if (argc > 1) {
-        test8();
+        preRun();
         realWork();
     } else {
         work();

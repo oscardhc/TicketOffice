@@ -12,14 +12,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="122fd3a7-4c31-469f-85b2-1a68ad52d72a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dhc/IOManager.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/dhc/IOManager.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/fly" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/fly" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/fly.dSYM/Contents/Resources/DWARF/fly" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/fly.dSYM/Contents/Resources/DWARF/fly" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fly/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/train_val.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/train_val.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/utility.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/utility.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" afterPath="$PROJECT_DIR$/main" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend.xcodeproj/project.xcworkspace/xcuserdata/oscar.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend.xcodeproj/xcuserdata/oscar.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/AppDelegate.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/Assets.xcassets/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/Base.lproj/LaunchScreen.storyboard" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/Base.lproj/Main.storyboard" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/FoldingCell.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/TabBarController.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/TableViewController.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/ViewController.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/iOSFrontend.xcdatamodeld/.xccurrentversion" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontend/iOSFrontend.xcdatamodeld/iOSFrontend.xcdatamodel/contents" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontendTests/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontendTests/iOSFrontendTests.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontendUITests/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOSFrontend/iOSFrontendUITests/iOSFrontendUITests.swift" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/fly/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,8 +78,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fly/test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="192" column="14" lean-forward="true" selection-start-line="192" selection-start-column="14" selection-end-line="192" selection-end-column="14" />
+            <state relative-caret-position="309">
+              <caret line="147" column="13" lean-forward="true" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
               <folding>
                 <element signature="e#38#60#0" expanded="true" />
               </folding>
@@ -125,8 +141,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fly/constant.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+            <state relative-caret-position="120">
+              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -217,9 +233,10 @@
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="height" value="819" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -314,15 +331,15 @@
       <workItem from="1558414185948" duration="9000" />
       <workItem from="1558433023847" duration="535000" />
       <workItem from="1558435670241" duration="2412000" />
-      <workItem from="1558491211787" duration="440000" />
+      <workItem from="1558491211787" duration="1099000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136430000" />
+    <option name="totallyTimeSpent" value="137089000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="819" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24749643" />
@@ -332,7 +349,7 @@
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Messages" order="2" weight="0.32650602" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.32871014" />
-      <window_info active="true" anchor="bottom" id="Run" order="4" visible="true" weight="0.28554216" />
+      <window_info active="true" anchor="bottom" id="Run" order="4" visible="true" weight="0.32599726" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.3987952" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
@@ -537,13 +554,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fly/constant.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fly/user_key.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-271">
@@ -554,10 +564,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fly/constant.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fly/test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="192" column="14" lean-forward="true" selection-start-line="192" selection-start-column="14" selection-end-line="192" selection-end-column="14" />
+        <state relative-caret-position="309">
+          <caret line="147" column="13" lean-forward="true" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
           <folding>
             <element signature="e#38#60#0" expanded="true" />
           </folding>

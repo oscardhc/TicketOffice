@@ -1,0 +1,7 @@
+platform:ios,'12.0'
+
+target 'FoldingCell-Demo' do
+    pod 'SkyFloatingLabelTextField', '~> 3.0'
+    pod 'Material', '~> 3.0'
+    pod 'SwiftyGif'
+end

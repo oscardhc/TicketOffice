@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Launch View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" customClass="LaunchViewController" customModule="FoldingCell_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nichijo" translatesAutoresizingMaskIntoConstraints="NO" id="20g-Gd-jnU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For Data Structure 2019, ACM Class, SJTU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcf-sN-ku0">
+                                <rect key="frame" x="16" y="630" width="343" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TTRS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCd-3b-lHA">
+                                <rect key="frame" x="149.5" y="315" width="76" height="37"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bCd-3b-lHA" firstAttribute="centerX" secondItem="fcf-sN-ku0" secondAttribute="centerX" id="1VA-v4-aGO"/>
+                            <constraint firstAttribute="trailing" secondItem="20g-Gd-jnU" secondAttribute="trailing" id="93j-6k-t8P"/>
+                            <constraint firstAttribute="bottom" secondItem="fcf-sN-ku0" secondAttribute="bottom" constant="20" symbolic="YES" id="9j8-b5-3eq"/>
+                            <constraint firstItem="20g-Gd-jnU" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="IUx-qk-z5l"/>
+                            <constraint firstItem="20g-Gd-jnU" firstAttribute="centerY" secondItem="bCd-3b-lHA" secondAttribute="centerY" id="U8w-GD-qKQ"/>
+                            <constraint firstItem="20g-Gd-jnU" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="f6T-fh-LwT"/>
+                            <constraint firstItem="fcf-sN-ku0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="g3N-Cj-8Q1"/>
+                            <constraint firstItem="20g-Gd-jnU" firstAttribute="centerX" secondItem="bCd-3b-lHA" secondAttribute="centerX" id="o3q-kP-8NS"/>
+                            <constraint firstItem="20g-Gd-jnU" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="qCP-Wg-Nte"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="nichijo" width="799" height="799"/>
+    </resources>
+</document>

@@ -1,0 +1,6 @@
+module Pods_FoldingCell_Demo {
+  umbrella header "Pods-FoldingCell-Demo-umbrella.h"
+
+  export *
+  module * { export * }
+}

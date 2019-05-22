@@ -1,0 +1,32 @@
+PODS:
+  - Material (3.1.2):
+    - Material/Core (= 3.1.2)
+  - Material/Core (3.1.2):
+    - Motion (~> 3.1.0)
+  - Motion (3.1.0):
+    - Motion/Core (= 3.1.0)
+  - Motion/Core (3.1.0)
+  - SkyFloatingLabelTextField (3.7.0)
+  - SwiftyGif (5.1.1)
+
+DEPENDENCIES:
+  - Material (~> 3.0)
+  - SkyFloatingLabelTextField (~> 3.0)
+  - SwiftyGif
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Material
+    - Motion
+    - SkyFloatingLabelTextField
+    - SwiftyGif
+
+SPEC CHECKSUMS:
+  Material: 75f784055f5444a85c61454d7d175a73262b991e
+  Motion: adfaf0a123322dfde099f49cf6cbe3abfa8f3899
+  SkyFloatingLabelTextField: 4b46db0ab1ccde0919cded29c656e6b4805eda04
+  SwiftyGif: f7702483db93586a41f04f4927cd682852a2fa10
+
+PODFILE CHECKSUM: 812d4f8aa028555864635f778565337a733c932e
+
+COCOAPODS: 1.5.3
