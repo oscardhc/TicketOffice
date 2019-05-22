@@ -65,6 +65,7 @@ namespace sjtu{
         date[7] = '-';
         date[8] = (char)((inte / 10) % 10) + '0';
         date[9] = (char)(inte % 10) + '0';
+        date[10] = 0;
     }
 
     short timeToInt(char *time){

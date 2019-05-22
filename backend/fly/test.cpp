@@ -183,8 +183,7 @@ void realWork()
 
 int main(int argc, char** argv){
 //    test8();
-//    printf("%d %d %d %d\n", sizeof(sjtu::Train_val), sjtu::TRAIN_SIZE, sizeof(sjtu::User_val), sjtu::USER_SIZE);
-    return 0;
+//    return 0;
     if (argc > 1) {
         test8();
         realWork();

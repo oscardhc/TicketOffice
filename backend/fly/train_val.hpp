@@ -121,7 +121,7 @@ namespace sjtu {
                 sprintf(ret + strlen(ret),"%s %s %s %s",getStation(i)->station_name,
                         arri,st,stop);
                 for(int j = 0;j < price_num;++j){
-                    sprintf(ret + strlen(ret)," ￥%f",getStation(i)->price[j], getStation(i)->ticket[1][j]);
+                    sprintf(ret + strlen(ret)," ￥%f",getStation(i)->price[j]);
                 }
                 if (i != station_num - 1) sprintf(ret + strlen(ret),"\n");
             }
