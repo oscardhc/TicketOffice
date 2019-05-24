@@ -28,7 +28,7 @@ class intereaction:
             self.rf = os.open(self.read_path, os.O_RDONLY)
 
         while True:
-            s = os.read(self.rf, 1024).decode()
+            s = os.read(self.rf, 50000).decode()
             if s == "":
                 continue
             print("received msg: [%s]" % s)

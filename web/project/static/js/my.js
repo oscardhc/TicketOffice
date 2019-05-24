@@ -1,6 +1,6 @@
 var userInfo = []
-var allCata = ['C','D','E']
-var allCity = ['你好','上海','闵行','HHHHHH','hasdasd','asdfasdf','hbbbb','haaaa']
+var allCata = ['C','D','G','K','O','T','Z']
+var allCity = ['北京南','沈阳','上海虹桥','闵行','HHHHHH','hasdasd','asdfasdf','hbbbb','haaaa']
 var captcha = []
 
 function execCommand(cmd, done) {
@@ -62,8 +62,12 @@ function eraseBtnClicked () {
             openError('用户名或密码错误')
         } else {
             localStorage.removeItem('userInfo', JSON.stringify(userInfo))
+            // console.log(location.href)
             var url = location.href.replace('#mdui-dialog','')
+            // console.log(url)
             location.href = url
+            location.reload(true)
+            // history.go(0)
         }
     })
 
@@ -161,9 +165,9 @@ if (hitokoto) {
 }
 
 var data = [
-    ['c100','2018-03-28 08:00','2018-03-28 08:23',[['一等座',2000,765.50],['二等座',2000,765.49],['三等座',2000,765.48]],'c','name1'],
-    ['c200','2018-03-28 10:00','2018-03-28 10:23',[['一等座',2000,965.50],['二等座',2000,965.49],['三等座',2000,965.48]],'c','name2'],
-    ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
+    // ['c100','2018-03-28 08:00','2018-03-28 08:23',[['一等座',2000,765.50],['二等座',2000,765.49],['三等座',2000,765.48]],'c','name1'],
+    // ['c200','2018-03-28 10:00','2018-03-28 10:23',[['一等座',2000,965.50],['二等座',2000,965.49],['三等座',2000,965.48]],'c','name2'],
+    // ['c300','2018-03-29 10:00','2018-03-29 10:23',[['一等座',2000,2265.50],['二等座',2000,265.49],['三等座',2000,265.48]],'c','name3']
 ]
 
 var tagname = [
@@ -173,6 +177,8 @@ var tagname = [
 function createPanel() {
     var plc = document.querySelector('#panelPlace')
     var row = data.length
+
+    plc.innerHTML = ""
 
     for (var i=0;i<row;++i) {
         var pnl = document.createElement('div')

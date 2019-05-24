@@ -46,11 +46,11 @@ class LoginViewController: UIViewController {
     var btn: Button!
     var imgView = UIImageView()
     lazy var alert: UIAlertController = {
-        var _a = UIAlertController(title: "处理中", message: "\n\n\n\n\n\n\n", preferredStyle: .alert)
+        var _a = UIAlertController(title: "少女手冲中", message: "\n\n\n\n\n\n\n", preferredStyle: .alert)
         self.imgView.frame = CGRect(x: 75, y: 50, width: 120, height: 120)
 //        self.imgView.image = resolveGifImage()[0]
         self.imgView.animationImages = resolveGifImage()
-        self.imgView.animationDuration = 0.7
+        self.imgView.animationDuration = 0.1
         self.imgView.animationRepeatCount = 0
         self.imgView.startAnimating()
         print(self.imgView.frame)

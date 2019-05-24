@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <cstring>
 #include "constant.hpp"
-#include <ctime>
+#include "vector.hpp"
 
 namespace sjtu{
 
@@ -104,6 +104,47 @@ namespace sjtu{
     int calculateOffset(int index, int userCurId) {
         if (index < userCurId) return sizeof(int) + (index - 2019) * USER_SIZE;
         else return -1;
+    }
+    char* myget(char* str) {
+        while (1) {
+            *str = getchar();
+            if (*str == '\n') {
+                *str = 0;
+                return str;
+            } else {
+                str++;
+            }
+        }
+    }
+
+    template <class T>
+    void swap(T& _a, T& _b) {
+        T _t = _a;
+        _a = _b;
+        _b = _t;
+    }
+
+    template <class T>
+    int partsort(sjtu::vector<T> &array, int left, int right, int pivotIdx){
+        T tmp = array[pivotIdx];
+        swap(array[pivotIdx], array[right]);
+        int storeIdx = left;
+        for (int i = left; i < right; i++) {
+            if (*array[i] < *tmp) {
+                swap(array[i], array[storeIdx]);
+                storeIdx++;
+            }
+        }
+        swap(array[right], array[storeIdx]);
+        return storeIdx;
+    }
+    template <class T>
+    void Quicksort(sjtu::vector<T> &array, int left, int right){
+        if (left >= right) return;
+        int pivot = (left + right) >> 1;
+        int index = partsort(array, left, right, pivot);
+        Quicksort(array, left, index - 1);
+        Quicksort(array, index + 1, right);
     }
 
 

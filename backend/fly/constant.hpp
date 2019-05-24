@@ -30,7 +30,7 @@ namespace sjtu{
   const int LOC_SIZE = LOCATION_SIZE + 1 + 2 * sizeof(short) + 5 * sizeof(float) + 31 * 5 * sizeof(short);
   const int TRAIN_SIZE = 2 * sizeof(int) + 2 * sizeof(bool) + sizeof(short) +
       TRAIN_ID_SIZE + 1 + NAME_SIZE + 2 + 2 + 5 * TICKET_KIND_SIZE;
-  const int STATION_SIZE = 1485 * sizeof(unsigned int);
+  const int STATION_SIZE = 186 * sizeof(unsigned int);
   const int RECORD_SIZE = 4 * sizeof(unsigned int);
 }
 

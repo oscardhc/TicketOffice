@@ -242,9 +242,11 @@ namespace sjtu {
 //            static User_val val;
 //            int offset = calculateOffset(userid, 9999999);
 //            DataBase.getElement((char*)&val, offset, USER_SIZE, USER);
-            int noff = DataBase.createElement(RECORD_SIZE, RECORD);
-            Record a(trainid, catalog[0], 0, i, date, cnt1, cnt2, num);
-            DataBase.setElement((char*)&a, noff, RECORD_SIZE, RECORD);
+            if (DataBase.createElement(0, RECORD) == 4) {
+                int noff = DataBase.createElement(RECORD_SIZE, RECORD);
+                Record a(trainid, catalog[0], 0, i, date, cnt1, cnt2, num);
+                DataBase.setElement((char*)&a, noff, RECORD_SIZE, RECORD);
+            }
 //            val.setFirst(noff);
 //            DataBase.setElement((char*)&val, offset, USER_SIZE, USER);
             return price;
@@ -262,6 +264,13 @@ namespace sjtu {
 //        ~Train_val(){
 //            //TODO
 //        }
+
+        bool operator < (const Train_val a) const {
+            return strcmp(trainID, a.trainID) < 0;
+        }
+        bool operator <= (const Train_val a) const {
+            return strcmp(trainID, a.trainID) <= 0;
+        }
 
     };
     Train_val *createTrainWithOffset(int offset) {
@@ -281,9 +290,6 @@ namespace sjtu {
     void deleteTrain(Train_val *tr) {
 //        fprintf(stderr, "\t\t\t d %llx\n", tr);
         operator delete((void*)tr);
-    }
-    bool trainCompare(const Train_val *a, const Train_val *b) {
-        return strcmp(a->trainID, b->trainID) < 0;
     }
 
 }

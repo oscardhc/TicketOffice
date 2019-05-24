@@ -12,13 +12,8 @@ char cmd[1000],ret[50000];
 void work() {
     sjtu::Program prog;
     while (1) {
-        fgets(cmd, 200, stdin);
-        cmd[strlen(cmd) - 1] = 0;
-//        puts(cmd);
-//        fprintf(stderr, "%s\n", cmd);
-        int _t = clock();
+        sjtu::myget(cmd);
         prog.exec(cmd, ret);
-        sjtu::exe += (clock() - _t);
         puts(ret);
         if (strcmp(cmd, "exit") == 0) break;
     }
@@ -164,7 +159,7 @@ inline void preRun() {
 #define FIFO_READ "/tmp/pipe.in"
 #define FIFO_WRITE "/tmp/pipe.out"
 
-#define BUF_SIZE 1024
+#define BUF_SIZE 50000
 
 int wfd,rfd;
 char ubuf[BUF_SIZE];
@@ -192,7 +187,7 @@ void realWork()
             ubuf[len]=0;
 
             prog.exec(ubuf, resl);
-            usleep(500000);
+            usleep(200000);
 
             write(wfd,resl,strlen(resl));
             printf("read *%s* sent *%s*\n", ubuf, resl);
@@ -204,7 +199,7 @@ void realWork()
 }
 
 int main(int argc, char** argv){
-//    test8();
+//    test2();
 //    return 0;
     if (argc > 1) {
         preRun();

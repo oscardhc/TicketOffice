@@ -61,7 +61,7 @@
             </div>
 
             <div>
-{#                <div align="center"> 查询结果 </div>#}
+                {#                <div align="center"> 查询结果 </div>#}
                 <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
 
                 </div>
@@ -137,8 +137,39 @@
                 }
             }
 
-            alert(cmd)
+            {#alert(cmd)#}
+            console.log(cmd)
+
+            execCommand(cmd, function (d) {
+                handleQueryTicket(d.result)
+            })
+
         }
+
+        function handleQueryTicket(ret) {
+            data = []
+            ar = ret.split(/[ ]|\n/)
+            console.log(ar)
+            var cu = 1, cnt = parseInt(ar[0]);
+            for (var i = 0; i < cnt; i++) {
+                var curTr = []
+                curTr.push(ar[cu])
+                curTr.push(ar[cu + 2] + ' ' + ar[cu + 3])
+                curTr.push(ar[cu + 5] + ' ' + ar[cu + 6])
+                cu = cu + 7;
+                curTr.push([])
+                let l = curTr.length
+                while (/.*[\u4e00-\u9fa5]+.*/.test(ar[cu])) {
+                    curTr[l - 1].push([ar[cu], ar[cu + 1], ar[cu + 2]])
+                    cu = cu + 3
+                }
+                curTr.push('orz')
+                curTr.push('TTK')
+                data.push(curTr)
+            }
+            createPanel()
+        }
+
         for (var i = 0; i < allCata.length; i++) {
             $('#catas').append('<label class="mdui-checkbox" style="margin-right:50px"><input type="checkbox" id="cataCKB' + i + '" checked/><i class="mdui-checkbox-icon"></i>' + allCata[i] + '</label>')
         }
