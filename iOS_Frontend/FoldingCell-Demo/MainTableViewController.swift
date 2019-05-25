@@ -23,16 +23,40 @@
 
 import FoldingCell
 import UIKit
+import Material
 
 let themeLightColor = UIColor(red: 222/255, green: 219/255, blue: 234/255, alpha: 1)
 let themeHeavyColor = UIColor(red: 90/255, green: 76/255, blue: 148/255, alpha: 1)
 
-class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    var trainData = [[String]]()
+    var ticketData = [[[String]]]()
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 30
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var l = view as? UILabel
+        if l == nil {
+            l = UILabel()
+            l?.font = .systemFont(ofSize: 14)
+            l?.textAlignment = .center
+        }
+        l?.text = "2019-06-" + String(format: "%02d" , row + 1)
+//        l?.te
+        return l!
+    }
+    
 
     enum Const {
         static let closeCellHeight: CGFloat = 179
         static let openCellHeight: CGFloat = 488
-        static let rowsCount = 10
     }
     
     var cellHeights: [CGFloat] = []
@@ -47,17 +71,111 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return _myNavItem
     }()
     lazy var myNavBar: UINavigationBar = {
-        var _myNavBar = UINavigationBar(frame: CGRect(x: 0, y: -50, width: 375, height: 275))
+        var _myNavBar = UINavigationBar(frame: CGRect(x: 0, y: -50, width: 375, height: 350))
         
         _myNavBar.addShadow()
         _myNavBar.items = [myNavItem]
-        
-        
-        
         //        myNavBar.backgroundColor = UIColor(red: 197/255, green: 192/255, blue: 217/255, alpha: 1)
-        _myNavBar.backgroundColor = themeLightColor
+        _myNavBar.backgroundColor = .white
         return _myNavBar
     }()
+    lazy var titleLable: UILabel = {
+        var i = UILabel()
+        i.frame = CGRect(x: 18, y: 138, width: 100, height: 50)
+        i.text = "查询"
+//        i.fontSize = 30
+        i.font = UIFont.boldSystemFont(ofSize: 32)
+        return i
+    }()
+    lazy var fromInput: TextField = {
+        var i = TextField()
+        i.frame = CGRect(x: 20, y: 210, width: 120, height: 30)
+        i.placeholder = "出发站"
+        i.placeholderActiveColor = themeHeavyColor
+        i.dividerActiveColor = themeHeavyColor
+        i.text = "上海虹桥"
+        return i
+    }()
+    lazy var toInput: TextField = {
+        var i = TextField()
+        i.frame = CGRect(x: 150, y: 210, width: 120, height: 30)
+        i.placeholder = "到达站"
+        i.placeholderActiveColor = themeHeavyColor
+        i.dividerActiveColor = themeHeavyColor
+        i.text = "杭州东"
+        return i
+    }()
+    lazy var dateLable: UILabel = {
+        var i = UILabel()
+        i.frame = CGRect(x: 20, y: 250, width: 70, height: 50)
+        i.text = "出发日期"
+        return i
+    }()
+    lazy var dateSelect: UIPickerView = {
+        var i = UIPickerView()
+        i.frame = CGRect(x: 100, y: 250, width: 170, height: 50)
+        i.delegate = self
+        i.dataSource = self
+        return i
+    }()
+    lazy var submitBtn: Button = {
+        var i = Button()
+        i.frame = CGRect(x: 280, y: 210, width: 50, height: 50)
+        i.setTitle("查询", for: .normal)
+        i.backgroundColor = themeLightColor
+        i.addTarget(self, action: #selector(MainTableViewController.submit(_:)), for: .touchUpInside)
+        return i
+    }()
+    
+    @objc func submit(_ sender: Button) {
+        if fromInput.isEmpty || toInput.isEmpty {
+            
+        } else {
+            let cmd = ["query_ticket", fromInput.text!, toInput.text!, "2019-06-" + String(format: "%02d" ,dateSelect.selectedRow(inComponent: 0) + 1), "CDGKOTZ"].joined(separator: " ")
+            print(cmd)
+            NetworkManager.default.postA(cmd: cmd) { (ret) in
+                self.parseTrainData(ret: ret)
+                self.setup()
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func parseTrainData(ret: String) {
+        trainData = [[String]]()
+        ticketData = [[[String]]]()
+        let ar = ret.split { (chr) -> Bool in
+            return chr == " " || chr == "\n"
+        }
+        let cnt = Int(String(ar[0]))!
+        var cur = 1
+        for _ in 0...cnt - 1 {
+            var tmp: [String] = []
+            var tickets: [[String]] = []
+            tmp.append(String(ar[cur]))
+            tmp.append(String(ar[cur + 1]))
+            tmp.append(String(ar[cur + 2]))
+            tmp.append(String(ar[cur + 3]))
+            tmp.append(String(ar[cur + 4]))
+            tmp.append(String(ar[cur + 5]))
+            tmp.append(String(ar[cur + 6]))
+            cur = cur + 7
+            var tst = String(ar[cur])
+            while tst.count > 0 && tst[tst.startIndex].unicodeScalars.first!.value >= UInt32(0x4E00) {
+                tickets.append([String(ar[cur]), String(ar[cur + 1]), String(ar[cur + 2])])
+                if (cur + 3 < ar.count) {
+                    cur = cur + 3
+                    tst = String(ar[cur])
+                } else {
+                    break
+                }
+            }
+            trainData.append(tmp)
+            ticketData.append(tickets)
+        }
+        print(trainData)
+        print(ticketData)
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,24 +187,31 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
 //        myNavBar.alpha = 0.3
         self.view.addSubview(myNavBar)
+        myNavBar.addSubview(titleLable)
+        myNavBar.addSubview(fromInput)
+        myNavBar.addSubview(toInput)
+        myNavBar.addSubview(dateLable)
+        myNavBar.addSubview(dateSelect)
+        myNavBar.addSubview(submitBtn)
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-//        let str = NetworkManager.default.post(cmd: "query_profile 2020")
-    }
-
-    private func setup() {
-        cellHeights = Array(repeating: Const.closeCellHeight, count: Const.rowsCount)
-        tableView.estimatedRowHeight = Const.closeCellHeight
-        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "background"))
         if #available(iOS 10.0, *) {
             tableView.refreshControl = UIRefreshControl()
             tableView.refreshControl?.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
         }
+        
+//        let str = NetworkManager.default.post(cmd: "query_profile 2020")
+    }
+
+    private func setup() {
+        cellHeights = Array(repeating: Const.closeCellHeight, count: trainData.count)
+        tableView.estimatedRowHeight = Const.closeCellHeight
+        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "background"))
     }
     
     @objc func refreshHandler() {
@@ -105,7 +230,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
 extension MainTableViewController {
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 10
+        return trainData.count
     }
 
     func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -122,6 +247,12 @@ extension MainTableViewController {
         }
 
         cell.number = indexPath.row
+        cell.fromLable.text = trainData[indexPath.row][1]
+        cell.toLable.text = trainData[indexPath.row][4]
+        cell.trainIDLable.text = trainData[indexPath.row][0]
+        cell.startTimeLable.text = trainData[indexPath.row][3]
+        cell.arriveTimeLable.text = trainData[indexPath.row][6]
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

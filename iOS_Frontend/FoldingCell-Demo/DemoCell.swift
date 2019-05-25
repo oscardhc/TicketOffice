@@ -13,14 +13,19 @@ class DemoCell: FoldingCell {
 
     @IBOutlet var closeNumberLabel: UILabel!
     @IBOutlet var openNumberLabel: UILabel!
-
+    @IBOutlet weak var fromLable: UILabel!
+    @IBOutlet weak var toLable: UILabel!
+    @IBOutlet weak var trainIDLable: UILabel!
+    @IBOutlet weak var startTimeLable: UILabel!
+    @IBOutlet weak var arriveTimeLable: UILabel!
+    
     var number: Int = 0 {
         didSet {
             closeNumberLabel.text = String(number)
             openNumberLabel.text = String(number)
         }
     }
-
+    
     override func awakeFromNib() {
         foregroundView.layer.cornerRadius = 10
         foregroundView.layer.masksToBounds = true

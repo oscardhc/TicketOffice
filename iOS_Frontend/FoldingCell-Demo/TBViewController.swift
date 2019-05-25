@@ -20,7 +20,7 @@ class TBViewController: UITabBarController {
 //        var bar = UINavigationBar(frame: CGRect(x: 0, y: 20, width: 375, height: 300))
 //        view1.view.addSubview(bar)
         
-        let view2 = UserViewController()
+        let view2 = storyboard.instantiateViewController(withIdentifier: "UserViewController")
         view2.title = "我的"
         let nav2 = UINavigationController(rootViewController: view2)
         

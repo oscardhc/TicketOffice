@@ -15,6 +15,8 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        errorLable.isHidden = true
+        
         loginFrame.layer.cornerRadius = 10
         
         inp = TextField(frame: usernameFrame.frame)
@@ -27,6 +29,7 @@ class LoginViewController: UIViewController {
         pas.placeholder = "PASSWORD"
         pas.placeholderActiveColor = themeHeavyColor
         pas.dividerActiveColor = themeHeavyColor
+        pas.isSecureTextEntry = true
         loginFrame.addSubview(pas)
         
         loginFrame.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleTap(_:))))
@@ -38,6 +41,18 @@ class LoginViewController: UIViewController {
         btn.addTarget(self, action: #selector(LoginViewController.loginClicked(_:)), for: .touchUpInside)
         btn.backgroundColor = themeLightColor
         loginFrame.addSubview(btn)
+        
+        var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
+        var navItem = UINavigationItem()
+        var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
+        navItem.rightBarButtonItem = navBtn
+        navBar.items = [navItem]
+        self.view.addSubview(navBar)
+        
+    }
+    
+    @objc func cancleBtnClicked(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBOutlet weak var imageView: UIImageView!
@@ -62,16 +77,44 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameFrame: UIView!
     @IBOutlet weak var loginFrame: UIView!
     @IBOutlet weak var passwordFrame: UIView!
+    @IBOutlet weak var errorLable: UILabel!
     
     @objc func loginClicked(_ sender: Button) {
         print("clicked!")
-//        self.dismiss(animated: true, completion: nil)
+        if inp.isEmpty || pas.isEmpty {
+            self.errorLable.isHidden = false
+            self.errorLable.text = "请输入用户ID和密码。"
+            return
+        }
         self.present(alert, animated: true, completion: {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.alert.dismiss(animated: true, completion: {
-                    self.dismiss(animated: true, completion: nil)
-                })
+            NetworkManager.default.postA(cmd: "login " + self.inp.text! + " " + self.pas.text!, done: { (ret) in
+                if (ret == "1") {
+                    self.alert.dismiss(animated: true, completion: {
+                        NetworkManager.default.postA(cmd: ["query_profile", self.inp.text!].joined(separator: " ") , done: { (ret) in
+                            let tmp = ret.split(separator: " ")
+                            userInfo = []
+                            for ii in tmp {
+                                userInfo.append(String(ii))
+                            }
+                            self.dismiss(animated: true, completion: {
+                                
+                            })
+                        })
+                        
+                    })
+                } else {
+                    self.errorLable.isHidden = false
+                    //                        self.inp.text = ""
+                    self.pas.text = ""
+                    self.alert.dismiss(animated: true, completion: {
+
+//                        self.dismiss(animated: true, completion: nil)
+                    })
+                }
             })
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+
+//            })
         })
     }
     

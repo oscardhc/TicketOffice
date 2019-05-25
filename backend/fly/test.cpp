@@ -155,47 +155,22 @@ inline void preRun() {
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <zmq.hpp>
 
-#define FIFO_READ "/tmp/pipe.in"
-#define FIFO_WRITE "/tmp/pipe.out"
-
-#define BUF_SIZE 50000
-
-int wfd,rfd;
-char ubuf[BUF_SIZE];
-char resl[BUF_SIZE];
-
-void realWork()
-{
+void realWork() {
     sjtu::Program prog;
-    freopen("./out.txt", "r", stdout);
-    umask(0);
-    wfd=open(FIFO_WRITE,O_SYNC | O_WRONLY, 0777);
-    rfd=open(FIFO_READ,O_RDONLY);
-    if(wfd==-1 || rfd==-1)
-    {
-        cout<<"open named pipe error"<<FIFO_WRITE<<strerror(errno)<<endl;
-        exit(1);
+    void *context =  zmq_ctx_new();
+    void *responder = zmq_socket(context, ZMQ_REP);
+    int rc = zmq_bind(responder, "tcp://*:5555");
+    fprintf(stderr, "%d\n", rc);
+    while (true) {
+        memset(cmd, 0, sizeof(cmd));
+        zmq_recv(responder, cmd, 1000, 0);
+        fprintf(stderr, "server received %s\n", cmd);
+        prog.exec(cmd, ret);
+        fprintf(stderr, "server respond %s\n", ret);
+        zmq_send(responder, ret, strlen(ret), 0);
     }
-    printf("%d %d\n", wfd,rfd);
-    printf(".....begin\n");
-    int nCount=0;
-    while(1)
-    {
-        int len = read(rfd,ubuf,BUF_SIZE);
-        if(len>0){
-            ubuf[len]=0;
-
-            prog.exec(ubuf, resl);
-            usleep(200000);
-
-            write(wfd,resl,strlen(resl));
-            printf("read *%s* sent *%s*\n", ubuf, resl);
-        }
-        usleep(100000);
-    }
-    close(wfd);
-    close(rfd);
 }
 
 int main(int argc, char** argv){
