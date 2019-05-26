@@ -16,6 +16,7 @@
 		55A301B12294EEC1002B6091 /* 198110.gif in Resources */ = {isa = PBXBuildFile; fileRef = 55A301B02294EEC1002B6091 /* 198110.gif */; };
 		55A301B32294EF24002B6091 /* 1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 55A301B22294EF23002B6091 /* 1.gif */; };
 		55A301B5229808F2002B6091 /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A301B4229808F2002B6091 /* DateFormat.swift */; };
+		55A301B7229A8E49002B6091 /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A301B6229A8E48002B6091 /* BuyViewController.swift */; };
 		55EE4D9F2293132200031D57 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE4D9E2293132200031D57 /* LaunchViewController.swift */; };
 		5A0E1C3021414940006A0374 /* FoldingCellDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E1C2F21414940006A0374 /* FoldingCellDemoTests.swift */; };
 		5A1225D821B65E8E005BBB26 /* RotationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1225D721B65E8E005BBB26 /* RotationViewTests.swift */; };
@@ -93,6 +94,7 @@
 		55A301B02294EEC1002B6091 /* 198110.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 198110.gif; sourceTree = "<group>"; };
 		55A301B22294EF23002B6091 /* 1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 1.gif; sourceTree = "<group>"; };
 		55A301B4229808F2002B6091 /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
+		55A301B6229A8E48002B6091 /* BuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyViewController.swift; sourceTree = "<group>"; };
 		55EE4D9E2293132200031D57 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		5A0E1C2D21414940006A0374 /* FoldingCellDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoldingCellDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A0E1C2F21414940006A0374 /* FoldingCellDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldingCellDemoTests.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				55EE4D9E2293132200031D57 /* LaunchViewController.swift */,
 				5528A25422853D2F0055256C /* NetworkManager.swift */,
 				551C4EBF2278289900FCDAD3 /* UserViewController.swift */,
+				55A301B6229A8E48002B6091 /* BuyViewController.swift */,
 				9D57F3221EDC7A6F0004599F /* Main.storyboard */,
 				9D57F3251EDC7A6F0004599F /* Assets.xcassets */,
 				9D57F3271EDC7A6F0004599F /* LaunchScreen.storyboard */,
@@ -490,6 +493,7 @@
 			files = (
 				55138135227D869E00BE847D /* LoginViewController.swift in Sources */,
 				9D57F32F1EDC7A850004599F /* MainTableViewController.swift in Sources */,
+				55A301B7229A8E49002B6091 /* BuyViewController.swift in Sources */,
 				551C4EC02278289900FCDAD3 /* UserViewController.swift in Sources */,
 				5528A25522853D2F0055256C /* NetworkManager.swift in Sources */,
 				9D57F31F1EDC7A6F0004599F /* AppDelegate.swift in Sources */,

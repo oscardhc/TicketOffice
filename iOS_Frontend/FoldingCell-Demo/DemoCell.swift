@@ -10,19 +10,31 @@ import FoldingCell
 import UIKit
 
 class DemoCell: FoldingCell {
-
+    
+    
+    @IBOutlet var ticketLeft: [UILabel]!
+    @IBOutlet weak var ticketType5Label: UILabel!
+    @IBOutlet weak var ticketType4Label: UILabel!
+    @IBOutlet weak var ticketType3Label: UILabel!
+    @IBOutlet weak var ticketType2Label: UILabel!
+    @IBOutlet weak var ticketType1Label: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var stationLabel: UILabel!
     @IBOutlet var closeNumberLabel: UILabel!
-    @IBOutlet var openNumberLabel: UILabel!
     @IBOutlet weak var fromLable: UILabel!
     @IBOutlet weak var toLable: UILabel!
     @IBOutlet weak var trainIDLable: UILabel!
     @IBOutlet weak var startTimeLable: UILabel!
     @IBOutlet weak var arriveTimeLable: UILabel!
+    @IBOutlet weak var ticketLable: UILabel!
+    @IBOutlet weak var scroolView: UIScrollView!
+    @IBOutlet weak var btn: UIButton!
     
     var number: Int = 0 {
         didSet {
             closeNumberLabel.text = String(number)
-            openNumberLabel.text = String(number)
+//            openNumberLabel.text = String(number)
         }
     }
     
@@ -42,7 +54,8 @@ class DemoCell: FoldingCell {
 
 extension DemoCell {
 
-    @IBAction func buttonHandler(_: AnyObject) {
-        print("tap")
-    }
+//    @IBAction func buttonHandler(_: AnyObject) {
+//        print("tap")
+//        var s = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyViewController")
+//    }
 }

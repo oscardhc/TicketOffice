@@ -171,7 +171,7 @@ var data = [
 ]
 
 var tagname = [
-    '车次    ：','发车时间：','到达时间：','座位情况：'
+    '车次','出发站','发车日期','发车时间','到达站','到达日期','到达时间','余票'
 ]
 
 function createPanel() {
@@ -195,7 +195,7 @@ function createPanel() {
         var lst = document.createElement('ul')
         lst.setAttribute('class', 'mdui-list')
 
-        for (var j=0;j<4;j++) {
+        for (var j=0;j<8;j++) {
             var c = document.createElement('li')
             c.setAttribute('class', 'mdui-list-item mdui-ripple')
             c.innerText = tagname[j] + data[i][j]
@@ -219,25 +219,6 @@ function createPanel() {
 
 if (document.querySelector('#panelPlace')) {
     createPanel()
-}
-
-var detailDialog = new mdui.Dialog('#detailDialogue');
-
-function clickedAtRow(x) {
-    var tx = document.createElement('div')
-    tx.setAttribute('class', 'mdui-typo')
-    var len = data[x][3].length
-    for(var i=0;i<len;i++) {
-        tx.innerHTML += "<h1 class='mdui-text-color-theme' style='display: inline;'>" + data[x][3][i][0] + "</h1>"
-        tx.innerHTML += "<p style='display: inline;'>" + ": 余" + data[x][3][i][1] + "张" + "</p> <br/>"
-    }
-    document.querySelector('#detailMsg').innerHTML = ""
-    document.querySelector('#detailMsg').append(tx)
-
-
-    detailDialog.open()
-    document.querySelector('#detailCancleBtn').focus()
-    // alert(row)
 }
 
 // console.log($('#fromInput').editableSelect)

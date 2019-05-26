@@ -635,7 +635,6 @@ namespace sjtu {
                 sprintf(ret,"0");
                 return;
             }
-
             Train_val *val = createTrainWithOffset(offset);
             if (!val->if_sale || val->if_delete) {
                 sprintf(ret, "0");

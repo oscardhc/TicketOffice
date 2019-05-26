@@ -44,7 +44,7 @@
 				return $(li).text().toLowerCase().indexOf(search) < 0 && py1.indexOf(search) < 0 && py2.indexOf(search) < 0;
 			}).hide().removeClass('es-visible').length;
 			// hiddens = this.$list.find('li').filter(function (i, li) { return false; }).hide().removeClass('es-visible').length;
-			console.log(hiddens)
+			// console.log(hiddens)
 			if (this.$list.find('li').length == hiddens) this.hide();
 		}
 	};

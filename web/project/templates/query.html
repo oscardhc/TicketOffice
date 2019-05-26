@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    {% if ( 'user' in ses ) or 1 %}
+    {% if 'user' in ses  %}
 
         <div class="mdui-typo">
             <h1 class="mdui-text-color-theme">查询</h1>
@@ -60,12 +60,20 @@
 
             </div>
 
+
+            <div class="mdui-table-fluid" style="visibility: hidden" id="tableCon">
+                <table class="mdui-table mdui-table-hoverable" id="tablePlace">
+                </table>
+            </div>
+
             <div>
                 {#                <div align="center"> 查询结果 </div>#}
-                <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}">
+                <div class="mdui-panel mdui-panel-popout" id="panelPlace" mdui-panel="{accordion: true}" style="visibility: hidden">
 
                 </div>
             </div>
+
+
 
 
         </div>
@@ -117,6 +125,71 @@
             })
         })
 
+        function createTable() {
+            var tbl = $('#tablePlace')
+            tbl.html('')
+            var hd = $('<thead></thead>')
+            var hr = $('<tr></tr>')
+            $('<th> # </th>').appendTo(hr)
+            for (var j = 0; j < 8; j++) {
+                if (j == 2 || j == 5) continue
+                var cu = $('<th>'+tagname[j]+'</th>')
+                cu.appendTo(hr)
+            }
+            $('<th></th>').appendTo(hr)
+            hr.appendTo(hd)
+            hd.appendTo(tbl)
+            var bd = $('<tbody></tbody>')
+            for (var i = 0; i < data.length; i++) {
+                var r = $('<tr></tr>')
+                $('<td>'+(i+1)+'</td>').appendTo(r)
+                for (var j = 0; j < 7; j++) {
+                    if (j == 2 || j == 5) continue
+                    if (j == 6 && data[i][5] != data[i][2]) {
+                        var cu = $('<td><span style="color:#ff0000">[次日]</span>' + data[i][j] + '</td>')
+                        cu.appendTo(r)
+                    } else {
+                        var cu = $('<td>' + data[i][j] + '</td>')
+                        cu.appendTo(r)
+                    }
+                }
+                var flag = 0;
+                var pri = 1e18;
+                for (var k = 0; k < data[i][7].length; k++) {
+                    if (data[i][7][k][1] > 0) {
+                        flag = 1;
+                        if (data[i][7][k][2] < pri) {
+                            pri = data[i][7][k][2]
+                        }
+                    }
+                }
+                $('<td>'+(flag!=0?'有，￥' + pri.toFixed(2) + '起':'无')+'</td>').appendTo(r)
+                $('<td><button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="clickedAtRow('+i+')">详情</button></td>').appendTo(r)
+                r.appendTo(bd)
+            }
+            bd.appendTo(tbl)
+            $('#tableCon').css('visibility', 'visible')
+        }
+
+        var detailDialog = new mdui.Dialog('#detailDialogue');
+
+        function clickedAtRow(x) {
+            var tx = document.createElement('div')
+            tx.setAttribute('class', 'mdui-typo')
+            var len = data[x][7].length
+            for(var i=0;i<len;i++) {
+                tx.innerHTML += "<h1 class='mdui-text-color-theme' style='display: inline;'>" + data[x][7][i][0] + "</h1>"
+                tx.innerHTML += "<p style='display: inline;'>" + ": 余" + data[x][7][i][1] + "张" + "</p>"
+                tx.innerHTML += "<p style='display: inline;'>" + "，￥" + data[x][7][i][2] + "</p> <br/>"
+            }
+            document.querySelector('#detailMsg').innerHTML = ""
+            document.querySelector('#detailMsg').append(tx)
+
+            detailDialog.open()
+            document.querySelector('#detailCancleBtn').focus()
+            // alert(row)
+        }
+
         function submitQuery() {
             var cmd = ''
             if ($('#viaCheck').prop('checked') == true) {
@@ -136,7 +209,6 @@
                     cmd += allCata[i]
                 }
             }
-
             {#alert(cmd)#}
             console.log(cmd)
 
@@ -154,13 +226,17 @@
             for (var i = 0; i < cnt; i++) {
                 var curTr = []
                 curTr.push(ar[cu])
-                curTr.push(ar[cu + 2] + ' ' + ar[cu + 3])
-                curTr.push(ar[cu + 5] + ' ' + ar[cu + 6])
+                curTr.push(ar[cu + 1])
+                curTr.push(ar[cu + 2])
+                curTr.push(ar[cu + 3])
+                curTr.push(ar[cu + 4])
+                curTr.push(ar[cu + 5])
+                curTr.push(ar[cu + 6])
                 cu = cu + 7;
                 curTr.push([])
                 let l = curTr.length
                 while (/.*[\u4e00-\u9fa5]+.*/.test(ar[cu])) {
-                    curTr[l - 1].push([ar[cu], ar[cu + 1], ar[cu + 2]])
+                    curTr[l - 1].push([ar[cu], parseInt(ar[cu + 1]), parseFloat(parseFloat(ar[cu + 2]).toFixed(2))])
                     cu = cu + 3
                 }
                 curTr.push('orz')
@@ -168,6 +244,7 @@
                 data.push(curTr)
             }
             createPanel()
+            createTable()
         }
 
         for (var i = 0; i < allCata.length; i++) {

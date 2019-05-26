@@ -27,11 +27,11 @@ import Material
 
 let themeLightColor = UIColor(red: 222/255, green: 219/255, blue: 234/255, alpha: 1)
 let themeHeavyColor = UIColor(red: 90/255, green: 76/255, blue: 148/255, alpha: 1)
+var currentlySelectedRow = 0
+var trainData = [[String]]()
+var ticketData = [[[String]]]()
 
 class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    var trainData = [[String]]()
-    var ticketData = [[[String]]]()
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -93,7 +93,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         i.placeholder = "出发站"
         i.placeholderActiveColor = themeHeavyColor
         i.dividerActiveColor = themeHeavyColor
-        i.text = "上海虹桥"
+        i.text = "兰州西"
         return i
     }()
     lazy var toInput: TextField = {
@@ -102,7 +102,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         i.placeholder = "到达站"
         i.placeholderActiveColor = themeHeavyColor
         i.dividerActiveColor = themeHeavyColor
-        i.text = "杭州东"
+        i.text = "天水南"
         return i
     }()
     lazy var dateLable: UILabel = {
@@ -128,6 +128,12 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }()
     
     @objc func submit(_ sender: Button) {
+        if fromInput.isFirstResponder {
+            fromInput.resignFirstResponder()
+        }
+        if toInput.isFirstResponder {
+            toInput.resignFirstResponder()
+        }
         if fromInput.isEmpty || toInput.isEmpty {
             
         } else {
@@ -246,13 +252,84 @@ extension MainTableViewController {
             cell.unfold(true, animated: false, completion: nil)
         }
 
+        
+        let tra = transferTime(t1: trainData[indexPath.row][3], t2: trainData[indexPath.row][6])
+        cell.timeLabel.text = "\(tra / 60)小时\(tra % 60)分钟"
+        var u = ticketData[indexPath.row].count
+        if u >= 1{
+             cell.ticketType1Label.text = ticketData[indexPath.row][0][0]
+            cell.ticketLeft[0].text = ticketData[indexPath.row][0][1]
+        }
+        if u >= 2{
+            cell.ticketType2Label.text = ticketData[indexPath.row][1][0]
+            cell.ticketLeft[1].text = ticketData[indexPath.row][1][1]
+        }
+        if u >= 3{
+            cell.ticketType3Label.text = ticketData[indexPath.row][2][0]
+            cell.ticketLeft[2].text = ticketData[indexPath.row][2][1]
+        }
+        if u >= 4{
+            cell.ticketType5Label.text = ticketData[indexPath.row][3][0]
+            cell.ticketLeft[3].text = ticketData[indexPath.row][3][1]
+        }
+        if u >= 5{
+            cell.ticketType4Label.text = ticketData[indexPath.row][4][0]
+            cell.ticketLeft[4].text = ticketData[indexPath.row][4][1]
+        }
+        
+        cell.btn.tag = indexPath.row
+//        print(nbt)
+        cell.btn.addTarget(self, action: #selector(MainTableViewController.goToNextView(_:)), for: .touchUpInside)
+        
+        
         cell.number = indexPath.row
+        cell.stationLabel.text = trainData[indexPath.row][1] + "  To  " + trainData[indexPath.row][4]
         cell.fromLable.text = trainData[indexPath.row][1]
         cell.toLable.text = trainData[indexPath.row][4]
         cell.trainIDLable.text = trainData[indexPath.row][0]
         cell.startTimeLable.text = trainData[indexPath.row][3]
         cell.arriveTimeLable.text = trainData[indexPath.row][6]
+        var ts = 0
+        for i in ticketData[indexPath.row] {
+            ts = ts + Int(i[1])!
+        }
+        cell.ticketLable.text = ts > 0 ? "有\(ts)" : "无"
+        for i in 1...10 {
+            var lbl = UILabel(frame: CGRect(x: 20, y: i * 30, width: 200, height: 25))
+            lbl.text = "\(i)"
+            cell.scroolView.addSubview(lbl)
+        }
         
+        cell.scroolView.isPagingEnabled = false
+        // 可以滚动的区域
+//        cell.scroolView.contentSize = CGSize(width: self.view.bounds.maxX, height: self.view.bounds.maxY)
+        // 显⽰示⽔水平滚动条
+        cell.scroolView.showsHorizontalScrollIndicator = true
+        // 显⽰示垂直滚动条
+        cell.scroolView.showsVerticalScrollIndicator = true
+        // 滚动条样式
+        cell.scroolView.indicatorStyle = .default
+        // 设置回弹效果
+        cell.scroolView.bounces = true
+        // 设置scrollView可以滚动
+        cell.scroolView.isScrollEnabled = true
+        // 当scrollsToTop=true时，点击设备状态栏会自动滚动到顶部
+        cell.scroolView.scrollsToTop = true
+        // 缩放的最小比例
+        cell.scroolView.minimumZoomScale = 0.5
+        // 放大的最大比例
+        cell.scroolView.maximumZoomScale = 2.0
+        // 缩放回弹
+        cell.scroolView.bouncesZoom = true
+//        scrView.delegate = self
+        
+    }
+    
+    @objc func goToNextView(_ sender: UIButton) {
+        print(sender.tag)
+        currentlySelectedRow = sender.tag
+        var s = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyViewController")
+        self.present(s, animated: true, completion: nil)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -343,3 +420,12 @@ func getColorFromHex(rgbValue: Int) -> (UIColor) {
 class MyTapGesture: UILongPressGestureRecognizer {
     var idx: Int = 0
 }
+
+func transferTime(t1: String, t2: String) -> Int {
+    let a1 = t1.split(separator: ":")
+    let a2 = t2.split(separator: ":")
+    let tt1 = Int(String(a1[0]))! * 60 + Int(String(a1[1]))!
+    let tt2 = Int(String(a2[0]))! * 60 + Int(String(a2[1]))!
+    return tt2 - tt1
+}
+
