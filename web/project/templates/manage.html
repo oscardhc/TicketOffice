@@ -2,6 +2,12 @@
 
 {% set curSide = "管理" %}
 
+{% block head %}
+
+    <link href="{{ url_for('static', filename='css/date-time-picker.min.css') }}" rel="stylesheet">
+
+{% endblock %}
+
 {% block content %}
 
     {% if 'user' in ses %}
@@ -40,7 +46,10 @@
                         <div style="width: 80%;">
                             <h3>新建车次</h3>
                             <div class="mdui-divider"></div>
-                            2333
+                            2333 [一点说明文字]
+                            <div align="center" style="margin-top: 30px; margin-bottom: 30px">
+                                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="addTrain()">下一步</button>
+                            </div>
                         </div>
                     </div>
 
@@ -94,5 +103,79 @@
             <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
         </div>
     </div>
+
+    <div class="mdui-dialog" id="addTrainDialogue">
+        <div class="mdui-dialog-title">DETAIL</div>
+        <div class="mdui-dialog-content" id="addTrainContent">
+
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block scr %}
+
+    <script src="{{ url_for('static', filename='js/pinyin4js.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/date-time-picker.min.js') }}"></script>
+
+    <script>
+        var addTrainDialogue = new mdui.Dialog("#addTrainDialogue", {modal: true})
+        function addTrain() {
+            $('#addTrainContent').html('')
+            addTrainDialogue.open()
+            createCompenent(0)
+            createCompenent(1)
+            createCompenent(2)
+            createCompenent(3)
+            createCompenent(4)
+        }
+        function createCompenent(i) {
+            $("<div style=\"margin: 20px 0\"><div style=\"margin: 10px 0\"></div><div style=\"display: inline-block\">" +
+                "                    <select id=\"placeInput" + i + "\" style=\"width: 150px;\" class=\"slt\">\n" +
+                "                    </select>\n" +
+                "                </div><div style='width:20%;display:inline-block;margin-left:15%' class=\"mdui-textfield\">\n" +
+                "            <input class=\"mdui-textfield-input\" id=\"dateIn"+i+"0"+"\" onkeydown=\"ClickUsername()\"></input>\n" +
+                "        </div><button class=\"mdui-btn mdui-btn-icon mdui-ripple\" onclick=\"dateFor("+i+",0)\"><i class=\"mdui-icon material-icons\">add</i></button>" +
+                "<div style='width:20%;display:inline-block;margin-left:5%' class=\"mdui-textfield\">\n" +
+                "            <input class=\"mdui-textfield-input\" id=\"dateIn"+i+"1"+"\" onkeydown=\"ClickUsername()\"></input>\n" +
+                "        </div><button class=\"mdui-btn mdui-btn-icon mdui-ripple\" onclick=\"dateFor("+i+",1)\"><i class=\"mdui-icon material-icons\">add</i></button>" +
+                "</div>").appendTo($('#addTrainContent'))
+            for (var j = 0; j < allCity.length; j++) {
+                $('#placeInput' + i).append('<option>' + allCity[j] + '</option>')
+            }
+            $('#placeInput' + i).editableSelect( {
+                effects: 'slide'
+            });
+            addTrainDialogue.handleUpdate()
+        }
+        function createTimePicker(i,j) {
+            var timePicker = new DateTimePicker.Time({
+                default: '12:34',
+                min: '00:00',
+                max: '23:59',
+                minuteStep: 1
+            })
+            timePicker.on('selected', function (formatTime, now) {
+                console.log('selected time: ', formatTime, now)
+                $('#dateIn'+i+j).val(formatTime)
+            })
+            timePicker.on('cleared', function () {
+                console.log('cleared time')
+                {#time.value = ''#}
+            })
+
+        }
+        function dateFor(i,j) {
+            console.log(i,j)
+            createTimePicker(i,j)
+        }
+        {#createTimePicker()#}
+    </script>
 
 {% endblock %}

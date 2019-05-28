@@ -111,7 +111,6 @@ function registerBtnClicked () {
 
 
 var logoutbtn = document.querySelector('#logoutbtn')
-
 function logout() {
     localStorage.removeItem('userInfo')
     $.post('/logout', {}, function (d) {

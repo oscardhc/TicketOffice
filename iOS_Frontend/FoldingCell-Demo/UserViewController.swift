@@ -9,9 +9,23 @@
 import UIKit
 import Material
 
-var userInfo = [String]();
+var userInfo = ["yyu","yyu@sjtu.edu.cn","233333333","2"];
+var userID = "2019"
+var userPassword = "2333333"
 
 class UserViewController: UIViewController {
+    
+    
+    @IBOutlet weak var LogoutButton: UIButton!
+    
+    @IBOutlet weak var aboutusButton: UIButton!
+    
+    @IBOutlet weak var refundButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var modifyButton: UIButton!
+    
+    @IBOutlet weak var orderButton: UIButton!
     
     lazy var rightbtn: UIButton = {
         var _rightbtn = UIButton(frame: CGRect(x: 20, y: 150, width: 120, height: 120))
@@ -23,39 +37,54 @@ class UserViewController: UIViewController {
         return _rightbtn
     }()
     
-    lazy var editbtn: Button = {
-        var b = Button()
-        var w = self.view.frame.width / 4
-        var x = (0.2) * self.view.frame.width / 4
-        var y = 300.0
-        b.frame = CGRect(x: x, y: CGFloat(y), width: w, height: w)
-        b.setImage(UIImage(named: "tkk.gif"), for: .normal)
-        b.setTitle("修改信息", for: .normal)
-        b.addShadow()
-        return b
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.view.addSubview(lable)
         self.view.addSubview(rightbtn)
-        self.view.addSubview(editbtn)
+        
+        modifyButton.setBackgroundImage(UIImage(named: "edit"), for: .normal)
+        modifyButton.imageView?.contentMode = .scaleAspectFit
+        orderButton.setBackgroundImage(UIImage(named: "order"), for: .normal)
+        orderButton.imageView?.contentMode = .scaleAspectFit
+        refundButton.setBackgroundImage(UIImage(named: "refund"), for: .normal)
+        refundButton.imageView?.contentMode = .scaleAspectFit
+        aboutusButton.setBackgroundImage(UIImage(named: "us"), for: .normal)
+        aboutusButton.imageView?.contentMode = .scaleAspectFit
+        
+        //LogoutButton.backgroundImage(for: .normal) = UIImage(named: "logout")
+        LogoutButton.layer.cornerRadius = 10
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if userInfo.count == 0 {
-            lable.text = "请登录"
-        } else {
-            lable.text = userInfo[0];
-        }
+//        super.viewWillAppear(animated)
+        
+        modifyButton.addShadow()
+        modifyButton.addTarget(self, action: #selector(UserViewController.goToUserDetail(_:)), for: .touchUpInside)
+        orderButton.addShadow()
+        refundButton.addShadow()
+        refundButton.addTarget(self, action: #selector(UserViewController.goToRefund(_:)), for: .touchUpInside)
+        aboutusButton.addShadow()
+        aboutusButton.addTarget(self, action: #selector(UserViewController.goToAboutUs(_:)), for: .touchUpInside)
+        LogoutButton.addShadow()
+        refreshUserData()
+        
         
 //        self.navigationController?.navigationBar.isHidden = false
 //        self.navigationController?.navigationBar.barTintColor = UIColor.white
 //        self.navigationController?.view.addSubview(rightbtn)
 //        print(self.navigationItem)
 //        print(self.navigationController?.view.window?.frame)
+    }
+    
+    @objc func goToUserDetail(_ sender: Any?) {
+        self.present(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConfirmViewController"), animated: true, completion: nil)
+    }
+    @objc func goToRefund(_ sender: Any?){
+        self.present(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RefundViewController"), animated: true, completion: nil)
+    }
+    @objc func goToAboutUs(_ sender: Any?){
+        self.present(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutUsViewController"), animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,16 +101,6 @@ class UserViewController: UIViewController {
         self.present(newView, animated: true, completion: nil)
     }
     
-    lazy var lable: UILabel = {
-        var _l = UILabel(frame: CGRect(x: 200, y: 200, width: 250, height: 100))
-        if userInfo.count == 0 {
-            _l.text = "请登录"
-        } else {
-            _l.text = userInfo[0];
-        }
-        return _l
-    }()
-    
     /*
     // MARK: - Navigation
 
@@ -92,4 +111,14 @@ class UserViewController: UIViewController {
     }
     */
 
+}
+
+func refreshUserData() {
+    NetworkManager.default.postA(cmd: ["query_profile", userID].joined(separator: " ") , done: { (ret) in
+        let tmp = ret.split(separator: " ")
+        userInfo = []
+        for ii in tmp {
+            userInfo.append(String(ii))
+        }
+    })
 }

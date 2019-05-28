@@ -12,22 +12,118 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="122fd3a7-4c31-469f-85b2-1a68ad52d72a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/BuyViewController.swift" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/project/static/css/date-time-picker.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/project/static/js/date-picker.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/project/static/js/date-time-picker.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../web/project/static/js/time-picker.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/IOManager.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/dhc/IOManager.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdC/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/3.14.2/CompilerIdCXX/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/CXX.includecache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/main.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/backend_dhc.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/feature_tests.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/feature_tests.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/feature_tests.cxx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/backend_dhc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/backend_dhc.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/backend_dhc.dSYM/Contents/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/backend_dhc.dSYM/Contents/Resources/DWARF/backend_dhc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dhc/cmake-build-debug/stdout.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fly/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/Progress/1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/Progress/count.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/fly" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/fly" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/fly.dSYM/Contents/Resources/DWARF/fly" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/fly.dSYM/Contents/Resources/DWARF/fly" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/untitled" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fly/program.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/program.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/program的副本.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeCCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeCXXCompiler.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdC/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/3.12.3/CompilerIdCXX/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/CXX.includecache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/bpcheck.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/backend_whj.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/feature_tests.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/feature_tests.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/feature_tests.cxx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/backend_dhc.cbp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/backend_whj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whj/cmake-build-debug/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOS_Frontend.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/Base.lproj/Main.storyboard" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/Base.lproj/Main.storyboard" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/DemoCell.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/DemoCell.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/BuyViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/BuyViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/LoginViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/LoginViewController.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/MainTableViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/MainTableViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/UserViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell-Demo/UserViewController.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell.xcworkspace/xcuserdata/oscar.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell.xcworkspace/xcuserdata/oscar.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell.xcworkspace/xcuserdata/oscar.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/../iOS_Frontend/FoldingCell.xcworkspace/xcuserdata/oscar.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/static/css/jquery-editable-select.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/static/css/jquery-editable-select.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/static/js/jquery-editable-select.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/static/js/jquery-editable-select.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test_kit/情报" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/project/static/js/mdui.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/static/js/mdui.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../web/project/static/js/my.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/static/js/my.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/templates/query.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/templates/query.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../web/project/templates/manage.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/templates/manage.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/fly/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,128 +140,154 @@
     <favorites_list name="fly" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dhc/IOManager.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2945">
-              <caret line="155" column="12" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
-              <folding>
-                <element signature="e#106#124#0" expanded="true" />
-                <element signature="e#249#280#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/whj/splay_new.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4123">
-              <caret line="217" column="12" selection-start-line="217" selection-start-column="12" selection-end-line="217" selection-end-column="12" />
-              <folding>
-                <element signature="e#37#56#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fly/program.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
-              <folding>
-                <element signature="e#49#72#0" expanded="true" />
-                <element signature="e#241#270#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6840">
-              <caret line="360" column="23" selection-start-line="360" selection-start-column="12" selection-end-line="360" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/fly/test.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="181" column="11" selection-start-line="181" selection-start-column="11" selection-end-line="181" selection-end-column="11" />
-              <folding>
-                <element signature="e#38#60#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fly/train_val.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5149">
-              <caret line="271" column="37" selection-start-line="271" selection-start-column="37" selection-end-line="271" selection-end-column="37" />
-              <folding>
-                <element signature="e#84#106#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fly/utility.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2641">
-              <caret line="139" column="4" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="4" />
-              <folding>
-                <element signature="e#88#105#0" expanded="true" />
-                <element signature="e#3226#3235#0" expanded="true" />
-                <element signature="e#3200#3209#0" expanded="true" />
-                <element signature="e#3634#3643#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dhc/listMap.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fly/constant.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fly/user_key.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
-              <folding>
-                <element signature="e#81#104#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/dhc/IOManager.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="157" column="43" selection-start-line="157" selection-start-column="43" selection-end-line="157" selection-end-column="43" />
+                  <folding>
+                    <element signature="e#106#124#0" expanded="true" />
+                    <element signature="e#249#280#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/whj/splay_new.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="703">
+                  <caret line="217" column="12" selection-start-line="217" selection-start-column="12" selection-end-line="217" selection-end-column="12" />
+                  <folding>
+                    <element signature="e#37#56#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/program.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="134">
+                  <caret line="377" column="38" selection-start-line="377" selection-start-column="38" selection-end-line="377" selection-end-column="38" />
+                  <folding>
+                    <element signature="e#49#72#0" expanded="true" />
+                    <element signature="e#241#270#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="mock:///disassembly">
+              <provider selected="true" editor-type-id="memory-view">
+                <state relative-caret-position="80">
+                  <caret line="5" selection-start-line="5" selection-end-line="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="275">
+                  <caret line="27" selection-start-line="27" selection-end-line="27" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/test.cpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-56">
+                  <caret line="168" column="48" selection-start-line="168" selection-start-column="48" selection-end-line="168" selection-end-column="48" />
+                  <folding>
+                    <element signature="e#38#60#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/CMakeLists.txt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="96">
+                  <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/train_val.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="195">
+                  <caret line="279" selection-start-line="279" selection-end-line="279" />
+                  <folding>
+                    <element signature="e#84#106#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/constant.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/user_key.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
+                  <folding>
+                    <element signature="e#81#104#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/fly/program.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="183">
+                  <caret line="990" column="37" selection-start-line="990" selection-start-column="37" selection-end-line="990" selection-end-column="37" />
+                  <folding>
+                    <element signature="e#49#72#0" expanded="true" />
+                    <element signature="e#241#270#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fly/utility.hpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2224">
+                  <caret line="139" column="4" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="4" />
+                  <folding>
+                    <element signature="e#88#105#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>stderr</find>
       <find>ret</find>
       <find>refund</find>
       <find>info</find>
@@ -195,6 +317,7 @@
       <find>quickPri</find>
       <find>doublespace</find>
       <find>but</find>
+      <find>getTrainID</find>
     </findStrings>
     <replaceStrings>
       <replace>createElementVirt</replace>
@@ -214,7 +337,6 @@
         <option value="$PROJECT_DIR$/whj/bpcheck.cpp" />
         <option value="$PROJECT_DIR$/dhc/main.cpp" />
         <option value="$PROJECT_DIR$/whj/bpt_new 2.hpp" />
-        <option value="$PROJECT_DIR$/fly/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/whj/splay.hpp" />
         <option value="$PROJECT_DIR$/fly/utility.cpp" />
         <option value="$PROJECT_DIR$/fly/ticket_value.hpp" />
@@ -229,9 +351,10 @@
         <option value="$PROJECT_DIR$/fly/train_val.hpp" />
         <option value="$PROJECT_DIR$/fly/utility.hpp" />
         <option value="$PROJECT_DIR$/fly/vector.hpp" />
+        <option value="$PROJECT_DIR$/fly/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/fly/test.cpp" />
-        <option value="$PROJECT_DIR$/dhc/IOManager.hpp" />
         <option value="$PROJECT_DIR$/fly/program.hpp" />
+        <option value="$PROJECT_DIR$/dhc/IOManager.hpp" />
       </list>
     </option>
   </component>
@@ -248,7 +371,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -275,6 +397,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -285,7 +408,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -346,25 +469,26 @@
       <workItem from="1558787655914" duration="605000" />
       <workItem from="1558836144807" duration="4933000" />
       <workItem from="1558871589402" duration="47000" />
+      <workItem from="1559002131729" duration="4022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="171490000" />
+    <option name="totallyTimeSpent" value="175512000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="43" y="23" width="1397" height="877" extended-state="6" />
+    <frame x="43" y="23" width="1397" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49823943" visible="true" weight="0.16974169" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49823943" visible="true" weight="0.17195572" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.50176054" side_tool="true" weight="0.15665236" />
       <window_info anchor="bottom" id="CMake" order="0" weight="0.32871014" />
       <window_info anchor="bottom" id="Message" order="1" />
-      <window_info active="true" anchor="bottom" id="Messages" order="2" visible="true" weight="0.32458565" />
+      <window_info anchor="bottom" id="Messages" order="2" weight="0.32356688" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.32871014" />
-      <window_info anchor="bottom" id="Run" order="4" weight="0.3577348" />
-      <window_info anchor="bottom" id="Debug" order="5" weight="0.39640883" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.3566879" />
+      <window_info active="true" anchor="bottom" id="Debug" order="5" visible="true" weight="0.39617833" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="8" />
@@ -408,13 +532,6 @@
           <folding>
             <element signature="e#115#136#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fly/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
@@ -491,74 +608,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dhc/IOManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2945">
-          <caret line="155" column="12" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
-          <folding>
-            <element signature="e#106#124#0" expanded="true" />
-            <element signature="e#249#280#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/whj/splay_new.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4123">
-          <caret line="217" column="12" selection-start-line="217" selection-start-column="12" selection-end-line="217" selection-end-column="12" />
-          <folding>
-            <element signature="e#37#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6840">
-          <caret line="360" column="23" selection-start-line="360" selection-start-column="12" selection-end-line="360" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fly/train_val.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5149">
-          <caret line="271" column="37" selection-start-line="271" selection-start-column="37" selection-end-line="271" selection-end-column="37" />
-          <folding>
-            <element signature="e#84#106#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fly/utility.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2641">
-          <caret line="139" column="4" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="4" />
-          <folding>
-            <element signature="e#88#105#0" expanded="true" />
-            <element signature="e#3226#3235#0" expanded="true" />
-            <element signature="e#3200#3209#0" expanded="true" />
-            <element signature="e#3634#3643#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dhc/listMap.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
+        <state>
           <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fly/constant.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
+        <state>
           <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fly/user_key.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
+        <state>
           <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
           <folding>
             <element signature="e#81#104#0" expanded="true" />
@@ -566,10 +632,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/whj/splay_new.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="703">
+          <caret line="217" column="12" selection-start-line="217" selection-start-column="12" selection-end-line="217" selection-end-column="12" />
+          <folding>
+            <element signature="e#37#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fly/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fly/utility.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2224">
+          <caret line="139" column="4" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="4" />
+          <folding>
+            <element signature="e#88#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fly/train_val.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="279" selection-start-line="279" selection-end-line="279" />
+          <folding>
+            <element signature="e#84#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fly/test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-56">
+          <caret line="168" column="48" selection-start-line="168" selection-start-column="48" selection-end-line="168" selection-end-column="48" />
+          <folding>
+            <element signature="e#38#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fly/program.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
+        <state relative-caret-position="134">
+          <caret line="377" column="38" selection-start-line="377" selection-start-column="38" selection-end-line="377" selection-end-column="38" />
           <folding>
             <element signature="e#49#72#0" expanded="true" />
             <element signature="e#241#270#0" expanded="true" />
@@ -577,12 +697,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fly/test.cpp">
+    <entry file="file://$PROJECT_DIR$/dhc/IOManager.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="181" column="11" selection-start-line="181" selection-start-column="11" selection-end-line="181" selection-end-column="11" />
+        <state relative-caret-position="105">
+          <caret line="157" column="43" selection-start-line="157" selection-start-column="43" selection-end-line="157" selection-end-column="43" />
           <folding>
-            <element signature="e#38#60#0" expanded="true" />
+            <element signature="e#106#124#0" expanded="true" />
+            <element signature="e#249#280#0" expanded="true" />
           </folding>
         </state>
       </provider>

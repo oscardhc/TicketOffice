@@ -30,6 +30,8 @@ let themeHeavyColor = UIColor(red: 90/255, green: 76/255, blue: 148/255, alpha: 
 var currentlySelectedRow = 0
 var trainData = [[String]]()
 var ticketData = [[[String]]]()
+var trainValue = [String]()
+var stationValue = [[String]]()
 
 class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -71,7 +73,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return _myNavItem
     }()
     lazy var myNavBar: UINavigationBar = {
-        var _myNavBar = UINavigationBar(frame: CGRect(x: 0, y: -50, width: 375, height: 350))
+        var _myNavBar = UINavigationBar(frame: CGRect(x: 0, y: -50, width: 375, height: 300))
         
         _myNavBar.addShadow()
         _myNavBar.items = [myNavItem]
@@ -145,6 +147,35 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    func parseTrainValue(ret: String) {
+        let ar = ret.split { (c) -> Bool in
+            return c == " " || c == "\n"
+        }
+        trainValue = []
+        stationValue = []
+        
+        for i in 0...4 {
+            trainValue.append(String(ar[i]))
+        }
+        
+        let staNum = Int(ar[3])!
+        let typeNum = Int(ar[4])!
+        
+        for i in 0..<typeNum {
+            trainValue.append(String(ar[5 + i]))
+        }
+        var cur = 5 + typeNum
+        for j in 0..<staNum {
+            var cc: [String] = []
+            for k in 0..<(4 + typeNum) {
+                cc.append(String(ar[cur + k]))
+            }
+            cur = cur + (4 + typeNum)
+            stationValue.append(cc)
+        }
+        
     }
     
     func parseTrainData(ret: String) {
@@ -251,7 +282,6 @@ extension MainTableViewController {
         } else {
             cell.unfold(true, animated: false, completion: nil)
         }
-
         
         let tra = transferTime(t1: trainData[indexPath.row][3], t2: trainData[indexPath.row][6])
         cell.timeLabel.text = "\(tra / 60)小时\(tra % 60)分钟"
@@ -294,15 +324,16 @@ extension MainTableViewController {
             ts = ts + Int(i[1])!
         }
         cell.ticketLable.text = ts > 0 ? "有\(ts)" : "无"
-        for i in 1...10 {
-            var lbl = UILabel(frame: CGRect(x: 20, y: i * 30, width: 200, height: 25))
-            lbl.text = "\(i)"
-            cell.scroolView.addSubview(lbl)
-        }
+        
+//        for i in 1...10 {
+//            var lbl = UILabel(frame: CGRect(x: 20, y: i * 30, width: 100, height: 25))
+//            lbl.text = "\(i)"
+//            cell.scroolView.addSubview(lbl)
+//        }
         
         cell.scroolView.isPagingEnabled = false
         // 可以滚动的区域
-//        cell.scroolView.contentSize = CGSize(width: self.view.bounds.maxX, height: self.view.bounds.maxY)
+        cell.scroolView.contentSize = CGSize(width: 0, height: self.view.bounds.maxY)
         // 显⽰示⽔水平滚动条
         cell.scroolView.showsHorizontalScrollIndicator = true
         // 显⽰示垂直滚动条
@@ -355,7 +386,7 @@ extension MainTableViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let cell = tableView.cellForRow(at: indexPath) as! FoldingCell
-
+        
         if cell.isAnimating() {
             return
         }
@@ -363,6 +394,20 @@ extension MainTableViewController {
         var duration = 0.0
         let cellIsCollapsed = cellHeights[indexPath.row] == Const.closeCellHeight
         if cellIsCollapsed {
+            NetworkManager.default.postA(cmd: ["query_train", trainData[indexPath.row][0]].joined(separator: " ")) { (ret) in
+                self.parseTrainValue(ret: ret)
+                print(trainValue)
+                print(stationValue)
+                let staNum = Int(trainValue[3])!
+                let ccell = cell as! DemoCell
+                for i in 0..<staNum {
+                    let lbl = UILabel(frame: CGRect(x: 20, y: i * 30, width: Int(ccell.scroolView.frame.width) - 40, height: 25))
+                    lbl.text = "\(stationValue[i][0]) \(stationValue[i][1]) \(stationValue[i][2])"
+                    ccell.scroolView.addSubview(lbl)
+                }
+                ccell.scroolView.contentSize = CGSize(width: 0, height: staNum * 30)
+                
+            }
             cellHeights[indexPath.row] = Const.openCellHeight
             cell.unfold(true, animated: true, completion: nil)
             duration = 0.5

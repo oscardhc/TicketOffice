@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FoldingCell-Demo/MainTableViewController.swift"
-            timestampString = "580567137.587428"
+            timestampString = "580628543.907063"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "goToNextView(_:)"
             landmarkType = "7">
          </BreakpointContent>

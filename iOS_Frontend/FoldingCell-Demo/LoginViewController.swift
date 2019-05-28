@@ -86,6 +86,7 @@ class LoginViewController: UIViewController {
             self.errorLable.text = "请输入用户ID和密码。"
             return
         }
+        userPassword = self.pas.text!
         self.present(alert, animated: true, completion: {
             NetworkManager.default.postA(cmd: "login " + self.inp.text! + " " + self.pas.text!, done: { (ret) in
                 if (ret == "1") {
@@ -163,7 +164,7 @@ extension UIView {
         self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOffset = CGSize(width: 4, height: 4)
         self.layer.shadowRadius = 10
-        self.layer.shadowOpacity = 0.4
+        self.layer.shadowOpacity = 0.3
     }
 }
 

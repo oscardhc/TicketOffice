@@ -23,6 +23,8 @@ listMap.hpp
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/whj/splay_new.hpp
 unistd.h
 -
+mutex
+-
 
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/exceptions.hpp
 cstddef
@@ -73,6 +75,10 @@ record.hpp
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/dhc/map.hpp
 vector.hpp
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/vector.hpp
+thread
+-
+mutex
+-
 
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/record.hpp
 train_val.hpp
@@ -95,26 +101,6 @@ station_val.hpp
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/station_val.hpp
 constant.hpp
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/constant.hpp
-sys/types.h
--
-sys/stat.h
--
-string.h
--
-iostream
--
-errno.h
--
-fcntl.h
--
-unistd.h
--
-stdlib.h
--
-stdio.h
--
-zmq.hpp
--
 
 /Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/backend/fly/ticket_value.hpp
 constant.hpp

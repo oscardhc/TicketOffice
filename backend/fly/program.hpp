@@ -14,10 +14,16 @@
 #include "record.hpp"
 #include "../dhc/map.hpp"
 #include "vector.hpp"
+#include <thread>
+#include <mutex>
 
 namespace sjtu {
     typedef int ID;
     typedef char *UserInfo;
+
+    std::mutex vecLock;
+
+    void execPart(sjtu::vector<Train_val*> *trains, station_val *sta1, station_val *sta2, char *loc1, char* loc2, int len, char* catalog, int from, int to);
 
     class Program {
 
@@ -120,7 +126,7 @@ namespace sjtu {
             return;
         }
 
-        inline int getTrainID(int index) {
+        static inline int getTrainID(int index) {
             int id;
             DataBase.getElement((char*)&id, sizeof(int) + index * sizeof(int) , sizeof(int), TRID);
 //            printf("get %d %d\n", index, id);
@@ -337,6 +343,7 @@ namespace sjtu {
 
         /*Ticket word*/
         void execute_queryTicket()  {
+
             char *cur = cmd + commandLength;
             char loc1[LOCATION_SIZE], loc2[LOCATION_SIZE];
             char date[DATE_SIZE];
@@ -366,50 +373,23 @@ namespace sjtu {
             int offset;
             int pos1,pos2;//loc1's num in the train
 
-//            std::vector<Train_val*> trains;
             sjtu::vector<Train_val*> trains;
 
-            for (int i = 0;i < 186; ++i){
-                unsigned int bit = sta1.passby_train[i] & sta2.passby_train[i];
-                int cnt = 0;
-                while(bit > 0){
-                    if(bit & 1){
-                        int trainOrd = i * 32 + cnt;
-                        offset = getTrainID(trainOrd);
-                        Train_val *tra = createTrainWithOffset(offset);
-                        int j = 0;// check catalog
-                        for(;j < len; ++j){
-                            if(catalog[j] == tra->catalog[0])
-                                break;
-                        }
-                        if(j == len){
-                            bit >>= 1;
-                            cnt ++;
-                            continue;
-                        }
-                        int index1 = -1,index2 = -1;
-                        for(j = 0;j < tra->station_num;++j) {
-                            if(strcmp(loc1, tra->getStation(j)->station_name) == 0)
-                                index1 = j;
-                            if(strcmp(loc2, tra->getStation(j)->station_name) == 0){
-                                if(index1 == -1)
-                                    break;
-                                index2 = j;
-                            }
-                        }
-                        if(index1 == -1 || index2 == -1){
-                            deleteTrain(tra);
-                            bit >>= 1;
-                            cnt ++;
-                            continue;
-                        }
-                        trains.push_back(tra);
-                    }
-                    bit >>= 1;
-                    cnt ++;
-                }
+            const int THREAD_COUNT = 2;
+            std::thread t[THREAD_COUNT];
 
+            for (int i = 0; i < THREAD_COUNT; i++) {
+                t[i] = std::thread(execPart, &trains, &sta1, &sta2, loc1, loc2, len, catalog, 186 * i / THREAD_COUNT, 186 * (i+1) / THREAD_COUNT);
+//                std::thread(execPart, &trains, &sta1, &sta2, loc1, loc2, len, catalog, 93, 186);
             }
+            for (int i = 0; i < THREAD_COUNT; i++) {
+                t[i].join();
+            }
+
+
+//            execPart(trains, sta1, sta2, loc1, loc2, len, catalog, 100, 186);
+//            execPart(trains, sta1, sta2, loc1, loc2, len, catalog, 0, 100);
+
 
             if(!trains.size()){
                 sprintf(ret,"0");
@@ -499,7 +479,7 @@ namespace sjtu {
             }
             DataBase.getElement((char*)&sta2,offset2,STATION_SIZE,STATION);
 
-            for(int j = 0;j <= (cnt_train >> 5);++j) {
+            for(int j = 0;j <= (cnt_train >> 5);++j) {//traverse all trains
                 int bit_str = sta2.passby_train[j];
                 if (bit_str == 0)
                     continue;
@@ -511,64 +491,103 @@ namespace sjtu {
                             bit_str >>= 1;
                             continue;
                         }
+
+                        //find train2 pass by loc2
                         int offset_train2 = getTrainID((j << 5) + bit);
                         Train_val *train2 = createTrainWithOffset(offset_train2);
+//                        cerr << "train2:" << train2->trainID << endl;//TODO
                         int i = 0;
-                        for (; i < len; ++i) {//check catalog
+                        //check catalog exists
+                        for (; i < len; ++i) {
                             if (train2->catalog[0] == catalog[i])
                                 break;
                         }
                         if (i == len)
                             continue;
+//                        cerr << "continue1" << endl;
                         int k;
+                        //find loc2's index of trian2's station
                         for (k = 0; k < train2->station_num; ++k) {
                             if (strcmp(train2->_stations[k].station_name, loc2) == 0)
                                 break;
                         }
+
 //                        printf("~ %d\n", k);
                         int ord_end = k;
+//                        cerr << "ord_end:" << ord_end << endl;
+                        if(ord_end == 0)
+                            continue;
+
+                        //traverse 0~k station of train2
                         for (k = 0; k < ord_end; k++) {
-                            char *transfer_loc = train2->_stations[k].station_name;//TODO I'm not sure
+                            char *transfer_loc = train2->_stations[k].station_name;
                             int loc_transfer = getID(transfer_loc);
                             station_val sta_transfer;
                             int offset_station_transfer = stationTree.search(loc_transfer);
                             DataBase.getElement((char*)&sta_transfer, offset_station_transfer, STATION_SIZE, STATION);
+
                             for (int l = 0; l < cnt_train; ++l) {
-                                if (!sta1.getval(l)) continue;
-//                                int ord_start = sta1.getval(l);
-//                                int ord_transfer1 = sta1.getval(l);
+                                if (!sta1.getval(l))
+                                    continue;
+                                if(!sta2.getval(l))
+                                    continue;
                                 int ord_transfer2 = k;
-//                                if (!(ord_start && ord_transfer1))//check train1 pass loc1 and loctransfer
-//                                    continue;
+//                                cerr << "ord_transfer2:" << ord_transfer2 << endl;
                                 int offset_train1 = getTrainID(l);
+                                if(offset_train1 == offset_train2)
+                                    continue;
+
                                 Train_val *train1 = createTrainWithOffset(offset_train1);
+                                //check catalog exists
+                                for (; i < len; ++i) {
+                                    if (train1->catalog[0] == catalog[i])
+                                        break;
+                                }
+                                if (i == len)
+                                    continue;
+
+//                                cerr << "train1:" << train1->trainID << endl;
                                 int ord_start = -1;
                                 int ord_transfer1 = -1;
                                 for (int u = 0; u < train1->station_num; ++u) {
                                     if (strcmp(train1->_stations[u].station_name, loc1) == 0) {
                                         ord_start = u;
+//                                        cerr <<"ord_start:" << ord_start << endl;
                                     }
                                     if (strcmp(train1->_stations[u].station_name, transfer_loc) == 0) {
                                         if (ord_start == -1)
                                             break;
                                         ord_transfer1 = u;
+//                                        cerr << "ord_transfer1:" << ord_transfer1 << endl;
                                         break;
                                     }
                                 }
-                                if (ord_start == -1 || ord_transfer1 == -1)
+
+                                if (ord_start == -1 || ord_transfer1 == -1 || ord_start == ord_transfer1)
                                     continue;
+//                                cerr << "break4" << endl;
                                 short transfer_arrive = train1->getStation(ord_transfer1)->arrive;
                                 short transfer_start = train2->getStation(ord_transfer2)->start;
-                                if (transfer_arrive > transfer_start)
+                                if (transfer_arrive > transfer_start){
+//                                    char time[TIME_SIZE];
+//                                   intToTime(transfer_arrive,time);
+//                                    cerr << "transfer_arrive" << time <<  endl;
+//                                    intToTime(transfer_start,time);
+//                                   cerr << "transfer_start" << time <<  endl;
                                     continue;
+                                }
+
+
                                 int start = train1->getStation(ord_start)->start;
                                 int arrive = train2->getStation(ord_end)->arrive;
                                 int whole_time = arrive - start;
+//                                cerr << "whole_time" << whole_time << endl;
                                 if (whole_time < minTime) {
+                                    minTime = whole_time;
                                     char time1[TIME_SIZE], time2[TIME_SIZE];
                                     intToTime(start, time1);
                                     intToTime(transfer_arrive, time2);
-                                    sprintf(info + strlen(info), "%s %s %s %s %s %s %s ", train1->trainID,
+                                    sprintf(info, "%s %s %s %s %s %s %s ", train1->trainID,
                                             train1->getStation(ord_start)->station_name, dat,
                                             time1, train1->getStation(ord_transfer1)->station_name,
                                             dat, time2);
@@ -603,10 +622,11 @@ namespace sjtu {
                                                 train2->getSurplus(ord_transfer2, ord_end, date, i),
                                                 price);
                                     }
+                                    sprintf(info + strlen(info),"\n");
                                 }
                             }
-                            bit_str >>= 1;
                         }
+                        bit_str >>= 1;
                     }
                 }
             }
@@ -635,6 +655,7 @@ namespace sjtu {
                 sprintf(ret,"0");
                 return;
             }
+
             Train_val *val = createTrainWithOffset(offset);
             if (!val->if_sale || val->if_delete) {
                 sprintf(ret, "0");
@@ -930,5 +951,49 @@ namespace sjtu {
 
     };
 
+    void execPart(sjtu::vector<Train_val*> *trains, station_val *sta1, station_val *sta2, char *loc1, char* loc2, int len, char* catalog, int from, int to) {
+        for (int i = from;i <to; ++i){
+            unsigned int bit = sta1->passby_train[i] & sta2->passby_train[i];
+            int cnt = 0;
+            while(bit > 0){
+                if(bit & 1){
+                    int trainOrd = i * 32 + cnt;
+                    int offset = Program::getTrainID(trainOrd);
+                    Train_val *tra = createTrainWithOffset(offset);
+                    int j = 0;// check catalog
+                    for(;j < len; ++j){
+                        if(catalog[j] == tra->catalog[0])
+                            break;
+                    }
+                    if(j == len){
+                        bit >>= 1;
+                        cnt ++;
+                        continue;
+                    }
+                    int index1 = -1,index2 = -1;
+                    for(j = 0;j < tra->station_num;++j) {
+                        if(strcmp(loc1, tra->getStation(j)->station_name) == 0)
+                            index1 = j;
+                        if(strcmp(loc2, tra->getStation(j)->station_name) == 0){
+                            if(index1 == -1)
+                                break;
+                            index2 = j;
+                        }
+                    }
+                    if(index1 == -1 || index2 == -1){
+                        deleteTrain(tra);
+                        bit >>= 1;
+                        cnt ++;
+                        continue;
+                    }
+                    vecLock.lock();
+                    trains->push_back(tra);
+                    vecLock.unlock();
+                }
+                bit >>= 1;
+                cnt ++;
+            }
+        }
+    }
 } // namespace sjtu
 #endif

@@ -5328,7 +5328,7 @@
      * 默认参数
      */
     var DEFAULT = {
-      history: true,                // 监听 hashchange 事件
+      history: false,                // 监听 hashchange 事件
       overlay: true,                // 打开对话框时是否显示遮罩
       modal: false,                 // 是否模态化对话框，为 false 时点击对话框外面区域关闭对话框，为 true 时不关闭
       closeOnEsc: true,             // 按下 esc 关闭对话框

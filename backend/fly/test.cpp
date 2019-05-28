@@ -146,42 +146,43 @@ inline void preRun() {
 }
 
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <iostream>
-#include <errno.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <zmq.hpp>
-
-void realWork() {
-    sjtu::Program prog;
-    void *context =  zmq_ctx_new();
-    void *responder = zmq_socket(context, ZMQ_REP);
-    int rc = zmq_bind(responder, "tcp://*:5555");
-    fprintf(stderr, "%d\n", rc);
-    while (true) {
-        memset(cmd, 0, sizeof(cmd));
-        zmq_recv(responder, cmd, 1000, 0);
-        fprintf(stderr, "server received %s\n", cmd);
-        prog.exec(cmd, ret);
-        fprintf(stderr, "server respond %s\n", ret);
-        zmq_send(responder, ret, strlen(ret), 0);
-    }
-}
+//#include <sys/types.h>
+//#include <sys/stat.h>
+//#include <string.h>
+//#include <iostream>
+//#include <errno.h>
+//#include <fcntl.h>
+//#include <unistd.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <zmq.hpp>
+//
+//void realWork() {
+//    sjtu::Program prog;
+//    void *context =  zmq_ctx_new();
+//    void *responder = zmq_socket(context, ZMQ_REP);
+//    int rc = zmq_bind(responder, "tcp://*:5555");
+//    fprintf(stderr, "%d\n", rc);
+//    while (true) {
+//        memset(cmd, 0, sizeof(cmd));
+//        zmq_recv(responder, cmd, 1000, 0);
+//        fprintf(stderr, "server received %s\n", cmd);
+//        prog.exec(cmd, ret);
+//        fprintf(stderr, "server respond %s\n", ret);
+//        zmq_send(responder, ret, strlen(ret), 0);
+//    }
+//}
 
 int main(int argc, char** argv){
-//    test2();
-//    return 0;
-    if (argc > 1) {
-        preRun();
-        realWork();
-    } else {
-        work();
-    }
+    test8();
+//    work();
+    return 0;
+//    if (argc > 1) {
+//        preRun();
+//        realWork();
+//    } else {
+//        work();
+//    }
 //    test6();
 //    test2();
 //    test1();

@@ -235,7 +235,8 @@
     </script>
 {% endif %}
 
-<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+{#<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>#}
+<script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>
 <script>
     const live2d_path = "{{ url_for('static', filename='js/') }}"
 </script>
@@ -248,7 +249,6 @@
   });
 </script>
 <script src="{{ url_for('static', filename='MathJax/MathJax.js') }}?config=TeX-MML-AM_CHTML"></script>
-<script src="{{ url_for('static', filename='js/jquery-3.4.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/mdui.js') }}"></script>
 <script src="{{ url_for("static", filename="js/my.js") }}"></script>
 {#<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>#}

@@ -14,6 +14,7 @@
 //#include <filesystem>
 #include "../whj/splay_new.hpp"
 #include <unistd.h>
+#include <mutex>
 
 // 8K per page (There should be NO elements with sizes exceeding 8K)
 const int pageSize = 8192;
@@ -36,6 +37,8 @@ namespace sjtu {
         int fileCount;
         FILE *file[10];
         int fileSize[10];
+
+        mutex ageLock, idxLock;
 
         struct Node {
             int index; // Page id (1,2,3...) in hard drive file
@@ -114,19 +117,16 @@ namespace sjtu {
                 fwrite((char*)(&fileSize[i]), sizeof(int), 1, file[i]);
                 fprintf(stderr, "END FILESIZE %d: %d\n", i, fileSize[i]);
                 fclose(file[i]);
-//                std::filesystem::resize_file(filename, fileSize[i]);
                 truncate(filename, fileSize[i]);
             }
             fprintf(stderr, "TOTAL %u HIT %u RATIO %lf\n", totalQuery, hitQuery, 1.0 * hitQuery / totalQuery);
         }
         void flushToDisk(Node* node) {
             int nfile = node->index % 10, idx = node->index / 10;
-//            fprintf(stderr, "FLUSH %d %d %d -> %d\n", nfile, idx, *((int*)&pool[node->value][948]), node->value);
             fseek(file[nfile], idx * pageSize, SEEK_SET);
             fwrite(pool[node->value], pageSize, 1, file[nfile]);
         }
         void readFromDisk(Node* node) {
-//            fprintf(stderr, "READ %d %d -> %d\n", node->index % 10, node->index / 10, node->value);
             fseek(file[node->index % 10], (node->index / 10) * pageSize, SEEK_SET);
             fread(pool[node->value], pageSize, 1, file[node->index % 10]);
         }
@@ -156,15 +156,23 @@ namespace sjtu {
         Node* getBufferId(int index, int flag) {
             totalQuery++;
 //            auto it = idxMap.find(index);
+            idxLock.lock();
             Node* node = idxMap.search(index);
+            idxLock.unlock();
 //            if (it != idxMap.end()) {
             if (node != nullptr) {
                 hitQuery++;
 //                Node* node = it->second;
+                ageLock.lock();
                 if (flag == 0) moveToFront(node);
+                ageLock.unlock();
                 return node;
             } else {
+                ageLock.lock();
+                idxLock.lock();
                 Node* node = getAvailableMemory(index);
+                ageLock.unlock();
+                idxLock.unlock();
                 return node;
             }
         }
@@ -198,7 +206,6 @@ namespace sjtu {
                 memcpy(t + pageLeft + 8192, pool[poolid3->value], 8192);
                 memcpy(t + pageLeft + 8192 + 8192, pool[poolid4->value], elementSize - pageLeft - 8192 - 8192);
             }
-//            if (nFile == TRAIN) fprintf(stderr, "GET %d %d %d   [%d]\n", offset, elementSize, nFile, *(int*)t);
         }
         int createElement(int elementSize, FOR_FILE nFile = BPT) {
             fileSize[nFile] += elementSize;
@@ -209,11 +216,9 @@ namespace sjtu {
             int beginIndex = offset / pageSize;
             int pagePosition = offset % pageSize;
             int pageLeft = pageSize - pagePosition;
-//            if (nFile == TRAIN) fprintf(stderr, "SET %d %d %d   %d [%d]  %d %d\n", offset, elementSize, nFile, *(int*)t, *((int*)(&pool[0][948])), pagePosition, pageLeft);
             if (pageLeft >= elementSize) {
                 Node* poolid = getBufferId(beginIndex * 10 + nFile, flag);
                 memcpy(pool[poolid->value] + pagePosition, t, elementSize);
-//                if (nFile == TRAIN) fprintf(stderr, "- %d %d\n", beginIndex, poolid->value);
                 poolid->isEdited = true;
             } else if (elementSize <= 8192 + pageLeft){
                 Node *poolid1 = getBufferId(beginIndex * 10 + nFile, flag);
@@ -246,7 +251,6 @@ namespace sjtu {
                 poolid3->isEdited = true;
                 poolid4->isEdited = true;
             }
-//            if (nFile == TRAIN) fprintf(stderr, "[%d]\n", *((int*)(&pool[0][948])));
         }
 
         int createElementVirt(int elementSize, FOR_FILE nFile = BPT) {

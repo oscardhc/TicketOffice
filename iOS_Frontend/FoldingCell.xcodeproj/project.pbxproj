@@ -20,6 +20,10 @@
 		55EE4D9F2293132200031D57 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE4D9E2293132200031D57 /* LaunchViewController.swift */; };
 		5A0E1C3021414940006A0374 /* FoldingCellDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E1C2F21414940006A0374 /* FoldingCellDemoTests.swift */; };
 		5A1225D821B65E8E005BBB26 /* RotationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1225D721B65E8E005BBB26 /* RotationViewTests.swift */; };
+		70C4CE03229AC546000ED498 /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4CE02229AC546000ED498 /* ConfirmViewController.swift */; };
+		70D005DA229C1E8300754AC4 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D005D9229C1E8300754AC4 /* OrderViewController.swift */; };
+		70D005DC229C1F7A00754AC4 /* RefundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D005DB229C1F7A00754AC4 /* RefundViewController.swift */; };
+		70D005DE229C266900754AC4 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D005DD229C266900754AC4 /* AboutUsViewController.swift */; };
 		8499D8881D0054A8004B5B37 /* FoldingCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 8499D8871D0054A8004B5B37 /* FoldingCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		98FEA781B800B6B7261B3252 /* libPods-FoldingCell-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E0967199822DAE9FD7AB8C /* libPods-FoldingCell-Demo.a */; };
 		9D57F31F1EDC7A6F0004599F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D57F31E1EDC7A6F0004599F /* AppDelegate.swift */; };
@@ -100,6 +104,10 @@
 		5A0E1C2F21414940006A0374 /* FoldingCellDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldingCellDemoTests.swift; sourceTree = "<group>"; };
 		5A0E1C3121414940006A0374 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A1225D721B65E8E005BBB26 /* RotationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationViewTests.swift; sourceTree = "<group>"; };
+		70C4CE02229AC546000ED498 /* ConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
+		70D005D9229C1E8300754AC4 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		70D005DB229C1F7A00754AC4 /* RefundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundViewController.swift; sourceTree = "<group>"; };
+		70D005DD229C266900754AC4 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
 		8499D8851D0054A8004B5B37 /* FoldingCell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoldingCell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8499D8871D0054A8004B5B37 /* FoldingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FoldingCell.h; sourceTree = "<group>"; };
 		8499D8891D0054A8004B5B37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -222,6 +230,10 @@
 				551C4EBF2278289900FCDAD3 /* UserViewController.swift */,
 				55A301B6229A8E48002B6091 /* BuyViewController.swift */,
 				9D57F3221EDC7A6F0004599F /* Main.storyboard */,
+				70D005DD229C266900754AC4 /* AboutUsViewController.swift */,
+				70D005D9229C1E8300754AC4 /* OrderViewController.swift */,
+				70D005DB229C1F7A00754AC4 /* RefundViewController.swift */,
+				70C4CE02229AC546000ED498 /* ConfirmViewController.swift */,
 				9D57F3251EDC7A6F0004599F /* Assets.xcassets */,
 				9D57F3271EDC7A6F0004599F /* LaunchScreen.storyboard */,
 				9D57F32A1EDC7A6F0004599F /* Info.plist */,
@@ -493,11 +505,15 @@
 			files = (
 				55138135227D869E00BE847D /* LoginViewController.swift in Sources */,
 				9D57F32F1EDC7A850004599F /* MainTableViewController.swift in Sources */,
+				70D005DA229C1E8300754AC4 /* OrderViewController.swift in Sources */,
 				55A301B7229A8E49002B6091 /* BuyViewController.swift in Sources */,
+				70D005DC229C1F7A00754AC4 /* RefundViewController.swift in Sources */,
+				70C4CE03229AC546000ED498 /* ConfirmViewController.swift in Sources */,
 				551C4EC02278289900FCDAD3 /* UserViewController.swift in Sources */,
 				5528A25522853D2F0055256C /* NetworkManager.swift in Sources */,
 				9D57F31F1EDC7A6F0004599F /* AppDelegate.swift in Sources */,
 				558FE89A2272CD39000F3E6D /* TBViewController.swift in Sources */,
+				70D005DE229C266900754AC4 /* AboutUsViewController.swift in Sources */,
 				5528A2572285537F0055256C /* AlertControl.swift in Sources */,
 				55EE4D9F2293132200031D57 /* LaunchViewController.swift in Sources */,
 				55A301B5229808F2002B6091 /* DateFormat.swift in Sources */,
