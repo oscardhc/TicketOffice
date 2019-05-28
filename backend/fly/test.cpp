@@ -174,8 +174,8 @@ inline void preRun() {
 //}
 
 int main(int argc, char** argv){
-    test8();
-//    work();
+//    test8();
+    work();
     return 0;
 //    if (argc > 1) {
 //        preRun();

@@ -527,9 +527,9 @@ namespace sjtu {
                             DataBase.getElement((char*)&sta_transfer, offset_station_transfer, STATION_SIZE, STATION);
 
                             for (int l = 0; l < cnt_train; ++l) {
-                                if (!sta1.getval(l))
+                                if(!sta1.getval(l))
                                     continue;
-                                if(!sta2.getval(l))
+                                if(!sta_transfer.getval(l))
                                     continue;
                                 int ord_transfer2 = k;
 //                                cerr << "ord_transfer2:" << ord_transfer2 << endl;
