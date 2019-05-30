@@ -83,7 +83,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/fly/test.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="104">
+                <state relative-caret-position="414">
                   <caret line="178" column="13" lean-forward="true" selection-start-line="178" selection-start-column="13" selection-end-line="178" selection-end-column="13" />
                   <folding>
                     <element signature="e#38#60#0" expanded="true" />
@@ -350,12 +350,12 @@
       <workItem from="1558787655914" duration="605000" />
       <workItem from="1558836144807" duration="4933000" />
       <workItem from="1558871589402" duration="47000" />
-      <workItem from="1559002131729" duration="4758000" />
+      <workItem from="1559002131729" duration="5154000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176248000" />
+    <option name="totallyTimeSpent" value="176644000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="23" width="1397" height="877" extended-state="0" />
@@ -369,7 +369,7 @@
       <window_info anchor="bottom" id="Messages" order="2" weight="0.32356688" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.32871014" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.3566879" />
-      <window_info anchor="bottom" id="Debug" order="5" visible="true" weight="0.39617833" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.39617833" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="8" />
@@ -581,7 +581,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fly/test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
+        <state relative-caret-position="414">
           <caret line="178" column="13" lean-forward="true" selection-start-line="178" selection-start-column="13" selection-end-line="178" selection-end-column="13" />
           <folding>
             <element signature="e#38#60#0" expanded="true" />

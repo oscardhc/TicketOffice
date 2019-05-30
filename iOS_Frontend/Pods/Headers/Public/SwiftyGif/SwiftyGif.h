@@ -1,1 +1,0 @@
-../../../SwiftyGif/SwiftyGif/SwiftyGif.h

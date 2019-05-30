@@ -8,6 +8,7 @@
 
 import UIKit
 import Material
+import Cards
 
 var userInfo = ["yyu","yyu@sjtu.edu.cn","233333333","2"];
 var userID = "2019"
@@ -53,6 +54,28 @@ class UserViewController: UIViewController {
         
         //LogoutButton.backgroundImage(for: .normal) = UIImage(named: "logout")
         LogoutButton.layer.cornerRadius = 10
+        
+        // Aspect Ratio of 5:6 is preferred
+        let card = CardHighlight(frame: CGRect(x: 100, y: 300, width: 100 , height: 120))
+        
+//        card.backgroundColor = UIColor(red: 0, green: 94/255, blue: 112/255, alpha: 1)
+        card.backgroundColor = .white
+//        card.icon = UIImage(named: "flappy")
+        card.title = "退票"
+//        card.itemTitle = "Flappy Bird"
+//        card.itemSubtitle = "Flap That !"
+        card.textColor = UIColor.black
+        
+        card.hasParallax = true
+        
+        print(card.layer.cornerRadius)
+//        card.layer.cornerRadius = 0
+        
+        let cardContentVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RefundViewController")
+        card.shouldPresent(cardContentVC, from: self, fullscreen: true)
+        card.addShadow()
+        view.addSubview(card)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

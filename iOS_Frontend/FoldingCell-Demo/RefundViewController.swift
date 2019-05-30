@@ -14,12 +14,12 @@ class RefundViewController: UIViewController {
     @IBOutlet weak var baseview: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
-        var navItem = UINavigationItem()
-        var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
-        navItem.rightBarButtonItem = navBtn
-        navBar.items = [navItem]
-        self.view.addSubview(navBar)
+//        var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
+//        var navItem = UINavigationItem()
+//        var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
+//        navItem.rightBarButtonItem = navBtn
+//        navBar.items = [navItem]
+//        self.view.addSubview(navBar)
 
         baseview.layer.cornerRadius = 10
         baseview.addShadow()

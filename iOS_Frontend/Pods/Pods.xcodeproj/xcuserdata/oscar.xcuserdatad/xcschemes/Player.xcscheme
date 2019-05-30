@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "92D591531C6D055717AED7D19CD34D36"
-               BlueprintName = "Pods-FoldingCell-Demo"
+               BlueprintIdentifier = "88AAEF9D104B0453432654CB3E5E57A6"
+               BlueprintName = "Player"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libPods-FoldingCell-Demo.a">
+               BuildableName = "libPlayer.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

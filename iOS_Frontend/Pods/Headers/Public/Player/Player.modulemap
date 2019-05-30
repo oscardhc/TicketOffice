@@ -1,0 +1,6 @@
+module Player {
+  umbrella header "Player-umbrella.h"
+
+  export *
+  module * { export * }
+}

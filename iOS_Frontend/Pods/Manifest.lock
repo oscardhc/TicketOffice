@@ -1,32 +1,32 @@
 PODS:
-  - Material (3.1.2):
-    - Material/Core (= 3.1.2)
-  - Material/Core (3.1.2):
+  - Cards (1.4.0):
+    - Player (= 0.13.0)
+  - Material (3.1.4):
+    - Material/Core (= 3.1.4)
+  - Material/Core (3.1.4):
     - Motion (~> 3.1.0)
-  - Motion (3.1.0):
-    - Motion/Core (= 3.1.0)
-  - Motion/Core (3.1.0)
-  - SkyFloatingLabelTextField (3.7.0)
-  - SwiftyGif (5.1.1)
+  - Motion (3.1.1):
+    - Motion/Core (= 3.1.1)
+  - Motion/Core (3.1.1)
+  - Player (0.13.0)
 
 DEPENDENCIES:
+  - Cards
   - Material (~> 3.0)
-  - SkyFloatingLabelTextField (~> 3.0)
-  - SwiftyGif
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Cards
     - Material
     - Motion
-    - SkyFloatingLabelTextField
-    - SwiftyGif
+    - Player
 
 SPEC CHECKSUMS:
-  Material: 75f784055f5444a85c61454d7d175a73262b991e
-  Motion: adfaf0a123322dfde099f49cf6cbe3abfa8f3899
-  SkyFloatingLabelTextField: 4b46db0ab1ccde0919cded29c656e6b4805eda04
-  SwiftyGif: f7702483db93586a41f04f4927cd682852a2fa10
+  Cards: 45ae6bd0eca7b5e8016d3b6cb30b60b04753f68f
+  Material: 3622a0e18c8114e701b9d8509c3c4af28ed69ed8
+  Motion: f115b33f36cc52472a25a965daa89b3859817de0
+  Player: 968d8d07d923bcdd6f7e4091c9e306eb44a5f7a4
 
-PODFILE CHECKSUM: 812d4f8aa028555864635f778565337a733c932e
+PODFILE CHECKSUM: e2c0e57ba581232aa9cff8e7c137d7442e8d92b6
 
 COCOAPODS: 1.5.3

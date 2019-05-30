@@ -1,12 +1,11 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/SwiftyGif"
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Material" "${PODS_CONFIGURATION_BUILD_DIR}/Motion" "${PODS_CONFIGURATION_BUILD_DIR}/SkyFloatingLabelTextField" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif"
-OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Material/Material.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Motion/Motion.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif/SwiftyGif.modulemap" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/SwiftyGif"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"Material" -l"Motion" -l"SkyFloatingLabelTextField" -l"SwiftyGif"
-OTHER_SWIFT_FLAGS = $(inherited) -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Material/Material.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Motion/Motion.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif/SwiftyGif.modulemap" $(inherited) "-D" "COCOAPODS"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Cards" "${PODS_CONFIGURATION_BUILD_DIR}/Material" "${PODS_CONFIGURATION_BUILD_DIR}/Motion" "${PODS_CONFIGURATION_BUILD_DIR}/Player"
+OTHER_CFLAGS = $(inherited) -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Cards/Cards.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Material/Material.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Motion/Motion.modulemap" -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Player/Player.modulemap"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Cards" -l"Material" -l"Motion" -l"Player" -framework "UIKit"
+OTHER_SWIFT_FLAGS = $(inherited) -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Cards/Cards.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Material/Material.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Motion/Motion.modulemap" -Xcc -fmodule-map-file="${PODS_CONFIGURATION_BUILD_DIR}/Player/Player.modulemap" $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
-SWIFT_INCLUDE_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Material" "${PODS_CONFIGURATION_BUILD_DIR}/Motion" "${PODS_CONFIGURATION_BUILD_DIR}/SkyFloatingLabelTextField" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif"
+SWIFT_INCLUDE_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Cards" "${PODS_CONFIGURATION_BUILD_DIR}/Material" "${PODS_CONFIGURATION_BUILD_DIR}/Motion" "${PODS_CONFIGURATION_BUILD_DIR}/Player"

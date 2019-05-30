@@ -1,0 +1,6 @@
+module Cards {
+  umbrella header "Cards-umbrella.h"
+
+  export *
+  module * { export * }
+}
