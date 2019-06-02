@@ -26,6 +26,8 @@ var loginDialogue = new mdui.Dialog('#exampleDialog')
 function openLogin() {
     getCaptcha()
     loginDialogue.open()
+    $('#capinput').focus()
+    $('#emailinput').focus()
 }
 
 
@@ -252,27 +254,29 @@ function profileSubmitBtnClicked() {
 
 // alert('user = ' + user)
 
-function getUserInfo(userId) {
+function getUserInfo(userId, d = userInfo) {
     if (!localStorage.getItem('userInfo')) {
         // alert(userId);
-        execCommand('query_profile ' + userId, function (d) {
-            let res = d.result;
-            userInfo = res.split(" ")
-            localStorage.setItem('userInfo', JSON.stringify(userInfo))
-            $('.userName').html(userInfo[0])
-            $('.userEmail').html(userInfo[1])
-            $('.userPhone').html(userInfo[2])
-            $('.userPriv').html(userInfo[3])
-            // alert(JSON.stringify(userInfo))
+        execCommand('query_profile ' + userId, function (dd) {
+            let res = dd.result;
+            d = res.split(" ")
+            // console.log(d)
+            // console.log(JSON.stringify(d))
+            localStorage.setItem('userInfo', JSON.stringify(d))
+            $('.userName').html(d[0])
+            $('.userEmail').html(d[1])
+            $('.userPhone').html(d[2])
+            $('.userPriv').html(d[3])
+            // alert(JSON.stringify(d))
         })
     } else {
         // alert(localStorage.getItem('userInfo'))
-        userInfo = JSON.parse(localStorage.getItem('userInfo'))
+        d = JSON.parse(localStorage.getItem('userInfo'))
         // alert(userInfo)
-        $('.userName').html(userInfo[0])
-        $('.userEmail').html(userInfo[1])
-        $('.userPhone').html(userInfo[2])
-        $('.userPriv').html(userInfo[3] == "2" ? "管理员" : "注册用户")
+        $('.userName').html(d[0])
+        $('.userEmail').html(d[1])
+        $('.userPhone').html(d[2])
+        $('.userPriv').html(d[3] == "2" ? "管理员" : "注册用户")
         // document.querySelector('#userName').innerText = userInfo[0]
         // document.querySelector('#userEmail').innerText = userInfo[1]
         // document.querySelector('#userPhone').innerText = userInfo[2]

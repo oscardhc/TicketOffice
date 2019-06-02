@@ -147,12 +147,16 @@ internal class DetailViewController: UIViewController {
             scrollView.frame = view.bounds
             scrollView.frame.origin.y = 0
             self.card.backgroundIV.layer.cornerRadius = 0
+//            print(">", scrollView.frame)
+//            print("????")
             
         // Layout for present in non-fullscreen
         } else {
             scrollView.frame.size = CGSize(width: LayoutHelper.XScreen(90), height: LayoutHelper.YScreen(100) - 20)
             scrollView.center = blurView.center
             scrollView.frame.origin.y = 40
+            
+//            print("!!!!")
         }
         
         scrollView.frame = scrollView.frame.applying(transform)

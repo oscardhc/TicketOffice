@@ -30,7 +30,7 @@ public:
         data = (data << 5) + _date;
         data = (data << 3) + _type;
         data = (data << 11) + _qua;
-//        printf("INIT %d %d %d %d %d -> %d\n", _qua, _end, _start, _date, _type, data);
+       // printf("INIT %d %d %d %d %d -> %d   %d %d %d\n", _qua, _end, _start, _date, _type, data, trainid, cata, nxt);
     }
     inline void del() {
         data |= (1u << 31);

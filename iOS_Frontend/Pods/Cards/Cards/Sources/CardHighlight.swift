@@ -170,15 +170,27 @@ import UIKit
         super.layout(animating: animating)
         
         let gimme = LayoutHelper(rect: backgroundIV.frame)
+        let width = backgroundIV.frame.width
+//        print("gimme", backgroundIV.frame)
+//        print("layout ", width);
+//        if width > 200 {
+//            self.clipsToBounds = false
+//        } else {
+//            self.clipsToBounds = true
+//        }
         
         iconIV.frame = CGRect(x: insets,
-                              y: insets,
-                              width: gimme.Y(25),
-                              height: gimme.Y(25))
+                              y: insets + (width > 200 ? 30 : 0),
+                              width: gimme.Y(30),
+                              height: gimme.Y(30))
         
         titleLbl.frame.origin = CGPoint(x: insets, y: gimme.Y(25, from: iconIV))
         titleLbl.frame.size.width = (frame.width * 0.65) + ((backgroundIV.bounds.width - frame.width)/3)
         titleLbl.frame.size.height = gimme.Y(35)
+//        print("...", width, width > 200, titleLbl.frame)
+        titleLbl.frame.origin = CGPoint(x: insets, y: gimme.Y(25, from: iconIV) - (width > 200 ? 25 : 0))
+//        titleLbl.font = width > 200 ? UIFont.boldSystemFont(ofSize: 40) : UIFont.boldSystemFont(ofSize: 15)
+//        print("...", titleLbl.frame)
         
         itemSubtitleLbl.sizeToFit()
         itemSubtitleLbl.frame.origin = CGPoint(x: insets, y: gimme.RevY(0, height: itemSubtitleLbl.bounds.size.height) - insets)

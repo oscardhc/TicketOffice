@@ -5381,8 +5381,14 @@
         height: dialogHeight + 'px',
       });
 
+
       // 调整 mdui-dialog-content 的高度
       $dialogContent.height(dialogHeight - ($dialogTitle.height() || 0) - ($dialogActions.height() || 0));
+
+      if (document.querySelector('#addTrainContent')) {
+        document.querySelector('#addTrainContent').scrollTop = document.querySelector('#addTrainContent').scrollHeight
+      }
+
     };
 
     /**
@@ -6868,6 +6874,7 @@
       covered: 'auto',          // 菜单是否覆盖在触发它的元素上，true、false。auto 时简单菜单覆盖，级联菜单不覆盖
       subMenuTrigger: 'hover',  // 子菜单的触发方式 hover、click
       subMenuDelay: 200,        // 子菜单的触发延时，仅在 submenuTrigger 为 hover 有效
+      hhh: false,
     };
 
     /**
@@ -6998,7 +7005,7 @@
           (isFixed ? 0 : (anchorOffsetTop - anchorTop));
       }
 
-      _this.$menu.css('top', menuTop + 'px');
+      _this.$menu.css('top', (menuTop - (_this.options.hhh ? 360 : 0)) + 'px');
 
       // ===============================
       // ================= 设置菜单对齐方式
@@ -7388,7 +7395,8 @@
       $document.on('click', '.mdui-menu-item', function (e) {
         var $this = $(this);
         if (!$this.find('.mdui-menu').length && $this.attr('disabled') === null) {
-          _this.close();
+          // if ($this.attr('dont'))
+          // _this.close();
         }
       });
 

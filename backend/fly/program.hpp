@@ -694,6 +694,7 @@ namespace sjtu {
 
             DataBase.getElement((char*)&user, offset, USER_SIZE, USER);
             for (int off = user.getFirst(); off; ){
+                fprintf(stderr, "... %d\n", off);
                 DataBase.getElement((char*)&rec, off, RECORD_SIZE, RECORD);
                 int flag = 0;
                 for (int i = 0; i < calalen; i++) {
@@ -702,8 +703,10 @@ namespace sjtu {
                         break;
                     }
                 }
+                fprintf(stderr, "%d %d\n", dt, rec.getDate());
                 if (flag == 1 && dt == rec.getDate()) {
                     tot++;
+                    fprintf(stderr, ">>> %d %d\n", off, rec.nxt);
                     int troff = trainTree.search(rec.trainid);
                     Train_val *val = createTrainWithOffset(troff);
                     char ds[11],dt[11];
@@ -722,8 +725,8 @@ namespace sjtu {
                         sprintf(tmp + strlen(tmp), "%s %d %f ", val->pricename[j], j == rec.getType() ? rec.getQuantity() : 0, price);
                     }
                     sprintf(tmp + strlen(tmp), "\n");
-
                 }
+                
                 off = rec.nxt;
             }
             tmp[strlen(tmp) - 1] = 0;

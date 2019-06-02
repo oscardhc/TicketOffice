@@ -45,53 +45,55 @@ class UserViewController: UIViewController {
         
         modifyButton.setBackgroundImage(UIImage(named: "edit"), for: .normal)
         modifyButton.imageView?.contentMode = .scaleAspectFit
+        modifyButton.removeFromSuperview()
         orderButton.setBackgroundImage(UIImage(named: "order"), for: .normal)
         orderButton.imageView?.contentMode = .scaleAspectFit
+        orderButton.removeFromSuperview()
         refundButton.setBackgroundImage(UIImage(named: "refund"), for: .normal)
         refundButton.imageView?.contentMode = .scaleAspectFit
+        refundButton.removeFromSuperview()
         aboutusButton.setBackgroundImage(UIImage(named: "us"), for: .normal)
         aboutusButton.imageView?.contentMode = .scaleAspectFit
+        aboutusButton.removeFromSuperview()
         
         //LogoutButton.backgroundImage(for: .normal) = UIImage(named: "logout")
         LogoutButton.layer.cornerRadius = 10
         
-        // Aspect Ratio of 5:6 is preferred
-        let card = CardHighlight(frame: CGRect(x: 100, y: 300, width: 100 , height: 120))
+        addCard(title: "修改", frame: CGRect(x: 33, y: 320, width: 90 , height: 108), targetVC: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RefundViewController"), image: UIImage(named: "edit")!)
+        addCard(title: "订单", frame: CGRect(x: 143, y: 320, width: 90 , height: 108), targetVC: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RefundViewController"), image: UIImage(named: "order")!)
+        addCard(title: "退票", frame: CGRect(x: 253, y: 320, width: 90 , height: 108), targetVC: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RefundViewController"), image: UIImage(named: "refund")!)
+        addCard(title: "我们", frame: CGRect(x: 33, y: 450, width: 90 , height: 108), targetVC: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AboutUsViewController"), image: UIImage(named: "us")!)
         
-//        card.backgroundColor = UIColor(red: 0, green: 94/255, blue: 112/255, alpha: 1)
+        
+    }
+    
+    func addCard(title: String, frame: CGRect, targetVC: UIViewController, image: UIImage) {
+        let card = CardHighlight(frame: frame)
         card.backgroundColor = .white
-//        card.icon = UIImage(named: "flappy")
-        card.title = "退票"
-//        card.itemTitle = "Flappy Bird"
-//        card.itemSubtitle = "Flap That !"
+        card.icon = image
+        card.title = title
         card.textColor = UIColor.black
-        
         card.hasParallax = true
-        
-        print(card.layer.cornerRadius)
-//        card.layer.cornerRadius = 0
-        
-        let cardContentVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RefundViewController")
-        card.shouldPresent(cardContentVC, from: self, fullscreen: true)
-        card.addShadow()
+        card.shouldPresent(targetVC, from: self, fullscreen: true)
         view.addSubview(card)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        super.viewWillAppear(animated)
         
-        modifyButton.addShadow()
-        modifyButton.addTarget(self, action: #selector(UserViewController.goToUserDetail(_:)), for: .touchUpInside)
-        orderButton.addShadow()
-        refundButton.addShadow()
-        refundButton.addTarget(self, action: #selector(UserViewController.goToRefund(_:)), for: .touchUpInside)
-        aboutusButton.addShadow()
-        aboutusButton.addTarget(self, action: #selector(UserViewController.goToAboutUs(_:)), for: .touchUpInside)
-        LogoutButton.addShadow()
-        refreshUserData()
+//        modifyButton.addShadow()
+//        modifyButton.addTarget(self, action: #selector(UserViewController.goToUserDetail(_:)), for: .touchUpInside)
+//        orderButton.addShadow()
+//        refundButton.addShadow()
+//        refundButton.addTarget(self, action: #selector(UserViewController.goToRefund(_:)), for: .touchUpInside)
+//        aboutusButton.addShadow()
+//        aboutusButton.addTarget(self, action: #selector(UserViewController.goToAboutUs(_:)), for: .touchUpInside)
+//        LogoutButton.addShadow()
         
+        refreshUserData(fun: {
+            self.nameLabel.text = userInfo[0]
+        })
         
 //        self.navigationController?.navigationBar.isHidden = false
 //        self.navigationController?.navigationBar.barTintColor = UIColor.white
@@ -136,12 +138,13 @@ class UserViewController: UIViewController {
 
 }
 
-func refreshUserData() {
+func refreshUserData(fun: @escaping () -> Void) {
     NetworkManager.default.postA(cmd: ["query_profile", userID].joined(separator: " ") , done: { (ret) in
         let tmp = ret.split(separator: " ")
         userInfo = []
         for ii in tmp {
             userInfo.append(String(ii))
         }
+        fun()
     })
 }

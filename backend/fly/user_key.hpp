@@ -28,7 +28,7 @@ namespace sjtu{
             inp += len;
             len = getNextWord(inp,phone);
             setPrivilege(1);
-            setFirst(4);
+            setFirst(0);
         };
         User_val &operator=(const User_val &other) {
             _d = other._d;

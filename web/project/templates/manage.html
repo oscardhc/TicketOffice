@@ -30,17 +30,22 @@
                         <div style="width: 80%;">
                             <h3>修改用户信息</h3>
                             <div class="mdui-divider"></div>
-                            2333
-                        </div>
-                    </div>
 
-                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
-                        <div style="width: 80%;">
-                            <h3>修改用户权限</h3>
-                            <div class="mdui-divider"></div>
                             2333
+
+                            <div align="center" style="margin-top: 30px; margin-bottom: 30px">
+                                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="modifyUser()">下一步</button>
+                            </div>
                         </div>
                     </div>
+                    {##}
+                    {#                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">#}
+                    {#                        <div style="width: 80%;">#}
+                    {#                            <h3>修改用户权限</h3>#}
+                    {#                            <div class="mdui-divider"></div>#}
+                    {#                            2333#}
+                    {#                        </div>#}
+                    {#                    </div>#}
 
                     <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
                         <div style="width: 80%;">
@@ -55,17 +60,12 @@
 
                     <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
                         <div style="width: 80%;">
-                            <h3>公开车次</h3>
+                            <h3>查询车次</h3>
                             <div class="mdui-divider"></div>
                             2333
-                        </div>
-                    </div>
-
-                    <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
-                        <div style="width: 80%;">
-                            <h3>删除车次</h3>
-                            <div class="mdui-divider"></div>
-                            2333
+                            <div align="center" style="margin-top: 30px; margin-bottom: 30px">
+                                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="queryTrain()">下一步</button>
+                            </div>
                         </div>
                     </div>
 
@@ -74,6 +74,9 @@
                             <h3>修改车次</h3>
                             <div class="mdui-divider"></div>
                             2333
+                            <div align="center" style="margin-top: 30px; margin-bottom: 30px">
+                                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="">下一步</button>
+                            </div>
                         </div>
                     </div>
 
@@ -94,6 +97,40 @@
 
 {% block app %}
 
+    <div class="mdui-dialog" id="queryTrainDialogue">
+        <div class="mdui-dialog-title">查询车次</div>
+        <div class="mdui-dialog-content" id="detailMsg">
+            <div align="center">
+                <div style="display: inline-block;width: 50%" align="left" class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">车次ID</label>
+                    <input class="mdui-textfield-input" id="trainID"></input>
+                </div>
+                <div style="display: inline-block;">
+                    <button class="mdui-btn mdui-btn-icon mdui-ripple" onclick="queryTrainSubmit()">
+                        <i class="mdui-icon material-icons">check</i>
+                    </button>
+                </div>
+                <div style="display: inline-block;width: 50%" id="trainName">
+
+                </div>
+            </div>
+            <div class="mdui-table-fluid" id="queryTrain">
+                <table class="mdui-table mdui-table-hoverable" id="queryTrainCon">
+                    <thead id="queryTrainHead">
+                    </thead>
+                    <tbody id="queryTrainBody">
+                    </tbody>
+                </table>
+            </div>
+            <div align="center" id="queryTrainAction">
+
+            </div>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
+        </div>
+    </div>
+
     <div class="mdui-dialog" id="detailDialogue">
         <div class="mdui-dialog-title">DETAIL</div>
         <div class="mdui-dialog-content" id="detailMsg">
@@ -104,13 +141,119 @@
         </div>
     </div>
 
-    <div class="mdui-dialog" id="addTrainDialogue">
-        <div class="mdui-dialog-title">DETAIL</div>
-        <div class="mdui-dialog-content" id="addTrainContent">
+    <div class="mdui-dialog" id="modifyUserDialogue">
+        <div class="mdui-dialog-title">修改用户</div>
+        <div class="mdui-dialog-content" id="detailMsg">
+            <div align="center">
+                <div style="display: inline-block;width: 50%" align="left" class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">用户ID</label>
+                    <input class="mdui-textfield-input" id="modifyUserID"></input>
+                </div>
+                <div style="display: inline-block;">
+                    <button class="mdui-btn mdui-btn-icon mdui-ripple" onclick="idcheck()">
+                        <i class="mdui-icon material-icons">check</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">account_circle</i>
+                <label class="mdui-textfield-label">用户名</label>
+                <input class="mdui-textfield-input" id="profileUsername"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">vpn_key</i>
+                <label class="mdui-textfield-label">密码</label>
+                <input class="mdui-textfield-input" id="profilePassword" type="password"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">email</i>
+                <label class="mdui-textfield-label">邮箱</label>
+                <input class="mdui-textfield-input" type="email" id="profileEmail"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">phone</i>
+                <label class="mdui-textfield-label">电话号码</label>
+                <input class="mdui-textfield-input" id="profilePhone" onkeydown="ClickPassword(profileConfirmBtnClicked)"></input>
+            </div>
 
         </div>
         <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="addTrainDialogue">
+        <div class="mdui-dialog-title" id="addTrainTitle">添加车次</div>
+        <div class="mdui-dialog-content" id="addTrainContent">
+            <div id="addTrainHeader">
+                <div>
+                    <h2>车次信息</h2>
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <i class="mdui-icon material-icons">vpn_key</i>
+                        <label class="mdui-textfield-label">车次ID</label>
+                        <input class="mdui-textfield-input" id="addTrainTrainID"></input>
+                    </div>
+                    <div class="mdui-textfield mdui-textfield-floating-label" style="width: 65%; display: inline-block">
+                        <i class="mdui-icon material-icons">vpn_key</i>
+                        <label class="mdui-textfield-label">车次名</label>
+                        <input class="mdui-textfield-input" id="addTrainName"></input>
+                    </div>
+                    <div style="display: inline-block; width: 9%"></div>
+                    <div style="display: inline-block; width: 24%">
+                        类别
+                        <select id="addTrainCata" style="width: 50%" class="slt">
+                            <option>C</option>
+                            <option>D</option>
+                            <option>G</option>
+                            <option>K</option>
+                            <option>O</option>
+                            <option>T</option>
+                            <option>Z</option>
+                        </select>
+                    </div>
+                    <div>
+                        票务信息
+                        <div style="display: inline-block;" id="ticketInfo">
+                            <div style="width:100px;margin-left:20px;display:inline-block" class="mdui-textfield mdui-textfield-floating-label">
+                                <label class="mdui-textfield-label">类别1</label>
+                                <input class="mdui-textfield-input"/>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;width:40px;">
+                            <button class="mdui-btn mdui-btn-icon mdui-ripple" onclick="createType(priceNum);priceNum++">
+                                <i class="mdui-icon material-icons">add</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2>车站信息</h2>
+                    <div style="margin: 20px 0">
+                        <div style="width:175px;display:inline-block">
+                            车站名
+                        </div>
+                        <div style="width:20%;display:inline-block;margin-left:15%">
+                            到达时间
+                        </div>
+                        <div style="width: 24px;display: inline-block"></div>
+                        <div style="width:20%;display:inline-block;margin-left:5%">
+                            发车时间
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="trainDetailContent">
+            </div>
+            <div id="addTrainFooter">
+                <button style="margin-left: 30%" class="mdui-btn mdui-btn-icon mdui-ripple" onclick="cur=cur+1;createCompenent(cur);"><i class="mdui-icon material-icons">add</i></button>
+            </div>
+        </div>
+        <div class="mdui-dialog-actions">
             <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="addTrainConfirm()">confirm</button>
         </div>
     </div>
 
@@ -125,15 +268,181 @@
     <script src="{{ url_for('static', filename='js/date-time-picker.min.js') }}"></script>
 
     <script>
+        var cur = 1;
+        var priceNum = 2;
+        var id = '';
+        var isEditing = false;
+        $(document).ready(function () {
+            $('#addTrainCata').editableSelect( {
+                effects: 'slide'
+            });
+        })
+        function addTicketType() {
+
+        }
+        function saleTrain() {
+            execCommand('sale_train ' + id, function (dd) {
+                if (dd.result == '1') {
+                    mdui.snackbar({
+                        message: '发售成功！'
+                    });
+                } else {
+                    mdui.snackbar({
+                        message: '发售失败...可能该车次已被发售或已被删除'
+                    });
+                }
+            })
+        }
+        function deleteTrain() {
+            execCommand('sale_train ' + id, function (dd) {
+                if (dd.result == '1') {
+                    mdui.snackbar({
+                        message: '删除成功！'
+                    });
+                } else {
+                    mdui.snackbar({
+                        message: '删除失败...可能该车次已被发售或已被删除'
+                    });
+                }
+            })
+        }
+        var queryTrainDialog = new mdui.Dialog('#queryTrainDialogue', {modal: true})
+        function queryTrain() {
+            queryTrainDialog.open()
+        }
+        function queryTrainSubmit() {
+            id = $('#trainID').val()
+            if (!id || id === '') {
+                id = '85000C850103'
+            }
+            execCommand('query_train ' + id, function (dd) {
+                $('#queryTrainBody').html('')
+                $('#queryTrainHead').html('')
+                $('#trainName').html('')
+                $('#queryTrainAction').html('')
+                $('<button class="mdui-btn mdui-ripple mdui-color-theme-accent" onclick="saleTrain()">发售车次</button>\n' +
+                    '                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" onclick="deleteTrain()">删除车次</button>').appendTo($('#queryTrainAction'))
+                let res = dd.result
+                let d = res.split(/[ ]|\n/)
+                let typeNames = []
+                let trainStations = []
+                let stationNum = parseInt(d[3])
+                let typeNum = parseInt(d[4])
+                var cur = 5
+                for (var i = 0; i < typeNum; i++) {
+                    typeNames.push(d[i + cur])
+                }
+                cur = cur + typeNum
+
+                $('<h3>'+d[1]+'</h3>').appendTo($('#trainName'))
+
+                var ttt = $('<tr></tr>')
+                $('<th>#</th>').appendTo(ttt)
+                $('<th>车站</th>').appendTo(ttt)
+                $('<th>到达时间</th>').appendTo(ttt)
+                $('<th>发车时间</th>').appendTo(ttt)
+                for (var i = 0; i < typeNum; i++) {
+                    $('<th>' + typeNames[i] + '</th>').appendTo(ttt)
+                }
+                ttt.appendTo($('#queryTrainHead'))
+
+                for (var i = 0; i < stationNum; i++) {
+                    var tt = $('<tr></tr>')
+                    $('<td>'+(i+1)+'</td>').appendTo(tt)
+
+                    var tmp = []
+                    tmp.push(d[cur])
+                    tmp.push(i==0?'':d[cur+1])
+                    tmp.push(i==stationNum-1?'':d[cur+2])
+                    for (var j = 0; j < typeNum; j++) {
+                        tmp.push(d[cur+4+j])
+                    }
+
+                    for (var j = 0; j < 3; j++) {
+                        $('<td>' + tmp[j] + '</td>').appendTo(tt)
+                    }
+                    for (var j = 3; j < 3 + typeNum; j++) {
+                        $('<td>' + tmp[j] + '</td>').appendTo(tt)
+                    }
+
+                    tt.appendTo($('#queryTrainBody'))
+
+                    cur = cur + 4 + typeNum
+                    trainStations.push(tmp)
+                }
+                queryTrainDialog.handleUpdate()
+            })
+        }
+        function idcheck() {
+            let id = $('#modifyUserID').val()
+            {#console.log(id)#}
+            execCommand('query_profile ' + id, function (dd) {
+                let res = dd.result;
+                let d = res.split(" ")
+                $('#profileUsername').val(d[0])
+                $('#profilePassword').val(d[1])
+
+                $('#profileEmail').val(d[2])
+                $('#profilePhone').val(d[3])
+                $('#profilePhone').focus()
+                $('#profilePassword').focus()
+                $('#profileEmail').focus()
+                $('#profileUsername').focus()
+            })
+        }
+        var modifyUserDialogue = new mdui.Dialog('#modifyUserDialogue', {modal: true})
+        function modifyUser() {
+            modifyUserDialogue.open();
+        }
         var addTrainDialogue = new mdui.Dialog("#addTrainDialogue", {modal: true})
         function addTrain() {
-            $('#addTrainContent').html('')
+            $('#trainDetailContent').html('')
+            $('#ticketInfo').html('<div style="width:100px;margin-left:20px;display:inline-block" class="mdui-textfield mdui-textfield-floating-label">\n' +
+                '                                <label class="mdui-textfield-label">类别1</label>\n' +
+                '                                <input class="mdui-textfield-input" id="ca1"/>\n' +
+                '                            </div>')
+            cur = 1
+            priceNum = 1
+            if (isEditing) {
+                $('#addTrainTitle').html('修改车次')
+            } else {
+                $('#addTrainTitle').html('添加车次')
+            }
             addTrainDialogue.open()
             createCompenent(0)
             createCompenent(1)
-            createCompenent(2)
-            createCompenent(3)
-            createCompenent(4)
+            document.querySelector('#dateIn00').setAttribute('disabled','disabled')
+            document.querySelector('#dateIn00').value = '始发站'
+            document.querySelector('#bbbtn00').setAttribute('disabled','disabled')
+        }
+        function addTrainConfirm() {
+            var x = [isEditing ? 'modify_train' : 'add_train',$('#addTrainTrainID').val(),$('#addTrainName').val(),$('#addTrainCata').val(),(cur+1).toString(),priceNum.toString()]
+            for (var i=1;i<=priceNum;i++) {
+                x.push($('#ca'+i).val())
+            }
+            for (var i=0;i<=cur;i++) {
+                x.push($('#placeInput'+i).val())
+                x.push($('#dateIn'+i+'0').val())
+                x.push($('#dateIn'+i+'1').val())
+                for (var j=1;j<=priceNum;j++) {
+                    x.push($('#price'+i+j).val())
+                }
+            }
+            console.log(x)
+        }
+        function createType(i) {
+            {#console.log(i)#}
+            $("<div style='width:100px;margin-left:20px;display:inline-block' class=\"mdui-textfield mdui-textfield-floating-label\">\n" +
+                "  <label class=\"mdui-textfield-label\">类别"+(i+1)+"</label>\n" +
+                "  <input class=\"mdui-textfield-input\" id='ca"+(i+1)+"' />\n" +
+                "</div>").appendTo($('#ticketInfo'))
+            for (var j = 0; j <= cur; j++) {
+                $('<div style="margin-left:20px;width:80px;display:inline-block"><div class="mdui-textfield mdui-textfield-floating-label">\n' +
+                    '<label class="mdui-textfield-label">票价' + (i+1) + '</label>\n' +
+                    '<input class="mdui-textfield-input" id="price' + j + (i+1) + '"/>\n'
+                ).appendTo($('#listitem' + j))
+            }
+
         }
         function createCompenent(i) {
             $("<div style=\"margin: 20px 0\"><div style=\"margin: 10px 0\"></div><div style=\"display: inline-block\">" +
@@ -141,17 +450,37 @@
                 "                    </select>\n" +
                 "                </div><div style='width:20%;display:inline-block;margin-left:15%' class=\"mdui-textfield\">\n" +
                 "            <input class=\"mdui-textfield-input\" id=\"dateIn"+i+"0"+"\" onkeydown=\"ClickUsername()\"></input>\n" +
-                "        </div><button class=\"mdui-btn mdui-btn-icon mdui-ripple\" onclick=\"dateFor("+i+",0)\"><i class=\"mdui-icon material-icons\">add</i></button>" +
+                "        </div><button class=\"mdui-btn mdui-btn-icon mdui-ripple\" id='bbbtn"+i+"0'  onclick=\"dateFor("+i+",0)\"><i class=\"mdui-icon material-icons\">access_time</i></button>" +
                 "<div style='width:20%;display:inline-block;margin-left:5%' class=\"mdui-textfield\">\n" +
                 "            <input class=\"mdui-textfield-input\" id=\"dateIn"+i+"1"+"\" onkeydown=\"ClickUsername()\"></input>\n" +
-                "        </div><button class=\"mdui-btn mdui-btn-icon mdui-ripple\" onclick=\"dateFor("+i+",1)\"><i class=\"mdui-icon material-icons\">add</i></button>" +
-                "</div>").appendTo($('#addTrainContent'))
+                "        </div><button class=\"mdui-btn mdui-btn-icon mdui-ripple\" id='bbbtn"+i+"1'  onclick=\"dateFor("+i+",1)\"><i class=\"mdui-icon material-icons\">access_time</i></button>" +
+                "</div>").appendTo($('#trainDetailContent'))
+            $('<button class="mdui-btn mdui-btn-icon mdui-ripple" style="margin-left:30%" mdui-menu="{position:\'top\', hhh: true, target: \'#example-attr'+i+'\'}"><i class="mdui-icon material-icons">attach_money</i></button>\n' +
+                '<ul class="mdui-menu" style="width: ' + priceNum * 100 + 'px !important" align="center" id="example-attr' + i + '">\n' +
+                ' <li class="mdui-menu-item"><div id="listitem' + i + '" ></div></li>\n' +
+                '</ul>').appendTo($('#trainDetailContent'))
+            for (var j = 0; j < priceNum; j++) {
+                $(
+                    '<div style="margin-left:20px;width:80px;display:inline-block"><div class="mdui-textfield mdui-textfield-floating-label">\n' +
+                    '            <label class="mdui-textfield-label">票价' + (j+1) + '</label>\n' +
+                    '            <input class="mdui-textfield-input" id="price' + i + (j+1) + '"/>\n' +
+                    '        </div></div>'
+                ).appendTo($('#listitem' + i))
+            }
             for (var j = 0; j < allCity.length; j++) {
                 $('#placeInput' + i).append('<option>' + allCity[j] + '</option>')
             }
             $('#placeInput' + i).editableSelect( {
                 effects: 'slide'
             });
+            if (i > 0) {
+                document.querySelector('#dateIn'+(i-1)+'1').removeAttribute('disabled')
+                document.querySelector('#dateIn'+(i-1)+'1').value = ''
+                document.querySelector('#bbbtn'+(i-1)+'1').removeAttribute('disabled')
+            }
+            document.querySelector('#dateIn'+i+'1').setAttribute('disabled','disabled')
+            document.querySelector('#dateIn'+i+'1').value = '终点站'
+            document.querySelector('#bbbtn'+i+'1').setAttribute('disabled','disabled')
             addTrainDialogue.handleUpdate()
         }
         function createTimePicker(i,j) {

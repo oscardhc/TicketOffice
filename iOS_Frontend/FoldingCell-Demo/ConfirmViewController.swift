@@ -24,12 +24,12 @@ class ConfirmViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
-        var navItem = UINavigationItem()
-        var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
-        navItem.rightBarButtonItem = navBtn
-        navBar.items = [navItem]
-        self.view.addSubview(navBar)
+//        var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
+//        var navItem = UINavigationItem()
+//        var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
+//        navItem.rightBarButtonItem = navBtn
+//        navBar.items = [navItem]
+//        self.view.addSubview(navBar)
 
         // Do any additional setup after loading the view.
     }
@@ -39,7 +39,6 @@ class ConfirmViewController: UIViewController {
     
     @objc func confirmbuttonclicked(_ sender: AnyObject){
         NetworkManager.default.postS(cmd: ["modify_profile", userID, detailTextfields[0].text!, userPassword, detailTextfields[1].text!,detailTextfields[2].text!].joined(separator: " "))
-        refreshUserData()
         self.dismiss(animated: true, completion: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
