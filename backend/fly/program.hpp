@@ -376,18 +376,18 @@ namespace sjtu {
             sjtu::vector<Train_val*> trains;
 
             const int THREAD_COUNT = 1;
-//            std::thread t[THREAD_COUNT];
+           std::thread t[THREAD_COUNT];
 
-//            for (int i = 0; i < THREAD_COUNT; i++) {
-//                t[i] = std::thread(execPart, &trains, &sta1, &sta2, loc1, loc2, len, catalog, 186 * i / THREAD_COUNT, 186 * (i+1) / THREAD_COUNT);
-//                std::thread(execPart, &trains, &sta1, &sta2, loc1, loc2, len, catalog, 93, 186);
-//            }
-//            for (int i = 0; i < THREAD_COUNT; i++) {
-//                t[i].join();
-//            }
+           for (int i = 0; i < THREAD_COUNT; i++) {
+               t[i] = std::thread(execPart, &trains, &sta1, &sta2, loc1, loc2, len, catalog, 186 * i / THREAD_COUNT, (cnt_train) * (i+1) / THREAD_COUNT);
+               // std::thread(execPart, &trains, &sta1, &sta2, loc1, loc2, len, catalog, 93, 186);
+           }
+           for (int i = 0; i < THREAD_COUNT; i++) {
+               t[i].join();
+           }
 
 
-            execPart(&trains, &sta1, &sta2, loc1, loc2, len, catalog, 0, 186);
+            // execPart(&trains, &sta1, &sta2, loc1, loc2, len, catalog, 0, 186);
 //            execPart(trains, sta1, sta2, loc1, loc2, len, catalog, 0, 100);
 
 

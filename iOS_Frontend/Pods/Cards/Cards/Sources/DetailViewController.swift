@@ -45,10 +45,15 @@ internal class DetailViewController: UIViewController {
         self.snap = UIScreen.main.snapshotView(afterScreenUpdates: true)
         self.view.addSubview(blurView)
         self.view.addSubview(scrollView)
+//        var vv = UIView(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
+//        vv.backgroundColor = .black
+//        vv.addShadow()
+//        scrollView.addSubview(vv)
         
         if let detail = detailView {
-            
+            print(detail.frame)
             scrollView.addSubview(detail)
+//            detail.addShadow()
             detail.alpha = 0
             detail.autoresizingMask = .flexibleWidth
         }
@@ -68,6 +73,9 @@ internal class DetailViewController: UIViewController {
         xButton.isUserInteractionEnabled = true
         view.isUserInteractionEnabled = true
         isViewAdded = true
+        
+        //scrollView.bringSubviewToFront(vv)
+        print(scrollView.subviews)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,6 +84,9 @@ internal class DetailViewController: UIViewController {
             self.setupView()
         }
         scrollView.addSubview(card.backgroundIV)
+//        print(card.frame)
+//        card.addShadow()
+//        card.clipsToBounds = false
 //        card.backgroundIV.
         self.delegate?.cardWillShowDetailView?(card: self.card)
     }

@@ -146,6 +146,7 @@ import UIKit
     public var backgroundIV = UIImageView()
     public var insets = CGFloat()
     var isPresenting = false
+    public var isEnabled = true
     
     //MARK: - View Life Cycle
     
@@ -203,12 +204,16 @@ import UIKit
      Opens the card if detail view is set.
      */
     open func open(){
+        if isEnabled == false {
+            return
+        }
         if let superview = self.superview {
             originalFrame = superview.convert(self.frame, to: nil)
             log("CARD: open() called, setting original frame to ---> \(originalFrame)" )
         }
         shrinkAnimated()
         self.cardTapped()
+//        self.addShadow()
     }
     
     //MARK: - Layout

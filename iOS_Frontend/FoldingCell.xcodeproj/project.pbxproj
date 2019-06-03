@@ -20,10 +20,15 @@
 		55EE4D9F2293132200031D57 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE4D9E2293132200031D57 /* LaunchViewController.swift */; };
 		5A0E1C3021414940006A0374 /* FoldingCellDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0E1C2F21414940006A0374 /* FoldingCellDemoTests.swift */; };
 		5A1225D821B65E8E005BBB26 /* RotationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1225D721B65E8E005BBB26 /* RotationViewTests.swift */; };
+		7065F3B722A3BBDE00BDB363 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7065F3B622A3BBDE00BDB363 /* RegisterViewController.swift */; };
 		70C4CE03229AC546000ED498 /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4CE02229AC546000ED498 /* ConfirmViewController.swift */; };
 		70D005DA229C1E8300754AC4 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D005D9229C1E8300754AC4 /* OrderViewController.swift */; };
 		70D005DC229C1F7A00754AC4 /* RefundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D005DB229C1F7A00754AC4 /* RefundViewController.swift */; };
 		70D005DE229C266900754AC4 /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D005DD229C266900754AC4 /* AboutUsViewController.swift */; };
+		70DD8AC5229FF9F100C02332 /* ManageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DD8AC4229FF9F100C02332 /* ManageViewController.swift */; };
+		70DD8AC722A0004900C02332 /* ManageTrainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DD8AC622A0004900C02332 /* ManageTrainViewController.swift */; };
+		70DD8AC922A0006B00C02332 /* ManageUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DD8AC822A0006B00C02332 /* ManageUserViewController.swift */; };
+		70DD8ACB22A0202D00C02332 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DD8ACA22A0202D00C02332 /* RecordView.swift */; };
 		8499D8881D0054A8004B5B37 /* FoldingCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 8499D8871D0054A8004B5B37 /* FoldingCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		98FEA781B800B6B7261B3252 /* libPods-FoldingCell-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E0967199822DAE9FD7AB8C /* libPods-FoldingCell-Demo.a */; };
 		9D57F31F1EDC7A6F0004599F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D57F31E1EDC7A6F0004599F /* AppDelegate.swift */; };
@@ -104,10 +109,15 @@
 		5A0E1C2F21414940006A0374 /* FoldingCellDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldingCellDemoTests.swift; sourceTree = "<group>"; };
 		5A0E1C3121414940006A0374 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A1225D721B65E8E005BBB26 /* RotationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationViewTests.swift; sourceTree = "<group>"; };
+		7065F3B622A3BBDE00BDB363 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		70C4CE02229AC546000ED498 /* ConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
 		70D005D9229C1E8300754AC4 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		70D005DB229C1F7A00754AC4 /* RefundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundViewController.swift; sourceTree = "<group>"; };
 		70D005DD229C266900754AC4 /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
+		70DD8AC4229FF9F100C02332 /* ManageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageViewController.swift; sourceTree = "<group>"; };
+		70DD8AC622A0004900C02332 /* ManageTrainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTrainViewController.swift; sourceTree = "<group>"; };
+		70DD8AC822A0006B00C02332 /* ManageUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageUserViewController.swift; sourceTree = "<group>"; };
+		70DD8ACA22A0202D00C02332 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		8499D8851D0054A8004B5B37 /* FoldingCell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoldingCell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8499D8871D0054A8004B5B37 /* FoldingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FoldingCell.h; sourceTree = "<group>"; };
 		8499D8891D0054A8004B5B37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -226,10 +236,15 @@
 				55138134227D869E00BE847D /* LoginViewController.swift */,
 				5528A2562285537F0055256C /* AlertControl.swift */,
 				55EE4D9E2293132200031D57 /* LaunchViewController.swift */,
+				70DD8ACA22A0202D00C02332 /* RecordView.swift */,
 				5528A25422853D2F0055256C /* NetworkManager.swift */,
 				551C4EBF2278289900FCDAD3 /* UserViewController.swift */,
+				70DD8AC4229FF9F100C02332 /* ManageViewController.swift */,
 				55A301B6229A8E48002B6091 /* BuyViewController.swift */,
 				9D57F3221EDC7A6F0004599F /* Main.storyboard */,
+				7065F3B622A3BBDE00BDB363 /* RegisterViewController.swift */,
+				70DD8AC622A0004900C02332 /* ManageTrainViewController.swift */,
+				70DD8AC822A0006B00C02332 /* ManageUserViewController.swift */,
 				70D005DD229C266900754AC4 /* AboutUsViewController.swift */,
 				70D005D9229C1E8300754AC4 /* OrderViewController.swift */,
 				70D005DB229C1F7A00754AC4 /* RefundViewController.swift */,
@@ -358,7 +373,7 @@
 					};
 					8499D8841D0054A8004B5B37 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = LEAZS7L33U;
+						DevelopmentTeam = AEF5CS25ZL;
 						LastSwiftMigration = 1020;
 					};
 					9D57F31B1EDC7A6F0004599F = {
@@ -511,11 +526,16 @@
 				70C4CE03229AC546000ED498 /* ConfirmViewController.swift in Sources */,
 				551C4EC02278289900FCDAD3 /* UserViewController.swift in Sources */,
 				5528A25522853D2F0055256C /* NetworkManager.swift in Sources */,
+				70DD8ACB22A0202D00C02332 /* RecordView.swift in Sources */,
+				70DD8AC922A0006B00C02332 /* ManageUserViewController.swift in Sources */,
+				70DD8AC722A0004900C02332 /* ManageTrainViewController.swift in Sources */,
+				7065F3B722A3BBDE00BDB363 /* RegisterViewController.swift in Sources */,
 				9D57F31F1EDC7A6F0004599F /* AppDelegate.swift in Sources */,
 				558FE89A2272CD39000F3E6D /* TBViewController.swift in Sources */,
 				70D005DE229C266900754AC4 /* AboutUsViewController.swift in Sources */,
 				5528A2572285537F0055256C /* AlertControl.swift in Sources */,
 				55EE4D9F2293132200031D57 /* LaunchViewController.swift in Sources */,
+				70DD8AC5229FF9F100C02332 /* ManageViewController.swift in Sources */,
 				55A301B5229808F2002B6091 /* DateFormat.swift in Sources */,
 				9D57F3311EDC7AAD0004599F /* DemoCell.swift in Sources */,
 			);
@@ -728,7 +748,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = LEAZS7L33U;
+				DEVELOPMENT_TEAM = AEF5CS25ZL;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -756,7 +776,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = LEAZS7L33U;
+				DEVELOPMENT_TEAM = AEF5CS25ZL;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

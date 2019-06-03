@@ -11,6 +11,8 @@ import UIKit
 import Material
 //import SwiftyGif
 
+var shouldGoToQuery = false
+
 class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -33,15 +35,22 @@ class LoginViewController: UIViewController {
         loginFrame.addSubview(pas)
         
         loginFrame.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleTap(_:))))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleTap(_:))))
+//        imageView.isUserInteractionEnabled = true
+//        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LoginViewController.handleTap(_:))))
         
         btn = Button(frame: btnField.frame)
         btn.setTitle("确认", for: .normal)
+        btn.layer.cornerRadius = 4
+        btn.addShadow()
         btn.addTarget(self, action: #selector(LoginViewController.loginClicked(_:)), for: .touchUpInside)
         btn.backgroundColor = themeLightColor
         loginFrame.addSubview(btn)
         
+        registerbtn.backgroundColor = themeLightColor
+        registerbtn.layer.cornerRadius = 4
+        registerbtn.addShadow()
+        
+        registerbtn.addTarget(self, action: #selector(LoginViewController.registerbtnclicked(_:)), for: .touchUpInside)
         var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
         var navItem = UINavigationItem()
         var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
@@ -51,8 +60,14 @@ class LoginViewController: UIViewController {
         
     }
     
+    @objc func registerbtnclicked(_ sender: Any){
+        self.present(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterViewController"), animated: true, completion: nil)
+    }
     @objc func cancleBtnClicked(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
+        shouldGoToQuery = true
+        self.dismiss(animated: true, completion: {
+            
+        })
     }
     
     @IBOutlet weak var imageView: UIImageView!
@@ -73,6 +88,7 @@ class LoginViewController: UIViewController {
         return _a
     }()
     
+    @IBOutlet weak var registerbtn: Button!
     @IBOutlet weak var btnField: UIView!
     @IBOutlet weak var usernameFrame: UIView!
     @IBOutlet weak var loginFrame: UIView!
@@ -93,6 +109,7 @@ class LoginViewController: UIViewController {
                     self.alert.dismiss(animated: true, completion: {
                         NetworkManager.default.postA(cmd: ["query_profile", self.inp.text!].joined(separator: " ") , done: { (ret) in
                             let tmp = ret.split(separator: " ")
+                            userID = self.inp.text!
                             userInfo = []
                             for ii in tmp {
                                 userInfo.append(String(ii))
@@ -161,10 +178,10 @@ extension UIView {
 //        print(self.layer.cornerRadius)
         self.layer.masksToBounds = true
         self.clipsToBounds = false
-        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 4, height: 4)
         self.layer.shadowRadius = 10
-        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOpacity = 0.15
     }
 }
 

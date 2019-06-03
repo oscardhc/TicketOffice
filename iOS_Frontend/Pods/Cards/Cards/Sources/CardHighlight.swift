@@ -171,6 +171,7 @@ import UIKit
         
         let gimme = LayoutHelper(rect: backgroundIV.frame)
         let width = backgroundIV.frame.width
+        
 //        print("gimme", backgroundIV.frame)
 //        print("layout ", width);
 //        if width > 200 {
@@ -234,4 +235,14 @@ import UIKit
 }
 
 
-
+extension UIView {
+    func addShadow() {
+        //        print(self.layer.cornerRadius)
+        self.layer.masksToBounds = true
+        self.clipsToBounds = false
+        self.layer.shadowColor = UIColor.red.cgColor
+        self.layer.shadowOffset = CGSize(width: 4, height: 4)
+        self.layer.shadowRadius = 10
+        self.layer.shadowOpacity = 0.9
+    }
+}

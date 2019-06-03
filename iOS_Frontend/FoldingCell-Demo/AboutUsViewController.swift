@@ -20,17 +20,41 @@ class AboutUsViewController: UIViewController {
 //        navItem.rightBarButtonItem = navBtn
 //        navBar.items = [navItem]
 //        self.view.addSubview(navBar)
-       
-        let whj = UIImageView(frame: CGRect(x: 45, y: 10, width: 150, height: 150))
+        let whjj = UILabel(frame: CGRect(x: 45, y: 0, width: 150, height: 30))
+        let flyy = UILabel(frame: CGRect(x: 260, y: 0, width: 150, height: 30))
+        let dhcc = UILabel(frame: CGRect(x: 470, y: 0, width: 150, height: 30))
+        
+        whjj.text = "陈大同的附体"
+        flyy.text = "陈大同的妻子"
+        dhcc.text = "一个不爱陈大同的男人"
+        flyy.fontSize = 12
+        whjj.fontSize = 12
+        dhcc.fontSize = 12
+        whjj.textColor = themeLightColor
+        flyy.textColor = themeLightColor
+        dhcc.textColor = themeLightColor
+        
+        whjj.textAlignment = .center
+        flyy.textAlignment = .center
+        dhcc.textAlignment = .center
+        
+        
+        
+        let whj = UIImageView(frame: CGRect(x: 45, y: 30, width: 150, height: 150))
         whj.image = UIImage(named: "whj")
-        let dhc = UIImageView(frame: CGRect(x: 260, y: 10, width: 150, height: 150))
-        dhc.image = UIImage(named: "dhc")
-        let fly = UIImageView(frame: CGRect(x: 470, y: 10, width: 150, height: 150))
+        let fly = UIImageView(frame: CGRect(x: 260, y: 30, width: 150, height: 150))
+        
+        let dhc = UIImageView(frame: CGRect(x: 470, y: 30, width: 150, height: 150))
         fly.image = UIImage(named: "fly")
+        dhc.image = UIImage(named: "dhc")
+        
         
         hahaha.addSubview(whj)
         hahaha.addSubview(dhc)
         hahaha.addSubview(fly)
+        hahaha.addSubview(flyy)
+        hahaha.addSubview(whjj)
+        hahaha.addSubview(dhcc)
         
         
         hahaha.isPagingEnabled = false

@@ -32,6 +32,7 @@ var trainData = [[String]]()
 var ticketData = [[[String]]]()
 var trainValue = [String]()
 var stationValue = [[String]]()
+var queryDate = ""
 
 class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -95,7 +96,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         i.placeholder = "出发站"
         i.placeholderActiveColor = themeHeavyColor
         i.dividerActiveColor = themeHeavyColor
-        i.text = "兰州西"
+        i.text = "杭州东"
         return i
     }()
     lazy var toInput: TextField = {
@@ -104,7 +105,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         i.placeholder = "到达站"
         i.placeholderActiveColor = themeHeavyColor
         i.dividerActiveColor = themeHeavyColor
-        i.text = "天水南"
+        i.text = "上海虹桥"
         return i
     }()
     lazy var dateLable: UILabel = {
@@ -139,80 +140,18 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if fromInput.isEmpty || toInput.isEmpty {
             
         } else {
+            queryDate = "2019-06-" + String(format: "%02d" ,dateSelect.selectedRow(inComponent: 0) + 1)
             let cmd = ["query_ticket", fromInput.text!, toInput.text!, "2019-06-" + String(format: "%02d" ,dateSelect.selectedRow(inComponent: 0) + 1), "CDGKOTZ"].joined(separator: " ")
             print(cmd)
             NetworkManager.default.postA(cmd: cmd) { (ret) in
-                self.parseTrainData(ret: ret)
+                parseTrainData(ret: ret)
                 self.setup()
                 self.tableView.reloadData()
             }
         }
     }
     
-    func parseTrainValue(ret: String) {
-        let ar = ret.split { (c) -> Bool in
-            return c == " " || c == "\n"
-        }
-        trainValue = []
-        stationValue = []
-        
-        for i in 0...4 {
-            trainValue.append(String(ar[i]))
-        }
-        
-        let staNum = Int(ar[3])!
-        let typeNum = Int(ar[4])!
-        
-        for i in 0..<typeNum {
-            trainValue.append(String(ar[5 + i]))
-        }
-        var cur = 5 + typeNum
-        for j in 0..<staNum {
-            var cc: [String] = []
-            for k in 0..<(4 + typeNum) {
-                cc.append(String(ar[cur + k]))
-            }
-            cur = cur + (4 + typeNum)
-            stationValue.append(cc)
-        }
-        
-    }
-    
-    func parseTrainData(ret: String) {
-        trainData = [[String]]()
-        ticketData = [[[String]]]()
-        let ar = ret.split { (chr) -> Bool in
-            return chr == " " || chr == "\n"
-        }
-        let cnt = Int(String(ar[0]))!
-        var cur = 1
-        for _ in 0...cnt - 1 {
-            var tmp: [String] = []
-            var tickets: [[String]] = []
-            tmp.append(String(ar[cur]))
-            tmp.append(String(ar[cur + 1]))
-            tmp.append(String(ar[cur + 2]))
-            tmp.append(String(ar[cur + 3]))
-            tmp.append(String(ar[cur + 4]))
-            tmp.append(String(ar[cur + 5]))
-            tmp.append(String(ar[cur + 6]))
-            cur = cur + 7
-            var tst = String(ar[cur])
-            while tst.count > 0 && tst[tst.startIndex].unicodeScalars.first!.value >= UInt32(0x4E00) {
-                tickets.append([String(ar[cur]), String(ar[cur + 1]), String(ar[cur + 2])])
-                if (cur + 3 < ar.count) {
-                    cur = cur + 3
-                    tst = String(ar[cur])
-                } else {
-                    break
-                }
-            }
-            trainData.append(tmp)
-            ticketData.append(tickets)
-        }
-        print(trainData)
-        print(ticketData)
-    }
+
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -236,6 +175,10 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        refreshUserData(fun: {
+            
+        })
+        
         if #available(iOS 10.0, *) {
             tableView.refreshControl = UIRefreshControl()
             tableView.refreshControl?.addTarget(self, action: #selector(refreshHandler), for: .valueChanged)
@@ -324,6 +267,7 @@ extension MainTableViewController {
             ts = ts + Int(i[1])!
         }
         cell.ticketLable.text = ts > 0 ? "有\(ts)" : "无"
+        cell.stationLabel.textColor = .white
         
 //        for i in 1...10 {
 //            var lbl = UILabel(frame: CGRect(x: 20, y: i * 30, width: 100, height: 25))
@@ -395,7 +339,7 @@ extension MainTableViewController {
         let cellIsCollapsed = cellHeights[indexPath.row] == Const.closeCellHeight
         if cellIsCollapsed {
             NetworkManager.default.postA(cmd: ["query_train", trainData[indexPath.row][0]].joined(separator: " ")) { (ret) in
-                self.parseTrainValue(ret: ret)
+                parseTrainValue(ret: ret)
                 print(trainValue)
                 print(stationValue)
                 let staNum = Int(trainValue[3])!
@@ -474,3 +418,67 @@ func transferTime(t1: String, t2: String) -> Int {
     return tt2 - tt1
 }
 
+func parseTrainValue(ret: String) {
+    let ar = ret.split { (c) -> Bool in
+        return c == " " || c == "\n"
+    }
+    trainValue = []
+    stationValue = []
+    
+    for i in 0...4 {
+        trainValue.append(String(ar[i]))
+    }
+    
+    let staNum = Int(ar[3])!
+    let typeNum = Int(ar[4])!
+    
+    for i in 0..<typeNum {
+        trainValue.append(String(ar[5 + i]))
+    }
+    var cur = 5 + typeNum
+    for j in 0..<staNum {
+        var cc: [String] = []
+        for k in 0..<(4 + typeNum) {
+            cc.append(String(ar[cur + k]))
+        }
+        cur = cur + (4 + typeNum)
+        stationValue.append(cc)
+    }
+    
+}
+
+func parseTrainData(ret: String) {
+    trainData = [[String]]()
+    ticketData = [[[String]]]()
+    let ar = ret.split { (chr) -> Bool in
+        return chr == " " || chr == "\n"
+    }
+    let cnt = Int(String(ar[0]))!
+    var cur = 1
+    for _ in 0...cnt - 1 {
+        var tmp: [String] = []
+        var tickets: [[String]] = []
+        tmp.append(String(ar[cur]))
+        tmp.append(String(ar[cur + 1]))
+        tmp.append(String(ar[cur + 2]))
+        tmp.append(String(ar[cur + 3]))
+        tmp.append(String(ar[cur + 4]))
+        tmp.append(String(ar[cur + 5]))
+        tmp.append(String(ar[cur + 6]))
+        cur = cur + 7
+        var tst = String(ar[cur])
+        while tst.count > 0 && tst[tst.startIndex].unicodeScalars.first!.value >= UInt32(0x4E00) {
+            tickets.append([String(ar[cur]), String(ar[cur + 1]), String(ar[cur + 2])])
+            if (cur + 3 < ar.count) {
+                cur = cur + 3
+                tst = String(ar[cur])
+            } else {
+                break
+            }
+        }
+        trainData.append(tmp)
+        ticketData.append(tickets)
+    }
+    print(trainData)
+    print(ticketData)
+}

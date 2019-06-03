@@ -7,30 +7,53 @@
 //
 
 import UIKit
+import Material
 
 class RefundViewController: UIViewController {
 
-    @IBOutlet weak var confirmbutton: UIButton!
+    @IBOutlet weak var refundtickettype: TextField!
+    @IBOutlet weak var refunddate: TextField!
+    @IBOutlet weak var refundnum: TextField!
+    @IBOutlet weak var refundID: TextField!
+    @IBOutlet weak var confirmbutton: Button!
     @IBOutlet weak var baseview: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        var navBar = UINavigationBar(frame: CGRect(x: 0, y: 30, width: view.frame.width, height: 300))
-//        var navItem = UINavigationItem()
-//        var navBtn = UIBarButtonItem(title: "返回", style: .done, target: self, action: #selector(cancleBtnClicked(_:)))
-//        navItem.rightBarButtonItem = navBtn
-//        navBar.items = [navItem]
-//        self.view.addSubview(navBar)
-
+        
+        
+        refundID.placeholder = "列车ID"
+        refundnum.placeholder = "退票张数"
+        refunddate.placeholder = "退票日期"
+        refundtickettype.placeholder = "退票类型"
+            
         baseview.layer.cornerRadius = 10
         baseview.addShadow()
         confirmbutton.backgroundColor = themeLightColor
+        confirmbutton.addTarget(self, action: #selector(RefundViewController.confirmbtnclicked(_:)), for: .touchUpInside)
         
-
-        
-        // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if refundData != [] {
+            refundID.text = refundData[0]
+            refundnum.text = refundData[8]
+            refunddate.text = refundData[2]
+            refundtickettype.text = refundData[7]
+        }
     }
     @objc func cancleBtnClicked(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
+    }
+    @objc func confirmbtnclicked(_ sender: Any){
+        let sth = refundData[1]
+        let sss = refundData[4]
+        let ar: [String] = ["refund_ticket", userID,refundnum!.text!,refundID!.text!, sth, sss, refunddate!.text!, refundtickettype!.text!]
+        NetworkManager.default.postS(cmd: ar.joined(separator: " "))
+        AlertControl.default.showMessage(title: "提示", message: "退票成功", viewCon: self)
+        
+        self.present(TBViewController(), animated: true, completion: nil)
+        
+        
     }
     
 

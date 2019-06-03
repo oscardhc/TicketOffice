@@ -14,8 +14,8 @@ class AlertControl {
     
     let alertController = UIAlertController(title: "",
                                             message: "", preferredStyle: .alert)
-    let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: nil)
     
+    let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: nil)
     private init() {
         alertController.addAction(cancelAction)
     }

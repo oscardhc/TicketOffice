@@ -45,9 +45,15 @@ class ConfirmViewController: UIViewController {
         super.viewWillAppear(animated)
         baseview.layer.cornerRadius = 10
         baseview.addShadow()
+        idTextfield.text = userID
         idTextfield.isEnabled = false
         detailTextfields[3].isEnabled = false
+        detailTextfields[1].minimumFontSize = 1.0
+        detailTextfields[1].adjustsFontSizeToFitWidth = true
         
+       
+        print(userInfo[0], userInfo[1], userInfo[2], userInfo[3])
+        print(detailTextfields[0].text, detailTextfields[1].text, detailTextfields[2].text, detailTextfields[3].text)
         for (idx, tx) in detailTextfields.enumerated() {
             tx.text = userInfo[idx]
         }

@@ -21,7 +21,6 @@ class DemoCell: FoldingCell {
     @IBOutlet weak var timeLabel: UILabel!
     
     @IBOutlet weak var stationLabel: UILabel!
-    @IBOutlet var closeNumberLabel: UILabel!
     @IBOutlet weak var fromLable: UILabel!
     @IBOutlet weak var toLable: UILabel!
     @IBOutlet weak var trainIDLable: UILabel!
@@ -33,7 +32,7 @@ class DemoCell: FoldingCell {
     
     var number: Int = 0 {
         didSet {
-            closeNumberLabel.text = String(number)
+//            closeNumberLabel.text = String(number)
 //            openNumberLabel.text = String(number)
         }
     }

@@ -24,20 +24,32 @@ class TBViewController: UITabBarController {
         view2.title = "我的"
         let nav2 = UINavigationController(rootViewController: view2)
         
+        let view3 = storyboard.instantiateViewController(withIdentifier: "ManageViewController")
+        view3.title = "管理"
+        let nav3 = UINavigationController(rootViewController: view3)
+        
         print(view1.navigationController?.navigationItem)
 //        view1.navigationController?.navigationItem
         
         if #available(iOS 11.0, *) {
             nav2.navigationBar.prefersLargeTitles = true
             nav2.navigationItem.largeTitleDisplayMode = .always
+            nav3.navigationBar.prefersLargeTitles = true
+            nav3.navigationItem.largeTitleDisplayMode = .always
         } else {
             // Fallback on earlier versions
         }
         
-        self.viewControllers = [view1, nav2]
+        self.viewControllers = [view1, nav3, nav2]
         self.selectedIndex = 0
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        self.selectIndex
+//        print(self.selectedIndex)
+//        if item.title == "管理" &&
     }
     
 
