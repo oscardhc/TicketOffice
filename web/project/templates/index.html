@@ -25,7 +25,8 @@
 
                 <div class="mdui-divider"></div>
                 <div class="mdui-card-content">
-                    asdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    试试<code style="display: inline-block" id="p1"></code>到<code style="display: inline-block" id="p2"></code>的车票？
+                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised" onclick="window.location.href = '/query'">手气不错</button></div>
                 </div>
             </div>
 
@@ -37,7 +38,8 @@
 
                 <div class="mdui-divider"></div>
                 <div class="mdui-card-content">
-                    asdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    想搞人吗？
+                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised" onclick="window.location.href = '/manage'">来！</button></div>
                 </div>
             </div>
 
@@ -65,7 +67,9 @@
 
                 <div class="mdui-divider"></div>
                 <div class="mdui-card-content">
-                    asdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised" onclick="window.location.href = '/manage'">管理</button></div>
+                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised" onclick="window.location.href = '/query'">查询</button></div>
+                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised" onclick="window.location.href = '/account'">我的</button></div>
                 </div>
             </div>
 
@@ -77,13 +81,24 @@
                 <h3>EXTERNAL LINKS</h3>
 
                 <div class="mdui-divider"></div>
+                    然而我并不知道其他组的链接QAQ...
                 <div class="mdui-card-content">
-                    asdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+{#                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised">顾逸的大作</button></div>#}
+{#                    <div style="margin-top: 10px"><button class="mdui-btn mdui-ripple mdui-btn-raised">顾逸的大作</button></div>#}
                 </div>
             </div>
 
         </div>
 
     </div>
+
+{% endblock %}
+
+{% block scr %}
+
+    <script>
+        $('#p1').html(allCity[Math.floor(Math.random()*allCity.length)])
+        $('#p2').html(allCity[Math.floor(Math.random()*allCity.length)])
+    </script>
 
 {% endblock %}

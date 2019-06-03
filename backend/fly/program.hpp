@@ -589,7 +589,7 @@ namespace sjtu {
                                     char time1[TIME_SIZE], time2[TIME_SIZE];
                                     intToTime(start, time1);
                                     intToTime(transfer_arrive, time2);
-                                    sprintf(info, "%s %s %s %s %s %s %s ", train1->trainID,
+                                    sprintf(info, "%s %s %s %s %s %s %s", train1->trainID,
                                             train1->getStation(ord_start)->station_name, dat,
                                             time1, train1->getStation(ord_transfer1)->station_name,
                                             dat, time2);
@@ -600,7 +600,7 @@ namespace sjtu {
                                             price += train1->getStation(kk)->price[p];
                                         }
                                         sprintf(info + strlen(info),
-                                                "%s %d %.2f ",
+                                                " %s %d %.2f",
                                                 train1->pricename[p],
                                                 train1->getSurplus(ord_start, ord_transfer1, date, i),
                                                 price);
@@ -609,7 +609,7 @@ namespace sjtu {
 
                                     intToTime(transfer_start, time1);
                                     intToTime(arrive, time2);
-                                    sprintf(info + strlen(info), "%s %s %s %s %s %s %s ", train2->trainID,
+                                    sprintf(info + strlen(info), "%s %s %s %s %s %s %s", train2->trainID,
                                             train2->getStation(ord_transfer2)->station_name, dat,
                                             time1, train2->getStation(ord_end)->station_name,
                                             dat, time2);
@@ -619,7 +619,7 @@ namespace sjtu {
                                             price += train2->getStation(kk)->price[p];
                                         }
                                         sprintf(info + strlen(info),
-                                                "%s %d %.2f ",
+                                                " %s %d %.2f",
                                                 train2->pricename[p],
                                                 train2->getSurplus(ord_transfer2, ord_end, date, i),
                                                 price);

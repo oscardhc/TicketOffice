@@ -12,8 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="122fd3a7-4c31-469f-85b2-1a68ad52d72a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/program.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/program.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/init.sh" beforeDir="false" afterPath="$PROJECT_DIR$/init.sh" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/fly/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -61,7 +60,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/fly/program.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="331">
+                <state relative-caret-position="327">
                   <caret line="389" column="38" selection-start-line="389" selection-start-column="38" selection-end-line="389" selection-end-column="38" />
                   <folding>
                     <element signature="e#49#72#0" expanded="true" />
@@ -141,8 +140,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/fly/program.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="96">
-                  <caret line="525" column="52" selection-start-line="525" selection-start-column="52" selection-end-line="525" selection-end-column="52" />
+                <state relative-caret-position="286">
+                  <caret line="535" column="34" selection-start-line="535" selection-start-column="34" selection-end-line="535" selection-end-column="34" />
                   <folding>
                     <element signature="e#49#72#0" expanded="true" />
                     <element signature="e#241#270#0" expanded="true" />
@@ -353,12 +352,12 @@
       <workItem from="1558871589402" duration="47000" />
       <workItem from="1559002131729" duration="5154000" />
       <workItem from="1559389860452" duration="2801000" />
-      <workItem from="1559548907527" duration="724000" />
+      <workItem from="1559548907527" duration="1201000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180169000" />
+    <option name="totallyTimeSpent" value="180646000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="23" width="1397" height="877" extended-state="0" />
@@ -590,8 +589,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fly/program.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="389" column="38" selection-start-line="389" selection-start-column="38" selection-end-line="389" selection-end-column="38" />
+        <state relative-caret-position="286">
+          <caret line="535" column="34" selection-start-line="535" selection-start-column="34" selection-end-line="535" selection-end-column="34" />
           <folding>
             <element signature="e#49#72#0" expanded="true" />
             <element signature="e#241#270#0" expanded="true" />

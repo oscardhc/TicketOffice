@@ -1,6 +1,6 @@
 var userInfo = []
 var allCata = ['C','D','G','K','O','T','Z']
-var allCity = ['北京南','沈阳','上海虹桥','闵行','HHHHHH','hasdasd','asdfasdf','hbbbb','haaaa']
+var allCity = ['北京','北京南','北京西','常州','成都','成都东','大同','广州','广州东','广州南','贵阳北','桂林北','哈尔滨','汉口','杭州东','合肥南','衡阳','济南','济南西','佳木斯','昆明南','兰州西','洛阳龙门','牡丹江','南仓','南京南','南宁','齐齐哈尔','青岛','山海关','上海','上海虹桥','深圳北','沈阳','沈阳北','沈阳南','石家庄','苏家屯','太原','天津','无锡','武昌','武汉','西安','西安北','鹰潭','长春','长沙南','郑州','郑州东','重庆北','株洲']
 var captcha = []
 
 function execCommand(cmd, done) {
@@ -289,7 +289,8 @@ function getCaptcha() {
     $.post('/captcha', {}, function (d) {
         captcha = d
         $('#capLable').html('$\\displaystyle\\int_{x=0}^{1}' + captcha.diff + '=?$（保留一位小数）')
-        $('#capinput').val(captcha.val)
+        // $('#capinput').val(captcha.val)
+        console.log("验证码:" + captcha.val)
         MathJax.Hub.Queue(["Typeset", MathJax.Hub])
     })
 }

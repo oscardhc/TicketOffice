@@ -56,6 +56,11 @@
 
             </div>
 
+            <div>
+                筛选：
+                <button style="display: inline-block" class="mdui-btn mdui-ripple" onclick="sortByPrice()">按最低票价排序</button>
+                <button style="display: inline-block" class="mdui-btn mdui-ripple" onclick="sortByTime()">按最短时间排序</button>
+            </div>
 
             <div class="mdui-table-fluid" style="visibility: hidden" id="tableCon">
                 <table class="mdui-table mdui-table-hoverable" id="tablePlace">
@@ -119,6 +124,46 @@
     <script>
 
         {#console.log()#}
+
+        function timeToInt(s) {
+            return (s[3].charCodeAt() - '0'.charCodeAt()) * 60 + (s[4].charCodeAt() - '0'.charCodeAt())
+        }
+
+        function sortByTime() {
+            data.sort(function (a,b) {
+                var t1 = timeToInt(a[6]) - timeToInt(a[3])
+                var t2 = timeToInt(b[6]) - timeToInt(b[3])
+                return t1 > t2
+            })
+            createTable()
+        }
+
+        function sortByPrice() {
+            data.sort(function (a,b) {
+                var flag1 = 0;
+                var pri1 = 1e18;
+                for (var k = 0; k < a[7].length; k++) {
+                    if (a[7][k][1] > 0) {
+                        flag1 = 1;
+                        if (a[7][k][2] < pri1) {
+                            pri1 = a[7][k][2]
+                        }
+                    }
+                }
+                var flag2 = 0;
+                var pri2 = 1e18;
+                for (var k = 0; k < b[7].length; k++) {
+                    if (b[7][k][1] > 0) {
+                        flag2 = 1;
+                        if (b[7][k][2] < pri2) {
+                            pri2 = b[7][k][2]
+                        }
+                    }
+                }
+                return pri1 > pri2
+            })
+            createTable()
+        }
 
         $(document).ready(function () {
             for (var i = 1; i <= 30; i++) {
@@ -214,7 +259,15 @@
             execCommand(["buy_ticket","{{ses['user']}}","1",data[x][0],data[x][1],data[x][4],$('#dateInput').val(),data[x][7][ii][0]].join(' '), function (d) {
                 var res = d.result;
                 if (res == "1") {
-                    alert(res)
+                    if (d.result == '1') {
+                        mdui.snackbar({
+                            message: '购票成功！'
+                        });
+                    } else {
+                        mdui.snackbar({
+                            message: '购票失败...'
+                        });
+                    }
                     data[x][7][ii][1] -= 1;
                     $('#ticketDetailBody').html('')
                     $('#ticketDetailTitle').html(data[x][0])
@@ -260,12 +313,20 @@
             console.log(cmd)
 
             execCommand(cmd, function (d) {
-                handleQueryTicket(d.result)
+                handleQueryTicket((($('#viaCheck').prop('checked') == true) ? "2\n" : "") + d.result)
             })
+
+        }
+        
+        function handleTransfer(d) {
+            var ar = d.result.split['\n']
+            var t1 = ar.split[' ']
+            var t2 = ar.split[' ']
 
         }
 
         function handleQueryTicket(ret) {
+            console.log(ret)
             data = []
             ar = ret.split(/[ ]|\n/)
             console.log(ar)

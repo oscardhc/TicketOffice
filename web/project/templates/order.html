@@ -71,7 +71,15 @@
         function refundTicket(i) {
             execCommand(['refund_ticket', {{ ses['user'] }}, records[i][8], records[i][0], records[i][1], records[i][4], records[i][2], records[i][7]].join(' '), function (d) {
                 var res = d.result
-                alert(res)
+                if (res == '1') {
+                    mdui.snackbar({
+                        message: '退票成功！'
+                    });
+                } else {
+                    mdui.snackbar({
+                        message: '退票失败...'
+                    });
+                }
                 queryOrder()
             })
         }

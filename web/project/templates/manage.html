@@ -24,15 +24,13 @@
             {% else %}
                 <div id="content">
 
-                    <div>Welcome to the management page!</div>
+                    {#                    <div>Welcome to the management page!</div>#}
 
                     <div class="mdui-card manageCard mdui-typo mdui-hoverable" align="center">
                         <div style="width: 80%;">
                             <h3>修改用户信息</h3>
                             <div class="mdui-divider"></div>
-
-                            2333
-
+                            「解放思想，实事求是，大胆地试，勇敢地改！」
                             <div align="center" style="margin-top: 30px; margin-bottom: 30px">
                                 <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="modifyUser()">下一步</button>
                             </div>
@@ -51,7 +49,7 @@
                         <div style="width: 80%;">
                             <h3>新建车次</h3>
                             <div class="mdui-divider"></div>
-                            2333 [一点说明文字]
+                            「坚持以人民为中心，不断实现人民对美好生活的向往！」
                             <div align="center" style="margin-top: 30px; margin-bottom: 30px">
                                 <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="addTrain()">下一步</button>
                             </div>
@@ -62,7 +60,7 @@
                         <div style="width: 80%;">
                             <h3>查询车次</h3>
                             <div class="mdui-divider"></div>
-                            2333
+                            「千里归乡路，平安是幸福。」
                             <div align="center" style="margin-top: 30px; margin-bottom: 30px">
                                 <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="queryTrain()">下一步</button>
                             </div>
@@ -73,9 +71,9 @@
                         <div style="width: 80%;">
                             <h3>修改车次</h3>
                             <div class="mdui-divider"></div>
-                            2333
+                            「把握住历史发展大势，抓住历史变革时机！」
                             <div align="center" style="margin-top: 30px; margin-bottom: 30px">
-                                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="">下一步</button>
+                                <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="modifyTrain()">下一步</button>
                             </div>
                         </div>
                     </div>
@@ -83,7 +81,7 @@
                         <div style="width: 80%;">
                             <h3>公开车次</h3>
                             <div class="mdui-divider"></div>
-                            2333
+                            「努力确保广大旅客走得了、走得好！」
                             <div align="center" style="margin-top: 30px; margin-bottom: 30px">
                                 <button class="mdui-btn mdui-ripple mdui-color-theme-accent" id="profilebtn" onclick="saleTrain()">下一步</button>
                             </div>
@@ -194,23 +192,30 @@
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <i class="mdui-icon material-icons">vpn_key</i>
                 <label class="mdui-textfield-label">密码</label>
-                <input class="mdui-textfield-input" id="profilePassword" type="password"></input>
+                <input class="mdui-textfield-input" id="realPassword" type="password"></input>
             </div>
 
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <i class="mdui-icon material-icons">email</i>
                 <label class="mdui-textfield-label">邮箱</label>
-                <input class="mdui-textfield-input" type="email" id="profileEmail"></input>
+                <input class="mdui-textfield-input" id="profilePassword" type="email"></input>
             </div>
 
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <i class="mdui-icon material-icons">phone</i>
-                <label class="mdui-textfield-label">电话号码</label>
-                <input class="mdui-textfield-input" id="profilePhone" onkeydown="ClickPassword(profileConfirmBtnClicked)"></input>
+                <label class="mdui-textfield-label">电话</label>
+                <input class="mdui-textfield-input" id="profileEmail"></input>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">account_circle</i>
+                <label class="mdui-textfield-label">权限</label>
+                <input class="mdui-textfield-input" id="profilePhone"></input>
             </div>
 
         </div>
         <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" onclick="modifyUserComfirm()">confirm</button>
             <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
         </div>
     </div>
@@ -314,7 +319,44 @@
         function saleTrain() {
             saleTrainDialog.open()
         }
+        function modifyUserComfirm() {
+            if ($('#modifyUserID').val() == '' || $('#profileUsername').val() == '' || $('#realPassword').val() == '' || $('#profilePassword').val() == '' || $('#profileEmail').val() == '') {
+                mdui.snackbar({
+                    message: '输入不能为空！'
+                });
+                return;
+            }
+            execCommand(['modify_profile', $('#modifyUserID').val(), $('#profileUsername').val(), $('#realPassword').val(), $('#profilePassword').val(),  $('#profileEmail').val()].join(' '), function (dd) {
+                if (dd.result == '1') {
+                    mdui.snackbar({
+                        message: '修改信息成功！'
+                    });
+                    localStorage.removeItem('userInfo', JSON.stringify(userInfo))
+                    getUserInfo('{{ ses['user'] }}')
+                } else {
+                    mdui.snackbar({
+                        message: '修改信息失败...'
+                    });
+                }
+            })
+            {#execCommand(['modify_', $('#profilePhone').val()].join(' '), function (dd) {#}
+            {#if (dd.result == '1') {#}
+            {#    mdui.snackbar({#}
+            {#        message: '发售成功！'#}
+            {#    });#}
+            {# } else { #}
+            {#    mdui.snackbar({#}
+            {#        message: '发售失败...可能该车次已被发售或已被删除'#}
+            {#    });#}
+            {# } #}
+            {# })#}
+        }
         function saleTrainCommit() {
+            if ($('#saleTrainID').val() == '') {
+                mdui.snackbar({
+                    message: '输入不能为空！'
+                });
+            }
             execCommand('sale_train ' + $('#saleTrainID').val(), function (dd) {
                 if (dd.result == '1') {
                     mdui.snackbar({
@@ -409,13 +451,17 @@
         }
         function idcheck() {
             let id = $('#modifyUserID').val()
+            if (id == '') {
+                mdui.snackbar({
+                    message: '输入不能为空！'
+                });
+            }
             {#console.log(id)#}
             execCommand('query_profile ' + id, function (dd) {
                 let res = dd.result;
                 let d = res.split(" ")
                 $('#profileUsername').val(d[0])
                 $('#profilePassword').val(d[1])
-
                 $('#profileEmail').val(d[2])
                 $('#profilePhone').val(d[3])
                 $('#profilePhone').focus()
@@ -429,7 +475,15 @@
             modifyUserDialogue.open();
         }
         var addTrainDialogue = new mdui.Dialog("#addTrainDialogue", {modal: true})
+        function modifyTrain() {
+            isEditing = true
+            adddd()
+        }
         function addTrain() {
+            isEditing = false
+            adddd()
+        }
+        function adddd() {
             $('#trainDetailContent').html('')
             $('#ticketInfo').html('<div style="width:100px;margin-left:20px;display:inline-block" class="mdui-textfield mdui-textfield-floating-label">\n' +
                 '                                <label class="mdui-textfield-label">类别1</label>\n' +
@@ -475,7 +529,15 @@
             console.log(x)
             execCommand(x.join(' '), function (d) {
                 var res = d.result
-                alert(res)
+                if (res == '1') {
+                    mdui.snackbar({
+                        message: '添加车次成功！'
+                    });
+                } else {
+                    mdui.snackbar({
+                        message: '添加失败...'
+                    });
+                }
             })
         }
         function createType(i) {

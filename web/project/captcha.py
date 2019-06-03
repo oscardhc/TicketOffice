@@ -15,5 +15,5 @@ def generate():
         i = exp(i)
     cu = i * randint(1, 3)
     cu = opSet[randint(0, 2)](cu, j) * randint(1, 3)
-    cu = opSet[randint(0, 3)](cu, k) * randint(1, 3)
+    # cu = opSet[randint(0, 3)](cu, k) * randint(1, 3)
     return [latex(cu), latex(simplify(diff(cu,x))), cu.evalf(subs={x:1})]
