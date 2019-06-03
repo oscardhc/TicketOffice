@@ -263,6 +263,9 @@
                         mdui.snackbar({
                             message: '购票成功！'
                         });
+                        {#$.post('/mail', {'to': userInfo[1], 'da': '您已成功购票'}, function (d) {#}
+
+                        {# } )#}
                     } else {
                         mdui.snackbar({
                             message: '购票失败...'
@@ -317,7 +320,7 @@
             })
 
         }
-        
+
         function handleTransfer(d) {
             var ar = d.result.split['\n']
             var t1 = ar.split[' ']

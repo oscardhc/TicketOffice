@@ -7,6 +7,7 @@ from random import randint
 import interaction
 import captcha
 import sys
+import subprocess
 
 BackEndPath = "/Users/oscar/Documents/SJTU/1819_Spring/Data_Structure/TicketOffice/"
 # BackEndPath = "/home/oscar/dhc/TicketOffice/"
@@ -102,6 +103,12 @@ def order():
     if request.method == 'GET' :
         return render_template('order.html', ses=session)
 
+@app.route('/mail')
+def mail():
+    if request.method == 'POST' :
+        to = request.form['to']
+        co = request.form['da']
+        subprocess.Popen('echo "'+co+'"|mail -s "您已成功购票！" ' + to, shell=True)
 
 if __name__ == '__main__':
     # con.init()

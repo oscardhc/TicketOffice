@@ -289,7 +289,7 @@ function getCaptcha() {
     $.post('/captcha', {}, function (d) {
         captcha = d
         $('#capLable').html('$\\displaystyle\\int_{x=0}^{1}' + captcha.diff + '=?$（保留一位小数）')
-        // $('#capinput').val(captcha.val)
+        $('#capinput').val(Number(captcha.val).toFixed(1))
         console.log("验证码:" + captcha.val)
         MathJax.Hub.Queue(["Typeset", MathJax.Hub])
     })
