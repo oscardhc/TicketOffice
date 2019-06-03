@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% set curSide = "订单" %}
+
+{% block content %}
+
+    <div class="mdui-typo">
+        {% if 'user' in ses %}
+
+            <h1 class="mdui-text-color-theme">订单</h1>
+
+            <div>
+                <div style="display: inline-block; margin: 0 20px">
+                    日期：
+                    <select id="dateInput" style="width: 150px;">
+                    </select>
+                </div>
+                <div style="display: inline-block; margin: 0 20px">
+                    <button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="queryOrder()">查询</button>
+                </div>
+            </div>
+            <div style="margin-top: 20px" id="catas">
+                    类别：
+            </div>
+            <div style="margin-top: 30px" class="mdui-table-fluid">
+                <table class="mdui-table mdui-table-hoverable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>车次</th>
+                        <th>出发站</th>
+                        <th>出发时间</th>
+                        <th>到达站</th>
+                        <th>到达时间</th>
+                        <th>车票</th>
+                        <th>金额</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="detailBody">
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+
+            please login...
+
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block app %}
+
+{% endblock %}
+{% block scr %}
+
+    <script src="{{ url_for('static', filename='js/pinyin4js.js') }}"></script>
+    <script>
+        var recordNum = 0
+        var records = []
+        $(document).ready(function () {
+            for (var i = 1; i <= 30; i++) {
+                $('#dateInput').append('<option>2019-06-' + (i < 10 ? '0' : '') + i + '</option>')
+            }
+            $('#dateInput').editableSelect({
+                effects: 'slide'
+            })
+        })
+        function refundTicket(i) {
+            execCommand(['refund_ticket', {{ ses['user'] }}, records[i][8], records[i][0], records[i][1], records[i][4], records[i][2], records[i][7]].join(' '), function (d) {
+                var res = d.result
+                alert(res)
+                queryOrder()
+            })
+        }
+        function queryOrder() {
+            var cmd = ['query_order', '{{ ses['user'] }}', $('#dateInput').val()].join(' ') + ' '
+            for (var i = 0; i < allCata.length; i++) {
+                if ($('#cataCKB' + i).prop('checked') == true) {
+                    cmd += allCata[i]
+                }
+            }
+            execCommand(cmd, function (d) {
+                records = []
+                var res = d.result;
+                var ar = res.split('\n')
+                recordNum = parseInt(ar[0])
+                $('#detailBody').html('')
+                for (var i = 0; i < recordNum; i++) {
+                    var tmp = []
+                    var aa = ar[i+1].split(' ')
+                    for (var j = 0; j < 7; j++) {
+                        tmp.push(aa[j])
+                    }
+                    var cur = 7
+                    while (cur < aa.length) {
+                        if (aa[cur + 1] !== '0') {
+                            tmp.push(aa[cur])
+                            tmp.push(aa[cur+1])
+                            tmp.push(aa[cur+2])
+                            break
+                        }
+                        cur = cur + 3;
+                    }
+                    records.push(tmp)
+                }
+                for (var i = 0; i < recordNum; i++) {
+                    var cu = $('<tr></tr>')
+                    $('<td>'+(i+1)+'</td>').appendTo(cu)
+                    $('<td>'+records[i][0]+'</td>').appendTo(cu)
+                    $('<td>'+records[i][1]+'</td>').appendTo(cu)
+                    $('<td>'+records[i][3]+'</td>').appendTo(cu)
+                    $('<td>'+records[i][4]+'</td>').appendTo(cu)
+                    $('<td>'+records[i][6]+'</td>').appendTo(cu)
+                    $('<td>'+records[i][8]+'张'+records[i][7]+'</td>').appendTo(cu)
+                    $('<td>¥'+records[i][9]+'</td>').appendTo(cu)
+                    $('<td><button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="refundTicket('+i+')">退票</button></td>').appendTo(cu)
+                    cu.appendTo($('#detailBody'))
+                }
+            })
+        }
+        for (var i = 0; i < allCata.length; i++) {
+            $('#catas').append('<label class="mdui-checkbox" style="margin-right:50px"><input type="checkbox" id="cataCKB' + i + '" checked/><i class="mdui-checkbox-icon"></i>' + allCata[i] + '</label>')
+        }
+    </script>
+
+{% endblock %}

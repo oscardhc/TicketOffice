@@ -1,7 +1,2 @@
-query_ticket 北海 合浦 2019-06-05 CDGKOTZ
-buy_ticket 53654 5 27000D531808 晋中 太原南 2019-06-03 一等座
-buy_ticket 53654 5 27000D531808 晋中 太原南 2019-06-03 动卧
-buy_ticket 53654 5 27000D531808 晋中 太原南 2019-06-03 高级软卧
-buy_ticket 53654 233 020000416205 双鸭山 佳木斯 2019-06-03 高级软卧
-query_order 53654 2019-06-03 CDGKOTZ
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
 exit

@@ -15,10 +15,6 @@
         <div class="mdui-typo">
             <h1 class="mdui-text-color-theme">查询</h1>
 
-            <p>This is the query page.</p>
-
-            <p>Tickets from <code>北京</code> to <code>上海</code></p>
-
         </div>
         <div>
 
@@ -89,9 +85,26 @@
 {% block app %}
 
     <div class="mdui-dialog" id="detailDialogue">
-        <div class="mdui-dialog-title">DETAIL</div>
+        <div class="mdui-dialog-title" id="ticketDetailTitle"></div>
         <div class="mdui-dialog-content" id="detailMsg">
-
+            {#            <div id="ticketDetailTitle">#}
+            {#                #}
+            {#            </div>#}
+            <div class="mdui-table-fluid">
+                <table class="mdui-table mdui-table-hoverable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>种类</th>
+                        <th>余票</th>
+                        <th>售价</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="ticketDetailBody">
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="mdui-dialog-actions">
             <button class="mdui-btn mdui-ripple" mdui-dialog-close id="detailCancleBtn">cancel</button>
@@ -174,20 +187,54 @@
         var detailDialog = new mdui.Dialog('#detailDialogue');
 
         function clickedAtRow(x) {
-            var tx = document.createElement('div')
-            tx.setAttribute('class', 'mdui-typo')
+
+            $('#ticketDetailBody').html('')
+            $('#ticketDetailTitle').html(data[x][0])
+            execCommand('query_train ' + data[x][0], function(d) {
+                let ar = d.result.split(/[ ]|\n/)
+                $('#ticketDetailTitle').html(ar[1])
+            })
             var len = data[x][7].length
-            for(var i=0;i<len;i++) {
-                tx.innerHTML += "<h1 class='mdui-text-color-theme' style='display: inline;'>" + data[x][7][i][0] + "</h1>"
-                tx.innerHTML += "<p style='display: inline;'>" + ": 余" + data[x][7][i][1] + "张" + "</p>"
-                tx.innerHTML += "<p style='display: inline;'>" + "，￥" + data[x][7][i][2] + "</p> <br/>"
+            for (var i=0; i<len;i++) {
+                var tmp=$('<tr></tr>')
+                $('<td>'+(i+1)+'</td>').appendTo(tmp)
+                $('<td>'+data[x][7][i][0]+'</td>').appendTo(tmp)
+                $('<td>'+data[x][7][i][1]+'</td>').appendTo(tmp)
+                $('<td>'+data[x][7][i][2]+'</td>').appendTo(tmp)
+                $('<td><button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="buyTicket('+x+','+i+')">购买</button></td>').appendTo(tmp)
+                tmp.appendTo($('#ticketDetailBody'))
             }
-            document.querySelector('#detailMsg').innerHTML = ""
-            document.querySelector('#detailMsg').append(tx)
 
             detailDialog.open()
             document.querySelector('#detailCancleBtn').focus()
-            // alert(row)
+
+        }
+
+        function buyTicket(x, ii) {
+            execCommand(["buy_ticket","{{ses['user']}}","1",data[x][0],data[x][1],data[x][4],$('#dateInput').val(),data[x][7][ii][0]].join(' '), function (d) {
+                var res = d.result;
+                if (res == "1") {
+                    alert(res)
+                    data[x][7][ii][1] -= 1;
+                    $('#ticketDetailBody').html('')
+                    $('#ticketDetailTitle').html(data[x][0])
+                    execCommand('query_train ' + data[x][0], function(d) {
+                        let ar = d.result.split(/[ ]|\n/)
+                        $('#ticketDetailTitle').html(ar[1])
+                    })
+                    var len = data[x][7].length
+                    for (var i=0; i<len;i++) {
+                        var tmp=$('<tr></tr>')
+                        $('<td>'+(i+1)+'</td>').appendTo(tmp)
+                        $('<td>'+data[x][7][i][0]+'</td>').appendTo(tmp)
+                        $('<td>'+data[x][7][i][1]+'</td>').appendTo(tmp)
+                        $('<td>'+data[x][7][i][2]+'</td>').appendTo(tmp)
+                        $('<td><button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="buyTicket('+x+','+i+')">购买</button></td>').appendTo(tmp)
+                        tmp.appendTo($('#ticketDetailBody'))
+                    }
+                }
+            })
+
         }
 
         function submitQuery() {
@@ -243,7 +290,7 @@
                 curTr.push('TTK')
                 data.push(curTr)
             }
-            createPanel()
+            {#createPanel()#}
             createTable()
         }
 

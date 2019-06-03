@@ -187,7 +187,7 @@ int main(int argc, char** argv){
        preRun();
        realWork();
    } else {
-       preRun();
+       test8();
        custom();
        // work();
    }

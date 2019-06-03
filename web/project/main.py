@@ -97,6 +97,11 @@ def capt():
         a = captcha.generate()
         return jsonify({'origin': a[0], 'diff': a[1], 'val': str(a[2])})
 
+@app.route('/order')
+def order():
+    if request.method == 'GET' :
+        return render_template('order.html', ses=session)
+
 
 if __name__ == '__main__':
     # con.init()

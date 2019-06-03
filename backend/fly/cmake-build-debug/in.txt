@@ -1,0 +1,10 @@
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 上海虹桥 2019-06-02 CDG
+query_transfer 北京南 沈阳 2019-06-02 CDG
+exit

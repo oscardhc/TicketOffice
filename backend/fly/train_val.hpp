@@ -176,7 +176,7 @@ namespace sjtu {
                 static Record rec;
                 DataBase.getElement((char*)&rec, off, RECORD_SIZE, RECORD);
 //                printf("... %d %d %d\n", rec.trainid, rec.data, a.data);
-                if (rec.trainid == a.trainid && (rec.data >> 11) == (a.data >> 11) && rec.getQuantity() > num) {
+                if (rec.trainid == a.trainid && (rec.data >> 11) == (a.data >> 11) && rec.getQuantity() >= num) {
                     flag = 1;
                     rec.data -= num;
                     DataBase.setElement((char*)&rec, off, RECORD_SIZE, RECORD);
