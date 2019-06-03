@@ -12,24 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="122fd3a7-4c31-469f-85b2-1a68ad52d72a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/fly" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/fly" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/fly.dSYM/Contents/Resources/DWARF/fly" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/fly.dSYM/Contents/Resources/DWARF/fly" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fly/cmake-build-debug/stdout.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fly/cmake-build-debug/CMakeFiles/fly.dir/test.cpp.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fly/program.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/program.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fly/train_val.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/fly/train_val.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in.txt" beforeDir="false" afterPath="$PROJECT_DIR$/in.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/init.sh" beforeDir="false" afterPath="$PROJECT_DIR$/init.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/stdout.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/templates/manage.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/templates/manage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/project/templates/query.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web/project/templates/query.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/fly/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -74,11 +58,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/fly/program.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-268">
-                  <caret line="591" column="68" selection-start-line="591" selection-start-column="68" selection-end-line="591" selection-end-column="68" />
+                <state relative-caret-position="331">
+                  <caret line="389" column="38" selection-start-line="389" selection-start-column="38" selection-end-line="389" selection-end-column="38" />
                   <folding>
                     <element signature="e#49#72#0" expanded="true" />
                     <element signature="e#241#270#0" expanded="true" />
@@ -90,17 +74,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="432">
+                <state relative-caret-position="416">
                   <caret line="27" selection-start-line="27" selection-end-line="27" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/fly/test.cpp">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="17">
-                  <caret line="173" column="25" lean-forward="true" selection-start-line="173" selection-start-column="25" selection-end-line="173" selection-end-column="25" />
+                  <caret line="173" column="25" selection-start-line="173" selection-start-column="25" selection-end-line="173" selection-end-column="25" />
                   <folding>
                     <element signature="e#38#60#0" expanded="true" />
                   </folding>
@@ -157,8 +141,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/fly/program.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="224">
-                  <caret line="533" column="42" lean-forward="true" selection-start-line="533" selection-start-column="42" selection-end-line="533" selection-end-column="42" />
+                <state relative-caret-position="96">
+                  <caret line="525" column="52" selection-start-line="525" selection-start-column="52" selection-end-line="525" selection-end-column="52" />
                   <folding>
                     <element signature="e#49#72#0" expanded="true" />
                     <element signature="e#241#270#0" expanded="true" />
@@ -251,8 +235,8 @@
         <option value="$PROJECT_DIR$/fly/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/dhc/IOManager.hpp" />
         <option value="$PROJECT_DIR$/dhc/EDPS.hpp" />
-        <option value="$PROJECT_DIR$/fly/program.hpp" />
         <option value="$PROJECT_DIR$/fly/test.cpp" />
+        <option value="$PROJECT_DIR$/fly/program.hpp" />
       </list>
     </option>
   </component>
@@ -369,12 +353,12 @@
       <workItem from="1558871589402" duration="47000" />
       <workItem from="1559002131729" duration="5154000" />
       <workItem from="1559389860452" duration="2801000" />
-      <workItem from="1559548907527" duration="614000" />
+      <workItem from="1559548907527" duration="724000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180059000" />
+    <option name="totallyTimeSpent" value="180169000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="23" width="1397" height="877" extended-state="0" />
@@ -385,9 +369,9 @@
       <window_info id="Favorites" order="2" sideWeight="0.50176054" side_tool="true" weight="0.15665236" />
       <window_info anchor="bottom" id="CMake" order="0" weight="0.32871014" />
       <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Messages" order="2" weight="0.32356688" />
+      <window_info active="true" anchor="bottom" id="Messages" order="2" visible="true" weight="0.32356688" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.32871014" />
-      <window_info active="true" anchor="bottom" id="Run" order="4" visible="true" weight="0.3566879" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.3566879" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.39617833" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
@@ -543,13 +527,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fly/train_val.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4448">
@@ -594,23 +571,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fly/program.hpp">
+    <entry file="file://$PROJECT_DIR$/fly/test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-268">
-          <caret line="591" column="68" selection-start-line="591" selection-start-column="68" selection-end-line="591" selection-end-column="68" />
+        <state relative-caret-position="17">
+          <caret line="173" column="25" selection-start-line="173" selection-start-column="25" selection-end-line="173" selection-end-column="25" />
           <folding>
-            <element signature="e#49#72#0" expanded="true" />
-            <element signature="e#241#270#0" expanded="true" />
+            <element signature="e#38#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fly/test.cpp">
+    <entry file="file://$PROJECT_DIR$/fly/vector.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="173" column="25" lean-forward="true" selection-start-line="173" selection-start-column="25" selection-end-line="173" selection-end-column="25" />
+        <state relative-caret-position="416">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fly/program.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="389" column="38" selection-start-line="389" selection-start-column="38" selection-end-line="389" selection-end-column="38" />
           <folding>
-            <element signature="e#38#60#0" expanded="true" />
+            <element signature="e#49#72#0" expanded="true" />
+            <element signature="e#241#270#0" expanded="true" />
           </folding>
         </state>
       </provider>
