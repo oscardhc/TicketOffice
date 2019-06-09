@@ -4,7 +4,7 @@
 
 开发环境：macOS 10.14 + Xcode 10
 
-测试环境：macOS 10.14 + Xcode 10
+测试环境：macOS 10.14 + Xcode 10 + iPhone X
 
 开发技术：Swift + Cocoa Touch + 各种各样的库
 
