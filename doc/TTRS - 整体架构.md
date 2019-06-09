@@ -4,7 +4,7 @@
 
 ### 架构
 
-![物理学引论-68 2](assets/物理学引论-68 2.jpg)
+![structure](assets/structure.jpg)
 
 通过Flask框架建立前后端分离的网站，并部署至Apache2服务器上，支持且仅支持Https访问，可极大提升安全性。Flask既提供web网页的访问，也提供api，供web前端和iOS前端与后端逻辑与数据库进行json交互。
 
